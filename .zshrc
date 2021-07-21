@@ -31,3 +31,4 @@ fix_wsl2_interop() {
 
 # ALIAS COMMANDS
 alias ls="exa --icons --group-directories-first" 
+alias ll="ls -l"
