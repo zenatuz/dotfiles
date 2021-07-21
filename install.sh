@@ -37,10 +37,9 @@ brew install exa fzf helmfile httpie k9s kubecm kubectx kubernetes-cli ncurses t
 echo ""
 echo "Cloning Dotenv project to ~/"
 
+# Removing temp files
+rm -rf ~/.zshrc ~/.p10k.zsh
+
+# Cloning dotfiles
 cd ~
 yadm clone git@github.com:zenatuz/dotfiles.git
-
-echo ""
-echo "Setting ZSH as default shell"
-# Settting ZSH as default Shell
-chsh -s $(which zsh)

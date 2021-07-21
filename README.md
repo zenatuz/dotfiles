@@ -9,3 +9,8 @@ You can run the script directly with the following:
 ```bash
 curl -s -L https://git.io/JWjpB | bash
 ```
+
+At the end, run the command to define ZSH as default shell:
+```
+chsh -s $(which zsh)
+```
