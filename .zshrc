@@ -3,6 +3,14 @@ source ~/.zsh/theemes/powerlevel10k/powerlevel10k.zsh-theme
 
 # Load ZSH Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+plugins=(
+  git
+  dotenv
+  docker
+  kubectl
+)
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -19,5 +27,4 @@ fix_wsl2_interop() {
 }
 
 # ALIAS COMMANDS
-[[ ! -f /bin/exa ]] && echo "Warning: exa is not installed" || alias ls="exa --icons --group-directories-first" 
-
+alias ls="exa --icons --group-directories-first" 
