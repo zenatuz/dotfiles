@@ -1,5 +1,5 @@
 # SET ZSH THEME
-source ~/.zsh/theemes/powerlevel10k/powerlevel10k.zsh-theme
+source ~/.zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
 
 # Load ZSH Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
