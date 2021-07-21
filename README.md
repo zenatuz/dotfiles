@@ -11,6 +11,23 @@ curl -s -L https://git.io/JWjpB | bash
 ```
 
 At the end, run the command to define ZSH as default shell:
-```
+```bash
 chsh -s $(which zsh)
+```
+
+## Prompt
+
+This is how your prompt will look like after cloning the settings with YADM.
+
+![Terminal Screenshot](terminal-screenshot.png)
+
+> To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+
+## Getting the DOTFILEs, only
+
+If you only want to get the files without installing anything new, just use YADM in your home directory.
+
+```bash
+cd ~
+yadm clone git@github.com:zenatuz/dotfiles.git
 ```
