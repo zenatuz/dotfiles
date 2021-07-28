@@ -19,7 +19,13 @@ chsh -s $(which zsh)
 
 This is how your prompt will look like after cloning the settings with YADM.
 
-![Screenshot](screenshot.png)
+- **Home directory**
+
+![screenshot-01.png](screenshot-01.png)
+
+- **Some project with git**
+
+![screenshot-02.png](screenshot-02.png)
 
 > To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 
