@@ -19,7 +19,7 @@ plugins=(
   kubectl
 )
 
-# Load Brew
+# Loading Brew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -35,6 +35,10 @@ fix_wsl2_interop() {
         fi
     done
 }
+
+# History
+SAVEHIST=1000  # Save most-recent 1000 lines
+HISTFILE=~/.zsh_history
 
 # ALIAS COMMANDS
 alias ls="exa --icons --group-directories-first" 
