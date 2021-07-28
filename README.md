@@ -19,7 +19,7 @@ chsh -s $(which zsh)
 
 This is how your prompt will look like after cloning the settings with YADM.
 
-![Terminal Screenshot](terminal-screenshot.png)
+![Screenshot](screenshot.png)
 
 > To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 
