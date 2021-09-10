@@ -21,11 +21,11 @@ This is how your prompt will look like after cloning the settings with YADM.
 
 - **Home directory**
 
-![screenshot-01.png](.dotfiles\screenshot-01.png)
+![screenshot-01.png](./.dotfiles/screenshot-01.png "Home Directory")
 
 - **Some project with git**
 
-![screenshot-02.png](.dotfiles\screenshot-02.png)
+![screenshot-02.png](./.dotfiles/screenshot-02.png "Project with git")
 
 > To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 
@@ -45,7 +45,7 @@ https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
 
 ### **Windows Terminal**
 
-![screenshot-03.png](.dotfiles\screenshot-03.png)
+![screenshot-03.png](./.dotfiles/screenshot-03.png "Font settings on Windows Terminal")
 
 ### **VSCode**
 
@@ -57,7 +57,7 @@ In the VSCode `settings.json` apply these settings to enable **`Firacode Nerd Fo
     "terminal.integrated.fontFamily": "FuraCode Nerd Font Mono",
 ```
 
-![screenshot-04.png](.dotfiles\screenshot-04.png)
+![screenshot-04.png](./.dotfiles/screenshot-04.png "VSCode Integrated Terminal with ZSH and Firacode Font")
 
 ## Windows Settings
 
