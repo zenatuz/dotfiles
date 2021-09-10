@@ -37,3 +37,24 @@ If you only want to get the files without installing anything new, just use YADM
 cd ~
 yadm clone git@github.com:zenatuz/dotfiles.git
 ```
+
+## Font
+To enjoy this setting at its utmost performance, install Firacode from Nerd Fonts on Windows, and select `Firacode Nerd Font Retina` on Windows Terminal and on VSCode.
+
+https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
+
+### **Windows Terminal**
+
+![screenshot-03.png](screenshot-03.png)
+
+### **VSCode**
+
+In the VSCode `settings.json` apply these settings to enable **`Firacode Nerd Font`** on the integrated terminal.
+
+```json
+    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\bash.exe",
+    "terminal.integrated.shellArgs.windows": ["-c", "zsh"],
+    "terminal.integrated.fontFamily": "FuraCode Nerd Font Mono",
+```
+
+![screenshot-04.png](screenshot-04.png)
