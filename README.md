@@ -58,3 +58,16 @@ In the VSCode `settings.json` apply these settings to enable **`Firacode Nerd Fo
 ```
 
 ![screenshot-04.png](.dotfiles\screenshot-04.png)
+
+## Windows Settings
+
+To enforce some resource limitations on the WSL environment.
+
+1 - Turn off all WSL instances such as docker-desktop
+
+- `wsl --shutdown`
+
+2 - Create/Edit the .wslconfig with:
+- `notepad "%HOMEPATH%/.wslconfig"`
+
+> Use the example on the file `.windows\.wslconfig`. More settings can be seen at the: [Official Documentation](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig).
