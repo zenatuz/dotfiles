@@ -45,7 +45,7 @@ alias ls="exa --icons --group-directories-first"
 alias ll="ls -l"
 
 # PATH
-export PATH=$PATH:/home/zenatuz/bin
+export PATH=$PATH:~/bin
 
 # Startup commands
 yadm pull
