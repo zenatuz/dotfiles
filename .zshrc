@@ -44,5 +44,8 @@ HISTFILE=~/.zsh_history
 alias ls="exa --icons --group-directories-first" 
 alias ll="ls -l"
 
+# PATH
+export PATH=$PATH:/home/zenatuz/bin
+
 # Startup commands
 yadm pull
