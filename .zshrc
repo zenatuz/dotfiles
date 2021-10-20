@@ -43,7 +43,7 @@ HISTFILE=~/.zsh_history
 # ALIAS COMMANDS
 alias ls="exa --icons --group-directories-first" 
 alias ll="ls -l"
-alias setenv="export $(grep -v '^#' `pwd`/.env | xargs)"
+alias setdotenv="export $(grep -v '^#' `pwd`/.env | xargs)"
 
 # PATH
 export PATH=$PATH:~/bin
