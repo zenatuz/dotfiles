@@ -57,6 +57,8 @@ alias ls="exa --icons --group-directories-first"
 alias ll="ls -l"
 alias setdotenv="export $(grep -v '^#' `pwd`/.env | xargs)"
 alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history"
+alias update="sudo apt update -qq && brew update"
+alias upgrade="sudo apt upgrade -y -qq && brew upgrade"
 
 # PATH
 export PATH=$PATH:~/bin
