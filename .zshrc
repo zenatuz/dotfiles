@@ -1,3 +1,9 @@
+# Enable auto-update for Oh My Zsh
+zstyle ':omz:update' mode auto
+
+# This will check for updates every 7 days
+zstyle ':omz:update' frequency 7
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -14,10 +20,16 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 plugins=(
   git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
   dotenv
   docker
   kubectl
 )
+
+# Disable error message: Insecure completion-dependent directories detected
+# https://pascalnaber.wordpress.com/2019/10/05/have-a-great-looking-terminal-and-a-more-effective-shell-with-oh-my-zsh-on-wsl-2-using-windows/
+ZSH_DISABLE_COMPFIX=true
 
 # Loading Brew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
