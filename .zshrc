@@ -65,3 +65,5 @@ export PATH=$PATH:~/bin
 
 # Startup commands
 yadm pull
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
