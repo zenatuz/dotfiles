@@ -55,6 +55,7 @@ HISTFILE=~/.zsh_history
 # ALIAS COMMANDS
 alias ls="exa --icons --group-directories-first" 
 alias ll="ls -l"
+alias la="ls -la"
 alias setdotenv="export $(grep -v '^#' `pwd`/.env | xargs)"
 alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history"
 alias update="sudo apt update -qq && brew update"
