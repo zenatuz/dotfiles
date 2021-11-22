@@ -1,8 +1,20 @@
 #!/bin/bash
 
 # Instaling requirements
-echo "Instaling requirements..."
-sudo apt-get update && sudo apt-get install -y git openssh-server software-properties-common apt-transport-https build-essential procps file curl wget zsh
+echo "Instaling requirements"
+sudo apt-get update && \
+sudo apt-get install -y \
+  apt-transport-https \
+  build-essential \
+  curl \
+  file \
+  git \
+  openssh-server \
+  procps \
+  socat \
+  software-properties-common \
+  wget \
+  zsh
 
 # Installing oh-my-zsh
 echo ""
@@ -30,9 +42,21 @@ echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.profile
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 echo ""
-echo "Instaling additional packages with brew (exa fzf helmfile httpie k9s kubecm kubectx kubernetes-cli ncurses terraform yadm)"
+echo "Instaling additional packages with brew"
 # Instaling additional packages with brew
-brew install exa fzf helmfile httpie k9s kubecm kubectx kubernetes-cli ncurses terraform yadm
+brew install \
+  awscli \
+  exa \
+  fzf \
+  helmfile \
+  httpie \
+  k9s \
+  kubecm \
+  kubectx \
+  kubernetes-cli \
+  ncurses \
+  terraform \
+  yadm
 
 echo ""
 echo "Cloning Dotenv project to ~/"
