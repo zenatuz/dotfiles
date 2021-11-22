@@ -61,10 +61,21 @@ alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history
 alias update="sudo apt update -qq && brew update"
 alias upgrade="sudo apt upgrade -y -qq && brew upgrade"
 
+# Starting ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
+if [ -z "$SSH_AUTH_SOCK" ]; then
+   # Check for a currently running instance of the agent
+   RUNNING_AGENT="`ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]'`"
+   if [ "$RUNNING_AGENT" = "0" ]; then
+        # Launch a new instance of the agent
+        ssh-agent -s &> $HOME/.ssh/ssh-agent
+   fi
+   eval `cat $HOME/.ssh/ssh-agent` > /dev/null
+fi
+
 # PATH
 export PATH=$PATH:~/bin
 
 # Startup commands
-yadm pull
+yadm pull > /dev/null
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
