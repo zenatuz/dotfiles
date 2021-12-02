@@ -58,8 +58,8 @@ alias ll="ls -l"
 alias la="ls -la"
 alias setdotenv="export $(grep -v '^#' `pwd`/.env | xargs)"
 alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history"
-alias update="sudo apt update -qq && brew update"
-alias upgrade="sudo apt upgrade -y -qq && brew upgrade"
+alias update="sudo apt-get update -qq && brew update > /dev/null"
+alias upgrade="sudo apt-get upgrade -y -qq && brew upgrade"
 
 # Starting ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
 if [ -z "$SSH_AUTH_SOCK" ]; then
