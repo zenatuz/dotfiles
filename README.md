@@ -7,7 +7,7 @@ There is a script `install.sh` that do the initial setup of all tools (**zsh, oh
 You can run the script directly with the following command:
 
 ```bash
-curl -s -L https://git.io/J1FEd | bash
+curl -s -L https://raw.githubusercontent.com/zenatuz/dotfiles/main/.install.sh | bash
 ```
 
 In the end, run the command to define ZSH as the default shell:
