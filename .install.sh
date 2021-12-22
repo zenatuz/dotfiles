@@ -46,6 +46,7 @@ echo "Instaling additional packages with brew"
 # Instaling additional packages with brew
 brew install \
   awscli \
+  azure-cli \
   exa \
   fzf \
   helmfile \
