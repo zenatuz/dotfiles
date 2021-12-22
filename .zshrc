@@ -53,13 +53,14 @@ SAVEHIST=1000  # Save most-recent 1000 lines
 HISTFILE=~/.zsh_history
 
 # ALIAS COMMANDS
-alias ls="exa --icons --group-directories-first" 
-alias ll="ls -l"
-alias la="ls -la"
-alias setdotenv="export $(grep -v '^#' `pwd`/.env | xargs)"
-alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history"
-alias update="sudo apt-get update -qq && brew update > /dev/null"
-alias upgrade="sudo apt-get upgrade -y -qq && brew upgrade"
+alias showaliases="grep alias ~/.zshrc" # Show aliases
+alias ls="exa --icons --group-directories-first"  # Use exa to show icons when ls
+alias ll="ls -l" # Short for 'ls -l'
+alias la="ls -la" # Short for 'ls -la'
+alias setdotenv="export $(grep -v '^#' `pwd`/.env | xargs)" # Export variables on .env files on current directory
+alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history" # Fix corrupted history file
+alias update="sudo apt-get update -qq && brew update > /dev/null" # Short for update repositories
+alias upgrade="sudo apt-get upgrade -y -qq && brew upgrade" # Short for upgrade system packages
 
 # Starting ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
 if [ -z "$SSH_AUTH_SOCK" ]; then
