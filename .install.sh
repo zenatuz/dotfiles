@@ -13,6 +13,7 @@ sudo apt-get install -y \
   procps \
   socat \
   software-properties-common \
+  tldr \
   wget \
   zsh
 
@@ -44,6 +45,8 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 echo ""
 echo "Instaling additional packages with brew"
 # Instaling additional packages with brew
+brew tap cantino/mcfly
+
 brew install \
   awscli \
   azure-cli \
@@ -55,6 +58,7 @@ brew install \
   kubecm \
   kubectx \
   kubernetes-cli \
+  mcfly \
   ncurses \
   terraform \
   yadm

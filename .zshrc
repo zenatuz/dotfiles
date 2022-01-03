@@ -76,6 +76,9 @@ fi
 # PATH
 export PATH=$PATH:~/bin
 
+# Mcfly
+eval "$(mcfly init zsh)"
+
 # Startup commands
 yadm pull > /dev/null
 
