@@ -14,6 +14,10 @@ fi
 # SET ZSH THEME
 source ~/.zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
 
+# Load p10k theme settings
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 # Load ZSH Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -34,9 +38,6 @@ ZSH_DISABLE_COMPFIX=true
 # Loading Brew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # FIX WSL2 INTEROP
 # https://github.com/microsoft/WSL/issues/5065
 #
@@ -48,21 +49,33 @@ fix_wsl2_interop() {
     done
 }
 
-# History
+# History file
 SAVEHIST=1000  # Save most-recent 1000 lines
 HISTFILE=~/.zsh_history
 
-# ALIAS COMMANDS
-alias showaliases="grep alias ~/.zshrc" # Show aliases
-alias ls="exa --icons --group-directories-first"  # Use exa to show icons when ls
-alias ll="ls -l" # Short for 'ls -l'
-alias la="ls -la" # Short for 'ls -la'
-alias setdotenv="export $(grep -v '^#' `pwd`/.env | xargs)" # Export variables on .env files on current directory
-alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history" # Fix corrupted history file
-alias update="sudo apt-get update -qq && brew update > /dev/null" # Short for update repositories
-alias upgrade="sudo apt-get upgrade -y -qq && brew upgrade" # Short for upgrade system packages
+# ALIASES COMMANDS
+#
+# Alias: Show aliases
+alias showaliases="grep -i alias ~/.zshrc"
+# Alias: Use exa to show icons when ls
+alias ls="exa --icons --group-directories-first"
+# Alias: Short for 'ls -l'
+alias ll="ls -l"
+# Alias: Short for 'ls -la'
+alias la="ls -la"
+# Alias: Export variables on .env files on current directory
+alias setdotenv="export $(grep -v '^#' `pwd`/.env | xargs)"
+# Alias: Fix corrupted history file
+alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history" 
+# Alias: Short for update repositories
+alias update="sudo apt-get update -qq && brew update > /dev/null"
+# Alias: Short for upgrade system packages
+alias upgrade="sudo apt-get upgrade -y -qq && brew upgrade"
+
+########################################################################################################################
 
 # Starting ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
+
 if [ -z "$SSH_AUTH_SOCK" ]; then
    # Check for a currently running instance of the agent
    RUNNING_AGENT="`ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]'`"
@@ -73,10 +86,14 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
    eval `cat $HOME/.ssh/ssh-agent` > /dev/null
 fi
 
+# To verify the key inside the remote container or host, type: ssh-add -l
+
 # PATH
 export PATH=$PATH:~/bin
 
-# Mcfly
+########################################################################################################################
+
+# Loading Mcfly
 eval "$(mcfly init zsh)"
 
 # Startup commands
