@@ -12,15 +12,18 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # SET ZSH THEME
+###############
 source ~/.zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
 
 # Load p10k theme settings
+##########################
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Load ZSH Plugins
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/.gita-completion.zsh
 
 plugins=(
   git
@@ -36,11 +39,15 @@ plugins=(
 ZSH_DISABLE_COMPFIX=true
 
 # Loading Brew
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+##############
+#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+#eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "`which -s brew` shellenv"
 
 # FIX WSL2 INTEROP
+##################
 # https://github.com/microsoft/WSL/issues/5065
-#
+
 fix_wsl2_interop() {
     for i in $(pstree -np -s $$ | grep -o -E '[0-9]+'); do
         if [[ -e "/run/WSL/${i}_interop" ]]; then
@@ -50,11 +57,12 @@ fix_wsl2_interop() {
 }
 
 # History file
+##############
 SAVEHIST=1000  # Save most-recent 1000 lines
 HISTFILE=~/.zsh_history
 
 # ALIASES COMMANDS
-#
+##################
 # Alias: Show aliases
 alias showaliases="grep -i alias ~/.zshrc"
 # Alias: Use exa to show icons when ls
@@ -68,10 +76,11 @@ alias setdotenv="export $(grep -v '^#' `pwd`/.env | xargs)"
 # Alias: Fix corrupted history file
 alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history" 
 # Alias: Short for update repositories
-alias update="sudo apt-get update -qq && brew update > /dev/null"
+alias update="brew update > /dev/null"
 # Alias: Short for upgrade system packages
 alias upgrade="sudo apt-get upgrade -y -qq && brew upgrade"
-
+# Alias: CD Alviere code directory
+alias acode="cd ~/code/mezu/repos"
 ########################################################################################################################
 
 # Starting ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
