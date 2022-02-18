@@ -18,6 +18,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Loading Brew
+##############
+test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 # SET ZSH THEME
 ###############
 source ~/.zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
@@ -44,12 +49,6 @@ plugins=(
 # Disable error message: Insecure completion-dependent directories detected
 # https://pascalnaber.wordpress.com/2019/10/05/have-a-great-looking-terminal-and-a-more-effective-shell-with-oh-my-zsh-on-wsl-2-using-windows/
 ZSH_DISABLE_COMPFIX=true
-
-# Loading Brew
-##############
-#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-#eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "`which -s brew` shellenv"
 
 # FIX WSL2 INTEROP
 ##################
