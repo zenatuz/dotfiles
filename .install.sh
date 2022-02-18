@@ -48,6 +48,7 @@ echo "Instaling homebrew"
 
 echo ""
 echo "Instaling additional packages with brew"
+#############################################
 
 brew tap cantino/mcfly
 brew install \
@@ -72,6 +73,12 @@ brew install \
   packer \
   tfenv \
   yadm
+
+echo ""
+echo "Instaling Helm plugins"
+#############################
+
+helm plugin install https://github.com/databus23/helm-diff
 
 echo ""
 echo "Cloning Dotenv project to ~/"
