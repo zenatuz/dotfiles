@@ -106,6 +106,11 @@ fi
 # PATH
 export PATH=$PATH:~/bin
 
+# Loading Brew apps on OSX
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export PATH="/opt/homebrew/bin:${PATH}"
+fi
+
 ########################################################################################################################
 
 # Loading Mcfly
