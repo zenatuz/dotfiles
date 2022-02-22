@@ -92,12 +92,15 @@ fi
 # To verify the key inside the remote container or host, type: ssh-add -l
 ########################################################################################################################
 
-# Bind Keys - iTerm
+# Bind Keys - iTerm - OSX
 # https://coderwall.com/p/a8uxma/zsh-iterm2-osx-shortcuts
-bindkey "[D" backward-word
-bindkey "[C" forward-word
-bindkey "^[a" beginning-of-line
-bindkey "^[e" end-of-line
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  bindkey "[D" backward-word
+  bindkey "[C" forward-word
+  bindkey "^[a" beginning-of-line
+  bindkey "^[e" end-of-line
+fi
 
 # PATH
 export PATH=$PATH:~/bin
