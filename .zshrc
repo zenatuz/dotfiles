@@ -4,13 +4,6 @@ zstyle ':omz:update' mode auto
 # This will check for updates every 7 days
 zstyle ':omz:update' frequency 7
 
-# Bind Keys - iTerm
-# https://coderwall.com/p/a8uxma/zsh-iterm2-osx-shortcuts
-bindkey "[D" backward-word
-bindkey "[C" forward-word
-bindkey "^[a" beginning-of-line
-bindkey "^[e" end-of-line
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -19,11 +12,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # SET ZSH THEME
-###############
+########################################################################################################################
 source ~/.zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
 
 # Load p10k theme settings
-##########################
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -40,6 +32,7 @@ plugins=(
   docker
   kubectl
 )
+########################################################################################################################
 
 # Disable error message: Insecure completion-dependent directories detected
 # https://pascalnaber.wordpress.com/2019/10/05/have-a-great-looking-terminal-and-a-more-effective-shell-with-oh-my-zsh-on-wsl-2-using-windows/
@@ -58,14 +51,14 @@ fix_wsl2_interop() {
 }
 
 # History file
-##############
+########################################################################################################################
 SAVEHIST=1000  # Save most-recent 1000 lines
 HISTFILE=~/.zsh_history
 
 # ALIASES COMMANDS
-##################
+########################################################################################################################
 # Alias: Show aliases
-alias showaliases="grep -i alias ~/.zshrc"
+alias aliases="grep -i alias ~/.zshrc"
 # Alias: Use exa to show icons when ls
 alias ls="exa --icons --group-directories-first"
 # Alias: Short for 'ls -l'
@@ -97,9 +90,20 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
 fi
 
 # To verify the key inside the remote container or host, type: ssh-add -l
+########################################################################################################################
+
+# Bind Keys - iTerm
+# https://coderwall.com/p/a8uxma/zsh-iterm2-osx-shortcuts
+bindkey "[D" backward-word
+bindkey "[C" forward-word
+bindkey "^[a" beginning-of-line
+bindkey "^[e" end-of-line
 
 # PATH
 export PATH=$PATH:~/bin
+
+# Set Defaul Platform for Docker
+DOCKER_DEFAULT_PLATFORM=linux/amd64
 
 # Loading Brew
 ##############
