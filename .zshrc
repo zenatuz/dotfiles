@@ -77,6 +77,50 @@ alias upgrade="sudo apt-get upgrade -y -qq && brew upgrade"
 alias acode="cd ~/code/mezu/repos"
 ########################################################################################################################
 
+# DOCKER ALIASES AND FUNCTIONS
+##################################
+
+docker_clean_containers (){
+  docker container stop $(docker container ls -aq)
+  docker container rm $(docker container ls -aq)
+}
+
+docker_clean_images (){
+  docker image prune -a
+}
+
+# KUBERNETES ALIASES AND FUNCTIONS
+##################################
+
+clean_jobs () {
+    echo "deleting Error pods"
+    kubectl get pods | awk 'IF $3 == "Error" { print $1}' | while read pod
+    do
+            echo $pod
+            kubectl delete pod $pod
+    done
+    echo "deleting ContainerCannotRun pods"
+    kubectl get pods | awk 'IF $3 == "ContainerCannotRun" { print $1}' | while read pod
+    do
+            echo $pod
+            kubectl delete pod $pod
+    done
+    echo "deleting incomplete jobs older then 1h"
+    kubectl get jobs | awk 'IF $2 == "0/1"  && $4 ~ /h|d/ {print $1}' | while read job
+    do
+            echo $job
+            kubectl delete job $job
+    done
+    echo "deleting complete jobs older then 1d"
+    kubectl get jobs | awk 'IF $2 == "1/1"  && $4 ~ /d/ {print $1}' | while read job
+    do
+            echo $job
+            kubectl delete job $job
+    done
+}
+
+########################################################################################################################
+
 # Starting ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
 
 if [ -z "$SSH_AUTH_SOCK" ]; then
