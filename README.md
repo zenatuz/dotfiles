@@ -2,6 +2,8 @@
 
 These files are my personal customization files that I use to personalize my Windows and/or Linux desktop experience.
 
+I got this idea from this video https://www.youtube.com/watch?v=AK2JE2YsKto, after that, I got a lot of more customizations.
+
 There is a script `install.sh` that do the initial setup of all tools (**zsh, oh-my-zsh, powerlevel10k theme, oh-my-zsh plugins, brew and yadm**), and then applies the YADM at the end, which gets the customizations on your `~/`.
 
 You can run the script directly with the following command:
