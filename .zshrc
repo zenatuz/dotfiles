@@ -136,15 +136,11 @@ fi
 # To verify the key inside the remote container or host, type: ssh-add -l
 ########################################################################################################################
 
-# Bind Keys - iTerm - OSX
-# https://coderwall.com/p/a8uxma/zsh-iterm2-osx-shortcuts
+# Bind Keys - Mac
+# https://medium.com/@elhayefrat/how-to-fix-the-home-and-end-buttons-for-an-external-keyboard-in-mac-4da773a0d3a2
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  bindkey "[D" backward-word
-  bindkey "[C" forward-word
-  bindkey "^[a" beginning-of-line
-  bindkey "^[e" end-of-line
-fi
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
 
 # PATH
 export PATH=$PATH:~/bin
@@ -167,3 +163,4 @@ eval "$(mcfly init zsh)"
 yadm pull > /dev/null
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ ! -f ~/.kubecm ]] || source ~/.kubecm
