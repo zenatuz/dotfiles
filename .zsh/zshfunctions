@@ -1,19 +1,28 @@
+
+# GIT FUNCTIONS
+##################################
+
+grlb (){ # Git_Remove_local_branchs_already_merged
+        git branch --merged >/tmp/merged-branches && \
+        vi /tmp/merged-branches && \
+        xargs git branch -d < /tmp/merged-branches
+}
 # DOCKER FUNCTIONS
 ##################################
 
-docker_clean_containers (){
+docker_clean_containers (){ # Docker_Clean_all_containers
   docker container stop $(docker container ls -aq)
   docker container rm $(docker container ls -aq)
 }
 
-docker_clean_images (){
+docker_clean_images (){ # Docker_Clean_images
   docker image prune -a
 }
 
 # KUBERNETES FUNCTIONS
 ##################################
 
-clean_k8s_jobs () {
+clean_k8s_jobs (){ # K8S_Clean_jobs_on_current_NS
     echo "deleting Error pods"
     kubectl get pods | awk 'IF $3 == "Error" { print $1}' | while read pod
     do

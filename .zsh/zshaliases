@@ -4,7 +4,7 @@
 # Alias: Show aliases
 alias aliases="cat ~/.zsh/zshaliases"
 # Alias: Show Functions
-alias functions="cat ~/.zsh/zshfunctions"
+alias functions="grep '()' ~/.zsh/zshfunctions"
 # Alias: Use exa to show icons when ls
 alias ls="exa --icons --group-directories-first"
 # Alias: Short for 'ls -l'
