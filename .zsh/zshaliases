@@ -1,0 +1,23 @@
+# ALIASES COMMANDS
+###################################################
+
+# Alias: Show aliases
+alias aliases="cat ~/.zsh/zshaliases"
+# Alias: Show Functions
+alias functions="cat ~/.zsh/zshfunctions"
+# Alias: Use exa to show icons when ls
+alias ls="exa --icons --group-directories-first"
+# Alias: Short for 'ls -l'
+alias ll="ls -l"
+# Alias: Short for 'ls -la'
+alias la="ls -la"
+# Alias: Export variables on .env files on current directory
+alias setdotenv="export $(grep -v '^#' `pwd`/.env | xargs)"
+# Alias: Fix corrupted history file
+alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history" 
+# Alias: Short for update repositories
+alias update="brew update > /dev/null"
+# Alias: Short for upgrade system packages
+alias upgrade="sudo apt-get upgrade -y -qq && brew upgrade"
+# Alias: CD Alviere code directory
+alias acode="cd ~/code/mezu/repos"
