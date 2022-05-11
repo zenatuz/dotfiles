@@ -1,10 +1,12 @@
 # My personal dotfiles
 
-These files are my personal customization files that I use to personalize my Windows and/or Linux desktop experience.
+This repo keep my personal customization files that I use to personalize my terminal experience.
 
 I got this idea from this video https://www.youtube.com/watch?v=AK2JE2YsKto, after that, I got a lot of more customizations.
 
-There is a script [.install.sh](.install.sh) that do the initial setup of all tools (**zsh, oh-my-zsh, powerlevel10k theme, oh-my-zsh plugins, brew packages and yadm**), and then applies the YADM at the end, which gets the current customizations on your home directory `~/`.
+> This can be applied on Linux, Mac or Windows (WSL).
+
+There is a script called [.install.sh](.install.sh) that do the initial setup of all tools (**zsh, oh-my-zsh, powerlevel10k theme, oh-my-zsh plugins, brew packages and yadm**), and then applies the YADM at the end, which gets the current customizations on your home directory `~/`.
 
 You can run the script directly with the following command:
 
@@ -21,13 +23,21 @@ chsh -s $(which zsh)
 
 This is how your prompt will look like after cloning the settings with YADM.
 
-- **Home directory**
+- **Home directory on WSL**
 
-![screenshot-01.png](./.dotfiles/screenshot-01.png "Home Directory")
+![screenshot-01.png](./.dotfiles/screenshot-01.png "Home Directory on WSL")
 
-- **Some project with git**
+- **Some project with Git on WSL**
 
 ![screenshot-02.png](./.dotfiles/screenshot-02.png "Project with git")
+
+- **Some project with Git on OSX**
+
+![screenshot-05.jpg](./.dotfiles/screenshot-05.jpg "Home Directory on OSX")
+
+
+
+
 
 > To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 
@@ -41,7 +51,7 @@ yadm clone git@github.com:zenatuz/dotfiles.git
 ```
 
 ## Font
-To enjoy this setting at its utmost performance, install Firacode from Nerd Fonts on Windows, and select `Firacode Nerd Font Retina` on Windows Terminal and on VSCode.
+To enjoy this setting at its utmost performance, install **Firacode** from `Nerd Fonts` on your OS, and select `Firacode Nerd Font Retina` on your Terminal and Editor.
 
 https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
 
@@ -51,7 +61,9 @@ https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
 
 ### **VSCode**
 
-In the VSCode `settings.json` apply these settings to enable **`Firacode Nerd Font`** on the integrated terminal.
+#### **On Windows**
+
+In the VSCode `settings`, apply these configs to enable **`Firacode Nerd Font`** on the integrated terminal.
 
 ```json
     "terminal.integrated.shell.windows": "C:\\Windows\\System32\\bash.exe",
@@ -61,7 +73,15 @@ In the VSCode `settings.json` apply these settings to enable **`Firacode Nerd Fo
 
 ![screenshot-04.png](./.dotfiles/screenshot-04.png "VSCode Integrated Terminal with ZSH and Firacode Font")
 
-## Windows Settings
+#### **On OSX**
+
+In the VSCode `settings` apply this config to enable **`Firacode Nerd Font`** on the integrated terminal.
+
+```json
+    "editor.fontFamily": "FuraCode Nerd Font Mono"
+```
+
+## WSL Additional Settings
 
 To enforce some resource limitations on the WSL environment.
 
