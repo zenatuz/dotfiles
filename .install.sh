@@ -68,6 +68,7 @@ echo
 #############################################
 
 brew tap cantino/mcfly
+
 brew install \
   ansible \
   aws-iam-authenticator \
@@ -90,6 +91,11 @@ brew install \
   tldr \
   warrensbox/tap/tfswitch \
   yadm
+
+# Firacode Nerd font
+brew tap caskroom/fonts
+brew cask install font-firacode-nerd-font
+brew cask install font-firacode-nerd-font-mono
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "Installing additional brew packages for Mac"

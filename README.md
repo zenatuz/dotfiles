@@ -55,6 +55,8 @@ To enjoy this setting at its utmost performance, install **Firacode** from `Nerd
 
 https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
 
+> UPDATE: Now the script installs the fonts. <https://guide.degete.cat/macos/fonts.html#nerd-fonts>
+
 ### **Windows Terminal**
 
 ![screenshot-03.png](./.dotfiles/screenshot-03.png "Font settings on Windows Terminal")
