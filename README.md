@@ -2,7 +2,7 @@
 
 This repo keep my personal customization files that I use to personalize my terminal experience.
 
-I got this idea from this video https://www.youtube.com/watch?v=AK2JE2YsKto, after that, I got a lot of more customizations.
+I got this idea from this video <https://www.youtube.com/watch?v=AK2JE2YsKto>, after that, I got a lot of more customizations.
 
 > This can be applied on Linux, Mac or Windows (WSL).
 
@@ -15,6 +15,7 @@ curl -s -L https://raw.githubusercontent.com/zenatuz/dotfiles/main/.install.sh |
 ```
 
 In the end, run the command to define ZSH as the default shell:
+
 ```bash
 chsh -s $(which zsh)
 ```
@@ -23,21 +24,13 @@ chsh -s $(which zsh)
 
 This is how your prompt will look like after cloning the settings with YADM.
 
-- **Home directory on WSL**
+- **Home directory**
 
-![screenshot-01.png](./.dotfiles/screenshot-01.png "Home Directory on WSL")
+![screenshot-01.png](./.dotfiles/screenshot-01.png "Home Directory")
 
-- **Some project with Git on WSL**
+- **Some project with git**
 
 ![screenshot-02.png](./.dotfiles/screenshot-02.png "Project with git")
-
-- **Some project with Git on OSX**
-
-![screenshot-05.jpg](./.dotfiles/screenshot-05.jpg "Home Directory on OSX")
-
-
-
-
 
 > To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 
@@ -51,11 +44,10 @@ yadm clone git@github.com:zenatuz/dotfiles.git
 ```
 
 ## Font
+
 To enjoy this setting at its utmost performance, install **Firacode** from `Nerd Fonts` on your OS, and select `Firacode Nerd Font Retina` on your Terminal and Editor.
 
 https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
-
-> UPDATE: Now the script installs the fonts. <https://guide.degete.cat/macos/fonts.html#nerd-fonts>
 
 ### **Windows Terminal**
 
@@ -63,9 +55,7 @@ https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
 
 ### **VSCode**
 
-#### **On Windows**
-
-In the VSCode `settings`, apply these configs to enable **`Firacode Nerd Font`** on the integrated terminal.
+In the VSCode `settings.json` apply these settings to enable **`Firacode Nerd Font`** on the integrated terminal.
 
 ```json
     "terminal.integrated.shell.windows": "C:\\Windows\\System32\\bash.exe",
@@ -74,14 +64,6 @@ In the VSCode `settings`, apply these configs to enable **`Firacode Nerd Font`**
 ```
 
 ![screenshot-04.png](./.dotfiles/screenshot-04.png "VSCode Integrated Terminal with ZSH and Firacode Font")
-
-#### **On OSX**
-
-In the VSCode `settings` apply this config to enable **`Firacode Nerd Font`** on the integrated terminal.
-
-```json
-    "editor.fontFamily": "FuraCode Nerd Font Mono"
-```
 
 ## WSL Additional Settings
 
