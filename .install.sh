@@ -33,12 +33,13 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 # "Instaling oh-my-zsh plugins..."
 echo ""
-echo "Installing oh-my-zsh plugins"
+echo "Installing oh-my-zsh plugins and auto-completions"
 echo 
 #############################################
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
-curl https://raw.githubusercontent.com/nosarthur/gita/master/.gita-completion.zsh --output ~/.zsh/.gita-completion.zsh --silent
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting
+curl https://raw.githubusercontent.com/nosarthur/gita/master/.gita-completion.zsh --output ~/.zsh/plugins/gita-completion.zsh --silent
+curl https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/git/git.plugin.zsh --output ~/.zsh/plugins/git.plugin.zsh
 
 # Instaling oh-my-zsh powerlevel10k theme
 echo ""
@@ -92,13 +93,15 @@ brew install \
   warrensbox/tap/tfswitch \
   yadm
 
-# Firacode Nerd font
-brew tap caskroom/fonts
-brew cask install font-firacode-nerd-font
-brew cask install font-firacode-nerd-font-mono
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "Installing additional brew packages for Mac"
+
+  # Firacode Nerd font
+  brew tap caskroom/fonts
+  brew cask install font-firacode-nerd-font
+  brew cask install font-firacode-nerd-font-mono
+  
+  # 1password-cli
   brew install 1password-cli
 fi
 

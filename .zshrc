@@ -20,18 +20,19 @@ source ~/.zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Load ZSH Plugins
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/.gita-completion.zsh
+source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/plugins/git.plugin.zsh
 
 plugins=(
   git
   zsh-autosuggestions
   zsh-syntax-highlighting
-  dotenv
-  docker
-  kubectl
 )
+
+# Load ZSH Auto-completion
+source ~/.zsh/plugins/gita-completion.zsh
+
 ########################################################################################################################
 
 # Disable error message: Insecure completion-dependent directories detected
