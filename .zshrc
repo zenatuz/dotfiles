@@ -4,12 +4,10 @@ zstyle ':omz:update' mode auto
 # This will check for updates every 7 days
 zstyle ':omz:update' frequency 7
 
-# The following lines were added by compinstall
+# Compinstall - Shell completion
 zstyle :compinstall filename '~/.zshrc'
-
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -19,7 +17,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # SET ZSH THEME
-########################################################################################################################
 source ~/.zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
 
 # Load p10k theme settings
@@ -44,14 +41,11 @@ source ~/.zsh/plugins/gita-completion.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ ! -f ~/.kubecm ]] || source ~/.kubecm
 
-########################################################################################################################
-
 # Disable error message: Insecure completion-dependent directories detected
 # https://pascalnaber.wordpress.com/2019/10/05/have-a-great-looking-terminal-and-a-more-effective-shell-with-oh-my-zsh-on-wsl-2-using-windows/
 ZSH_DISABLE_COMPFIX=true
 
 # FIX WSL2 INTEROP
-##################
 # https://github.com/microsoft/WSL/issues/5065
 
 fix_wsl2_interop() {
@@ -63,10 +57,8 @@ fix_wsl2_interop() {
 }
 
 # History file
-########################################################################################################################
 SAVEHIST=1000  # Save most-recent 1000 lines
 HISTFILE=~/.zsh_history
-
 
 # Aliases
 if [ -f ~/.zsh/zshaliases ]; then
@@ -82,9 +74,6 @@ else
     print "404: ~/.zsh/zshfunctions not found."
 fi
 
-
-########################################################################################################################
-
 # Starting ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
 
 if [ -z "$SSH_AUTH_SOCK" ]; then
@@ -96,9 +85,7 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
    fi
    eval `cat $HOME/.ssh/ssh-agent` > /dev/null
 fi
-
 # To verify the key inside the remote container or host, type: ssh-add -l
-########################################################################################################################
 
 # Bind Keys - Mac
 # https://medium.com/@elhayefrat/how-to-fix-the-home-and-end-buttons-for-an-external-keyboard-in-mac-4da773a0d3a2
@@ -110,15 +97,13 @@ bindkey "^[[F" end-of-line
 export PATH=$PATH:~/bin
 
 # Set Defaul Platform for Docker
-DOCKER_DEFAULT_PLATFORM=linux/amd64
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
 # Loading Brew
 ##############
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
 test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
-
-########################################################################################################################
 
 # Loading Mcfly
 eval "$(mcfly init zsh)"
