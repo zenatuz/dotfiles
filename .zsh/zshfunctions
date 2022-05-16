@@ -9,6 +9,10 @@ grlb (){ # Git_Remove_local_branchs_already_merged
 }
 
 gpa (){ # Git_pull_all_repos_in_current_dir
+    echo "\nFetching all repos in this directory"
+    find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} fetch origin \;
+    
+    echo "\nPulling all repos in this directory"
     find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} pull origin master \;
 }
 
