@@ -3,20 +3,25 @@
 ##################################
 
 grlb (){ # Git_Remove_local_branchs_already_merged
-        git branch --merged >/tmp/merged-branches && \
-        vi /tmp/merged-branches && \
-        xargs git branch -d < /tmp/merged-branches
+    git branch --merged >/tmp/merged-branches && \
+    vi /tmp/merged-branches && \
+    xargs git branch -d < /tmp/merged-branches
 }
+
+gpa (){ # Git_pull_all_repos_in_current_dir
+    find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} pull origin master \;
+}
+
 # DOCKER FUNCTIONS
 ##################################
 
 docker_clean_containers (){ # Docker_Clean_all_containers
-  docker container stop $(docker container ls -aq)
-  docker container rm $(docker container ls -aq)
+    docker container stop $(docker container ls -aq)
+    docker container rm $(docker container ls -aq)
 }
 
 docker_clean_images (){ # Docker_Clean_images
-  docker image prune -a
+    docker image prune -a
 }
 
 # KUBERNETES FUNCTIONS
@@ -26,25 +31,25 @@ clean_k8s_jobs (){ # K8S_Clean_jobs_on_current_NS
     echo "deleting Error pods"
     kubectl get pods | awk 'IF $3 == "Error" { print $1}' | while read pod
     do
-            echo $pod
-            kubectl delete pod $pod
+        echo $pod
+        kubectl delete pod $pod
     done
     echo "deleting ContainerCannotRun pods"
     kubectl get pods | awk 'IF $3 == "ContainerCannotRun" { print $1}' | while read pod
     do
-            echo $pod
-            kubectl delete pod $pod
+        echo $pod
+        kubectl delete pod $pod
     done
     echo "deleting incomplete jobs older then 1h"
     kubectl get jobs | awk 'IF $2 == "0/1"  && $4 ~ /h|d/ {print $1}' | while read job
     do
-            echo $job
-            kubectl delete job $job
+        echo $job
+        kubectl delete job $job
     done
     echo "deleting complete jobs older then 1d"
     kubectl get jobs | awk 'IF $2 == "1/1"  && $4 ~ /d/ {print $1}' | while read job
     do
-            echo $job
-            kubectl delete job $job
+        echo $job
+        kubectl delete job $job
     done
 }
