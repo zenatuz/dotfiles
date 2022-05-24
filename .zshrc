@@ -35,7 +35,7 @@ plugins=(
 )
 
 # Load ZSH Auto-completion
-source ~/.zsh/plugins/gita-completion.zsh
+# source ~/.zsh/plugins/gita-completion.zsh
 
 # Load other stuff
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -104,6 +104,9 @@ export DOCKER_DEFAULT_PLATFORM=linux/amd64
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
 test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Loading Krew
+test -d ~/.krew/bin && export PATH="${PATH}:${HOME}/.krew/bin"
 
 # Loading Mcfly
 eval "$(mcfly init zsh)"

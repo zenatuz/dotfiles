@@ -2,18 +2,21 @@
 # GIT FUNCTIONS
 ##################################
 
-grlb (){ # Git_Remove_local_branchs_already_merged
+git_update_all (){
+    find . -name .git \
+        -type d | \
+        xargs -n1 \
+        -P4 \
+        -I% git \
+        --git-dir=% \
+        --work-tree=%/.. \
+        remote update -p
+}
+
+git_remove_merged (){ # Git_Remove_local_branchs_already_merged
     git branch --merged >/tmp/merged-branches && \
     vi /tmp/merged-branches && \
     xargs git branch -d < /tmp/merged-branches
-}
-
-gpa (){ # Git_pull_all_repos_in_current_dir
-    echo "\nFetching all repos in this directory"
-    find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} fetch origin \;
-    
-    echo "\nPulling all repos in this directory"
-    find . -type d -depth 1 -exec git --git-dir={}/.git --work-tree=$PWD/{} pull origin master \;
 }
 
 # DOCKER FUNCTIONS
@@ -24,14 +27,14 @@ docker_clean_containers (){ # Docker_Clean_all_containers
     docker container rm $(docker container ls -aq)
 }
 
-docker_clean_images (){ # Docker_Clean_images
+docker_clean_images (){ # Docker_Prune_images
     docker image prune -a
 }
 
 # KUBERNETES FUNCTIONS
 ##################################
 
-clean_k8s_jobs (){ # K8S_Clean_jobs_on_current_NS
+k8s_clean_k8s_jobs (){ # K8S_Clean_jobs_on_current_NS
     echo "deleting Error pods"
     kubectl get pods | awk 'IF $3 == "Error" { print $1}' | while read pod
     do
@@ -57,3 +60,8 @@ clean_k8s_jobs (){ # K8S_Clean_jobs_on_current_NS
         kubectl delete job $job
     done
 }
+
+k8s_get_pods_alb (){ # Kubectl get pods with readiness gates (alb ingress)
+    kubectl get pods -o wide -A | awk '{if ($10 != "<none>" ) print $0}'
+}
+
