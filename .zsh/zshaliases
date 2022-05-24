@@ -17,7 +17,7 @@ alias ll="ls -l"
 alias la="ls -la"
 
 # Alias: Export variables on .env files on current directory
-alias setdotenv="export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)"
+alias setdotenv="if [ -f .env ]; then;export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst);fi"
 
 # Alias: Fix corrupted history file
 alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history" 
