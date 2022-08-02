@@ -58,9 +58,7 @@ https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
 In the VSCode `settings.json` apply these settings to enable **`Firacode Nerd Font`** on the integrated terminal.
 
 ```json
-    "terminal.integrated.shell.windows": "C:\\Windows\\System32\\bash.exe",
-    "terminal.integrated.shellArgs.windows": ["-c", "zsh"],
-    "terminal.integrated.fontFamily": "FuraCode Nerd Font Mono",
+    "terminal.integrated.fontFamily": "FuraCode Nerd Font Retina",
 ```
 
 ![screenshot-04.png](./.dotfiles/screenshot-04.png "VSCode Integrated Terminal with ZSH and Firacode Font")
