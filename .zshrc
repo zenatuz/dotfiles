@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
 # Enable auto-update for Oh My Zsh
 zstyle ':omz:update' mode auto
 
@@ -40,6 +42,7 @@ plugins=(
 # Load other stuff
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ ! -f ~/.kubecm ]] || source ~/.kubecm
+
 
 # Disable error message: Insecure completion-dependent directories detected
 # https://pascalnaber.wordpress.com/2019/10/05/have-a-great-looking-terminal-and-a-more-effective-shell-with-oh-my-zsh-on-wsl-2-using-windows/
@@ -108,8 +111,19 @@ test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
 # Loading Krew
 test -d ~/.krew/bin && export PATH="${PATH}:${HOME}/.krew/bin"
 
+# Loading kube-ps1
+source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
+PS1='$(kube_ps1)'$PS1
+
+# Loading Alviere utils
+test -d ~/code/mezu/repos/ops/utils && export PATH="${PATH}:${HOME}/code/mezu/repos/ops/utils"
+test -d ~/code/mezu/repos/docker/generic-builder/bin && export PATH="${PATH}:${HOME}/code/mezu/repos/docker/generic-builder/bin"
+
 # Loading Mcfly
 eval "$(mcfly init zsh)"
 
 # Startup commands
-yadm pull > /dev/null
+# yadm pull > /dev/null
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
