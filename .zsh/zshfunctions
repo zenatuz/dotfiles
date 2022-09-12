@@ -2,22 +2,66 @@
 # GIT FUNCTIONS
 ##################################
 
-git_update_all (){
-    find . -name .git \
-        -type d | \
-        xargs -n1 \
-        -P4 \
-        -I% git \
-        --git-dir=% \
-        --work-tree=%/.. \
-        remote update -p
+git_pull_master (){
+  for f in ~/code/mezu/repos/infra/terraform/modules/*; do
+    cd "$f" && echo "Updating '$f'" && git checkout master && git pull && echo "----------------------------------------"
+  done
 }
 
-git_remove_merged (){ # Git_Remove_local_branchs_already_merged
-    git branch --merged >/tmp/merged-branches && \
-    vi /tmp/merged-branches && \
-    xargs git branch -d < /tmp/merged-branches
-}
+# git_pull_all (){ 
+#     for i in `find . -maxdepth 2 -name .git -type d | sort`; do
+#         REPOSITORY=`echo $i|cut -d '/' -f2`
+#         CURRENT_BRANCH=`git --git-dir=$i --work-tree $i branch --show-current`
+
+#         echo "Repo Name: $REPOSITORY"
+#         echo "Current branch: $CURRENT_BRANCH"
+#         git --git-dir=$i --work-tree $i remote update -p
+#         git --git-dir=$i --work-tree $i pull
+#         echo
+#     done
+    
+#     # find . -name .git \
+#     #     -type d | \
+#     #     xargs -n1 \
+#     #     -P4 \
+#     #     -I% git \
+#     #     --git-dir=% \
+#     #     --work-tree=%/.. \
+#     #     remote update -p
+# }
+
+# git_checkout (){
+#     BRANCH="${1:=master}"
+#     find . -name .git \
+#         -type d | \
+#         xargs -n1 \
+#         -P4 \
+#         -I% git \
+#         --git-dir=% \
+#         --work-tree=%/.. \
+#         checkout $BRANCH
+# }
+
+# git_details (){
+#     for i in `find . -maxdepth 2 -name .git -type d | sort`; do
+#         REPOSITORY=`echo $i|cut -d '/' -f2`
+#         URL=`git --git-dir=$i --work-tree $i config --get remote.origin.url`
+#         CURRENT_BRANCH=`git --git-dir=$i --work-tree $i branch --show-current`
+        
+#         echo "Repo Name: $REPOSITORY"
+#         echo "Repo URL: $URL"
+#         echo "Current branch: $CURRENT_BRANCH"
+#         echo "------------------------------"
+#     done
+# }
+
+# git_remove_merged (){ # Git_Remove_local_branchs_already_merged
+#     git branch --merged >/tmp/merged-branches && \
+#     vi /tmp/merged-branches && \
+#     xargs git branch -d < /tmp/merged-branches
+# }
+
+
 
 # DOCKER FUNCTIONS
 ##################################
