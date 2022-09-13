@@ -26,9 +26,9 @@ source ~/.zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Load ZSH Plugins
-source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/plugins/git.plugin.zsh
+test -f ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh &&  source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+test -f ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh && source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+test -f ~/.zsh/plugins/git.plugin.zsh && source ~/.zsh/plugins/git.plugin.zsh
 
 plugins=(
   git
@@ -40,8 +40,8 @@ plugins=(
 # source ~/.zsh/plugins/gita-completion.zsh
 
 # Load other stuff
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ ! -f ~/.kubecm ]] || source ~/.kubecm
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
 # Disable error message: Insecure completion-dependent directories detected
@@ -112,8 +112,10 @@ test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
 test -d ~/.krew/bin && export PATH="${PATH}:${HOME}/.krew/bin"
 
 # Loading kube-ps1
-source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
-PS1='$(kube_ps1)'$PS1
+# source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
+# PS1='$(kube_ps1)'$PS1
+
+test -f /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh && source /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh
 
 # Loading Alviere utils
 test -d ~/code/mezu/repos/ops/utils && export PATH="${PATH}:${HOME}/code/mezu/repos/ops/utils"
@@ -125,7 +127,7 @@ eval "$(mcfly init zsh)"
 # Startup commands
 # yadm pull > /dev/null
 
-export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+test -d /opt/homebrew/opt/mysql-client/ && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
