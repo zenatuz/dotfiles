@@ -46,4 +46,10 @@ alias kctx-dev="kubectx arn:aws:eks:us-west-2:041513908165:cluster/alv-dev002p-c
 alias kctx-stg="kubectx arn:aws:eks:us-west-2:989024148375:cluster/alv-stg002p-core-001"
 alias kctx-snd="kubectx arn:aws:eks:us-west-2:695432702747:cluster/alv-snd002p-core-001"
 alias kctx-prd="kubectx arn:aws:eks:us-west-2:486983068138:cluster/alv-prd002p-core-001"
+alias kctx-dr="kubectx arn:aws:eks:us-east-1:486983068138:cluster/alv-prd002s-core-001"
 alias kctx-gitlab="kubectx arn:aws:eks:us-east-1:730860714720:cluster/gitlab-eks001"
+
+# Alias: docker
+alias d-up="docker-compose up --remove-orphans"
+
+# Alias: custom
