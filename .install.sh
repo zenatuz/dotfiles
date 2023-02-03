@@ -100,14 +100,24 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
   # Firacode Nerd font
   brew tap caskroom/fonts
-  brew cask install font-firacode-nerd-font
-  brew cask install font-firacode-nerd-font-mono
+  brew install --cask font-firacode-nerd-font
+  brew install --cask font-firacode-nerd-font-mono
   
-  # 1password-cli
+  # 1password
+  brew install --cask 1password
   brew install 1password-cli
 
-  #fig
+  # fig
   brew install --cask fig
+
+  # rancher desktop
+  brew install --cask rancher
+
+  # vscode
+  brew install --cask visual-studio-code
+
+  # slack
+  brew install --cask slack
 fi
 
 echo ""
