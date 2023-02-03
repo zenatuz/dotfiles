@@ -98,25 +98,14 @@ brew install \
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "Installing additional brew packages for Mac"
 
-  # Firacode Nerd font
-  brew tap homebrew/cask-fonts
-  brew install --cask font-firacode-nerd-font
-  brew install --cask font-firacode-nerd-font-mono
-  
-  # 1password
-  brew install --cask 1password
   brew install 1password-cli
-
-  # fig
+  brew install --cask 1password
+  brew tap homebrew/cask-fonts
+  brew install --cask font-fira-code-nerd-font
+  brew install --cask google-chrome
   brew install --cask fig
-
-  # rancher desktop
   brew install --cask rancher
-
-  # vscode
   brew install --cask visual-studio-code
-
-  # slack
   brew install --cask slack
 fi
 
