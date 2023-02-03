@@ -78,6 +78,7 @@ brew install \
   azure-cli \
   exa \
   fzf \
+  git \
   helm \
   helmfile \
   httpie \
@@ -89,6 +90,7 @@ brew install \
   mcfly \
   ncurses \
   packer \
+  tfk8s \
   tldr \
   warrensbox/tap/tfswitch \
   yadm
@@ -103,6 +105,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   
   # 1password-cli
   brew install 1password-cli
+
+  #fig
+  brew install --cask fig
 fi
 
 echo ""
