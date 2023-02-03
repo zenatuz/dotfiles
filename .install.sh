@@ -96,17 +96,25 @@ brew install \
   yadm
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "Installing additional brew packages for Mac"
+  echo "Installing additional desktop packages and fonts for MacOS"
 
+  brew tap homebrew/cask-fonts
   brew install 1password-cli
   brew install --cask 1password
-  brew tap homebrew/cask-fonts
+  brew install --cask dbeaver-community
+  brew install --cask fig
   brew install --cask font-fira-code-nerd-font
   brew install --cask google-chrome
-  brew install --cask fig
+  brew install --cask grammarly-desktop
+  brew install --cask iterm2
+  brew install --cask lens
   brew install --cask rancher
-  brew install --cask visual-studio-code
+  brew install --cask rectangle
   brew install --cask slack
+  brew install --cask visual-studio-code
+  brew install --cask pocket-casts
+  brew install --cask spotify
+  brew install --cask postman
 fi
 
 echo ""
