@@ -99,7 +99,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "Installing additional brew packages for Mac"
 
   # Firacode Nerd font
-  brew tap caskroom/fonts
+  brew tap homebrew/cask-fonts
   brew install --cask font-firacode-nerd-font
   brew install --cask font-firacode-nerd-font-mono
   
