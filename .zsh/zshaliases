@@ -30,9 +30,13 @@ alias cd-a="cd ~/code/mezu/repos/"
 alias cd-i="cd ~/code/mezu/repos/infra"
 alias cd-it="cd ~/code/mezu/repos/infra/terraform"
 alias cd-itm="cd ~/code/mezu/repos/infra/terraform/modules"
+alias cd-itd="cd ~/code/mezu/repos/infra/terraform/deploy"
 alias cd-itda="cd ~/code/mezu/repos/infra/terraform/deploy/alviere"
+alias cd-itaps="cd ~/code/mezu/repos/infra/terraform/aps"
+alias cd-itask="cd ~/code/mezu/repos/infra/tasks"
 alias cd-ih="cd ~/code/mezu/repos/infra/helm/"
 alias cd-ihc="cd ~/code/mezu/repos/infra/helm/core"
+alias cd-d="cd ~/code/mezu/repos/docker"
 
 # Alias: Httpie default parameters
 alias http="http --follow --all"
@@ -48,6 +52,12 @@ alias kctx-snd="kubectx arn:aws:eks:us-west-2:695432702747:cluster/alv-snd002p-c
 alias kctx-prd="kubectx arn:aws:eks:us-west-2:486983068138:cluster/alv-prd002p-core-001"
 alias kctx-dr="kubectx arn:aws:eks:us-east-1:486983068138:cluster/alv-prd002s-core-001"
 alias kctx-gitlab="kubectx arn:aws:eks:us-east-1:730860714720:cluster/gitlab-eks001"
+
+# Alias: k9s
+alias k9s-dev="kctx-dev && k9s -A"
+alias k9s-stg="kctx-stg && k9s -A"
+alias k9s-snd="kctx-snd && k9s -A"
+alias k9s-prd="kctx-prd && k9s -A"
 
 # Alias: docker
 alias d-up="docker-compose up --remove-orphans"

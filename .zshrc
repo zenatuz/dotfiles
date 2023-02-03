@@ -127,24 +127,22 @@ eval "$(mcfly init zsh)"
 # Startup commands
 # yadm pull > /dev/null
 
-<<<<<<< Updated upstream
 test -d /opt/homebrew/opt/mysql-client/ && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
-=======
-export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export REQUESTS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export CURL_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export SSL_CERT_FILE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export GIT_SSL_CAPATH=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export REQUESTS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export CURL_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export SSL_CERT_FILE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export GIT_SSL_CAPATH=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
->>>>>>> Stashed changes
 
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+# Load CA if available
+
+[[ ! -f /Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem ]] || \
+    export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
+[[ ! -f /Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem ]] || export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
+export REQUESTS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
+export CURL_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
+export SSL_CERT_FILE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
+export GIT_SSL_CAPATH=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
+export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/renato.batista/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)(( ! ${+functions[p10k]} )) || p10k finalize
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

@@ -2,20 +2,6 @@
 # GIT FUNCTIONS
 ##################################
 
-git_pull_master (){
-    CURRENT_DIR=`pwd`
-    for dir in `find $CURRENT_DIR -maxdepth 2 -name .git -type d | sort |rev | cut -d "/" -f2 | rev`; do
-        # echo "dir: $CURRENT_DIR/$dir"
-        cd "$dir" &&\
-        echo "Updating '$dir'" &&\
-        git fetch origin &&\
-        git checkout master &&\
-        git pull &&\
-        echo "----------------------------------------"
-    done
-    cd $CURRENT_DIR
-}
-
 git_pull_current (){
     R='\033[0;31m'
     G='\033[0;32m'
@@ -45,39 +31,38 @@ git_pull_current (){
     cd $CURRENT_DIR
 }
 
-# git_pull_all (){ 
-#     for i in `find . -maxdepth 2 -name .git -type d | sort`; do
-#         REPOSITORY=`echo $i|cut -d '/' -f2`
-#         CURRENT_BRANCH=`git --git-dir=$i --work-tree $i branch --show-current`
-
-#         echo "Repo Name: $REPOSITORY"
-#         echo "Current branch: $CURRENT_BRANCH"
-#         git --git-dir=$i --work-tree $i remote update -p
-#         git --git-dir=$i --work-tree $i pull
-#         echo
-#     done
+git_pull_all (){ 
     
-#     # find . -name .git \
-#     #     -type d | \
-#     #     xargs -n1 \
-#     #     -P4 \
-#     #     -I% git \
-#     #     --git-dir=% \
-#     #     --work-tree=%/.. \
-#     #     remote update -p
-# }
+    echo "\n>>>>> Updating Infra <<<<<\n"
+    cd-i
+    git_pull_current
 
-# git_checkout (){
-#     BRANCH="${1:=master}"
-#     find . -name .git \
-#         -type d | \
-#         xargs -n1 \
-#         -P4 \
-#         -I% git \
-#         --git-dir=% \
-#         --work-tree=%/.. \
-#         checkout $BRANCH
-# }
+    echo "\n>>>>> Updating Terraform-APS <<<<<\n"
+    cd-itaps
+    git_pull_current
+
+    echo "\n>>>>> Updating Terraform-Modules <<<<<\n"
+    cd-itm 
+    git_pull_current
+
+    echo "\n>>>>> Updating Terraform-Deploy <<<<<\n"
+    cd-itd
+    git_pull_current
+
+    echo "\n>>>>> Updating Helm <<<<<\n"
+    cd-ih
+    git_pull_current
+
+    echo "\n>>>>> Updating Tasks <<<<<\n"
+    cd-itask
+    git_pull_current
+
+    echo "\n>>>>> Updating Docker Images <<<<<\n"
+    cd-d
+    git_pull_current
+
+    cd ~
+}
 
 git_details (){
     R='\033[0;31m'
@@ -156,3 +141,34 @@ k8s_get_pods_alb (){ # Kubectl get pods with readiness gates (alb ingress)
     kubectl get pods -o wide -A | awk '{if ($10 != "<none>" ) print $0}'
 }
 
+#
+########
+
+curl_sc(){
+    URL=$1
+    curl -L --max-redirs 5 -I $URL 2>/dev/null | head -n 1 | cut -d$' ' -f2
+}
+
+######### AWS
+
+function alv-dms-start-tasks() {
+if [[ $1 == '' ]] ; then
+  echo "need env please"
+else
+  aws dms describe-replication-tasks --profile alv-$1 --no-paginate| jq -jr '.ReplicationTasks[] | .ReplicationTaskIdentifier, " ", .ReplicationTaskArn, " ", .Status,  "\n"' | while read task ; do
+  task_status=$(echo $task | awk '{print $3}')
+  task_arn=$(echo $task | awk '{print $2}')
+  task_name=$(echo $task | awk '{print $1}')
+  if [ $task_status == "stopped" ] || [ $task_status == "ready" ] || [ $task_status == "failed" ] ; then
+    echo -e   "\033[0;31mStarting \033[0m$task_name has arn $task_arn with status $task_status"
+    aws dms start-replication-task --replication-task-arn $task_arn --start-replication-task-type reload-target --profile alv-$1  > /dev/null 2>&1
+    if [[ $2 != '' ]] ; then
+      echo "waiting $2 before the starting the next task"
+      sleep $2
+    fi
+  else
+    echo -e "\033[0;32mSkipping\033[0m $task_name has arn $task_arn with status $task_status"
+  fi
+done
+fi
+}
