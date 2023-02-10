@@ -59,21 +59,28 @@ fix_wsl2_interop() {
 }
 
 # History file
-SAVEHIST=1000  # Save most-recent 1000 lines
+SAVEHIST=10000  # Save most-recent 1000 lines
 HISTFILE=~/.zsh_history
 
 # Aliases
-if [ -f ~/.zsh/zshaliases ]; then
-    source ~/.zsh/zshaliases
+if [ -f ~/.zsh/zsh-aliases.sh ]; then
+    source ~/.zsh/zsh-aliases.sh
 else
-    print "404: ~/.zsh/zshaliases not found."
+    print "404: ~/.zsh/zsh-aliases.sh not found."
 fi
 
 # Functions
-if [ -f ~/.zsh/zshfunctions ]; then
-    source ~/.zsh/zshfunctions
+if [ -f ~/.zsh/zsh-functions.sh ]; then
+    source ~/.zsh/zsh-functions.sh
 else
-    print "404: ~/.zsh/zshfunctions not found."
+    print "404: ~/.zsh/zsh-functions.sh not found."
+fi
+
+# Read Alviere custom
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    if [ -f ~/.zsh/zsh-alviere-custom.sh ]; then
+        source ~/.zsh/zsh-alviere-custom.sh
+    fi
 fi
 
 # Starting ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
@@ -103,23 +110,35 @@ export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
 # Loading Brew
 ##############
-test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
-test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
+test -d ~/.linuxbrew && \
+    eval "$(~/.linuxbrew/bin/brew shellenv)"
+test -d /home/linuxbrew/.linuxbrew && \
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+test -d /opt/homebrew && \
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Loading Krew
-test -d ~/.krew/bin && export PATH="${PATH}:${HOME}/.krew/bin"
+test -d ~/.krew/bin && \
+    export PATH="${PATH}:${HOME}/.krew/bin"
 
 # Loading kube-ps1
 # source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
 # PS1='$(kube_ps1)'$PS1
 
-test -f /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh && source /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh
+test -f /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh && \
+    source /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh
 
 # Loading Alviere utils
-test -d ~/code/mezu/repos/ops/utils && export PATH="${PATH}:${HOME}/code/mezu/repos/ops/utils"
-test -d ~/code/mezu/repos/docker/generic-builder/bin && export PATH="${PATH}:${HOME}/code/mezu/repos/docker/generic-builder/bin"
-test -d /opt/homebrew/opt/mysql-client/bin && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+test -d ~/code/mezu/repos/ops/utils && \
+    export PATH="${PATH}:${HOME}/code/mezu/repos/ops/utils"
+test -d ~/code/mezu/repos/docker/generic-builder/bin && \
+    export PATH="${PATH}:${HOME}/code/mezu/repos/docker/generic-builder/bin"
+test -d /opt/homebrew/opt/mysql-client/bin && \
+    export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+# Loading Personal utils
+test -d ~/code/mezu/repos/renato.batista/utils && \
+    export PATH="${PATH}:${HOME}/code/mezu/repos/renato.batista/utils"
 
 # Loading Mcfly
 eval "$(mcfly init zsh)"
@@ -127,22 +146,23 @@ eval "$(mcfly init zsh)"
 # Startup commands
 # yadm pull > /dev/null
 
-test -d /opt/homebrew/opt/mysql-client/ && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+test -d /opt/homebrew/opt/mysql-client/ && \
+    export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
-# Load CA if available
+# Load NetskopeCA if available
 
-[[ ! -f /Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem ]] || \
+test -f "/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem" && \
+    export REQUESTS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem &&\
+    export CURL_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem &&\
+    export SSL_CERT_FILE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem &&\
+    export GIT_SSL_CAPATH=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem &&\
     export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-[[ ! -f /Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem ]] || export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export REQUESTS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export CURL_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export SSL_CERT_FILE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export GIT_SSL_CAPATH=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
 
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/renato.batista/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)(( ! ${+functions[p10k]} )) || p10k finalize
+(( ! ${+functions[p10k]} )) || p10k finalize
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/renato.batista/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
