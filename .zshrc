@@ -37,7 +37,6 @@ plugins=(
 )
 
 # Load ZSH Auto-completion
-# source ~/.zsh/plugins/gita-completion.zsh
 
 # Load other stuff
 [[ ! -f ~/.kubecm ]] || source ~/.kubecm
@@ -50,38 +49,25 @@ ZSH_DISABLE_COMPFIX=true
 # FIX WSL2 INTEROP
 # https://github.com/microsoft/WSL/issues/5065
 
-fix_wsl2_interop() {
-    for i in $(pstree -np -s $$ | grep -o -E '[0-9]+'); do
-        if [[ -e "/run/WSL/${i}_interop" ]]; then
-            export WSL_INTEROP=/run/WSL/${i}_interop
-        fi
-    done
-}
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    fix_wsl2_interop() {
+        for i in $(pstree -np -s $$ | grep -o -E '[0-9]+'); do
+            if [[ -e "/run/WSL/${i}_interop" ]]; then
+                export WSL_INTEROP=/run/WSL/${i}_interop
+            fi
+        done
+    }
+fi
 
 # History file
-SAVEHIST=10000  # Save most-recent 1000 lines
+SAVEHIST=10000  # Save 10k lines in history file
 HISTFILE=~/.zsh_history
 
 # Aliases
-if [ -f ~/.zsh/zsh-aliases.sh ]; then
-    source ~/.zsh/zsh-aliases.sh
-else
-    print "404: ~/.zsh/zsh-aliases.sh not found."
-fi
+test -f  ~/.zsh/zsh-aliases.sh && source ~/.zsh/zsh-aliases.sh
 
 # Functions
-if [ -f ~/.zsh/zsh-functions.sh ]; then
-    source ~/.zsh/zsh-functions.sh
-else
-    print "404: ~/.zsh/zsh-functions.sh not found."
-fi
-
-# Read Alviere custom
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    if [ -f ~/.zsh/zsh-alviere-custom.sh ]; then
-        source ~/.zsh/zsh-alviere-custom.sh
-    fi
-fi
+test -f  ~/.zsh/zsh-functions.sh && source ~/.zsh/zsh-functions.sh
 
 # Starting ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
 
@@ -110,35 +96,26 @@ export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
 # Loading Brew
 ##############
-test -d ~/.linuxbrew && \
-    eval "$(~/.linuxbrew/bin/brew shellenv)"
-test -d /home/linuxbrew/.linuxbrew && \
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-test -d /opt/homebrew && \
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Loading Krew
-test -d ~/.krew/bin && \
-    export PATH="${PATH}:${HOME}/.krew/bin"
+test -d ~/.krew/bin && export PATH="${PATH}:${HOME}/.krew/bin"
 
 # Loading kube-ps1
 # source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
 # PS1='$(kube_ps1)'$PS1
 
-test -f /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh && \
-    source /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh
+test -f /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh && source /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh
 
 # Loading Alviere utils
-test -d ~/code/mezu/repos/ops/utils && \
-    export PATH="${PATH}:${HOME}/code/mezu/repos/ops/utils"
-test -d ~/code/mezu/repos/docker/generic-builder/bin && \
-    export PATH="${PATH}:${HOME}/code/mezu/repos/docker/generic-builder/bin"
-test -d /opt/homebrew/opt/mysql-client/bin && \
-    export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+test -d ~/code/mezu/repos/ops/utils && export PATH="${PATH}:${HOME}/code/mezu/repos/ops/utils"
+test -d ~/code/mezu/repos/docker/generic-builder/bin && export PATH="${PATH}:${HOME}/code/mezu/repos/docker/generic-builder/bin"
+test -d /opt/homebrew/opt/mysql-client/bin && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 # Loading Personal utils
-test -d ~/code/mezu/repos/renato.batista/utils && \
-    export PATH="${PATH}:${HOME}/code/mezu/repos/renato.batista/utils"
+test -d ~/code/mezu/repos/renato.batista/utils && export PATH="${PATH}:${HOME}/code/mezu/repos/renato.batista/utils"
 
 # Loading Mcfly
 eval "$(mcfly init zsh)"
@@ -146,8 +123,7 @@ eval "$(mcfly init zsh)"
 # Startup commands
 # yadm pull > /dev/null
 
-test -d /opt/homebrew/opt/mysql-client/ && \
-    export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+test -d /opt/homebrew/opt/mysql-client/ && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 # Load NetskopeCA if available
 

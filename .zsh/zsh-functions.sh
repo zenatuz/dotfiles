@@ -32,7 +32,6 @@ git_pull_current (){
 }
 
 git_pull_all (){ 
-    
     echo "\n>>>>> Updating Infra <<<<<\n"
     cd-i
     git_pull_current
@@ -49,8 +48,12 @@ git_pull_all (){
     cd-itd
     git_pull_current
 
-    echo "\n>>>>> Updating Helm-charts <<<<<\n"
+    echo "\n>>>>> Updating General Helm-charts <<<<<\n"
     cd-ih
+    git_pull_current
+
+    echo "\n>>>>> Updating Platform Helm-charts <<<<<\n"
+    cd-ihp
     git_pull_current
 
     echo "\n>>>>> Updating Tasks <<<<<\n"
@@ -60,7 +63,7 @@ git_pull_all (){
     echo "\n>>>>> Updating Docker Images <<<<<\n"
     cd-d
     git_pull_current
-
+    
     cd ~
 }
 
@@ -141,12 +144,34 @@ k8s_get_pods_alb (){ # Kubectl get pods with readiness gates (alb ingress)
     kubectl get pods -o wide -A | awk '{if ($10 != "<none>" ) print $0}'
 }
 
-#
+# CURL
 ########
-
 curl_sc(){
     URL=$1
     curl -L --max-redirs 5 -I $URL 2>/dev/null | head -n 1 | cut -d$' ' -f2
 }
 
-#
+# AWS
+######## 
+
+function alv-dms-start-tasks() {
+if [[ $1 == '' ]] ; then
+  echo "need env please"
+else
+  aws dms describe-replication-tasks --profile alv-$1 --no-paginate| jq -jr '.ReplicationTasks[] | .ReplicationTaskIdentifier, " ", .ReplicationTaskArn, " ", .Status,  "\n"' | while read task ; do
+  task_status=$(echo $task | awk '{print $3}')
+  task_arn=$(echo $task | awk '{print $2}')
+  task_name=$(echo $task | awk '{print $1}')
+  if [ $task_status == "stopped" ] || [ $task_status == "ready" ] || [ $task_status == "failed" ] ; then
+    echo -e   "\033[0;31mStarting \033[0m$task_name has arn $task_arn with status $task_status"
+    aws dms start-replication-task --replication-task-arn $task_arn --start-replication-task-type reload-target --profile alv-$1  > /dev/null 2>&1
+    if [[ $2 != '' ]] ; then
+      echo "waiting $2 before the starting the next task"
+      sleep $2
+    fi
+  else
+    echo -e "\033[0;32mSkipping\033[0m $task_name has arn $task_arn with status $task_status"
+  fi
+done
+fi
+}
