@@ -1,5 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # Enable auto-update for Oh My Zsh
 zstyle ':omz:update' mode auto
 
@@ -101,7 +99,7 @@ test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/bre
 test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Loading Krew
-test -d ~/.krew/bin && export PATH="${PATH}:${HOME}/.krew/bin"
+test -d ${HOME}/.krew/bin && export PATH="${PATH}:${HOME}/.krew/bin"
 
 # Loading kube-ps1
 # source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
@@ -135,9 +133,6 @@ test -f "/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundl
     export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
 
 (( ! ${+functions[p10k]} )) || p10k finalize
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/renato.batista/.rd/bin:$PATH"
