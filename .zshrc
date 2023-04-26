@@ -61,11 +61,8 @@ fi
 SAVEHIST=10000  # Save 10k lines in history file
 HISTFILE=~/.zsh_history
 
-# Aliases
-test -f  ~/.zsh/zsh-aliases.sh && source ~/.zsh/zsh-aliases.sh
-
-# Functions
-test -f  ~/.zsh/zsh-functions.sh && source ~/.zsh/zsh-functions.sh
+# Aliases and Functions
+test -f  ~/.zsh/zsh-custom.sh && source ~/.zsh/zsh-custom.sh
 
 # Starting ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
 
@@ -137,3 +134,4 @@ test -f "/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundl
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/renato.batista/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+
