@@ -6,3 +6,6 @@ vmap <C-A> <Home>
 map  <C-E> <End>
 imap <C-E> <End>
 vmap <C-E> <End>
+
+set rtp+=/usr/local/opt/fzf
+

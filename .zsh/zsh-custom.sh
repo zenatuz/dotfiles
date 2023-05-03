@@ -66,6 +66,9 @@ alias cd-ihd="cd ~/code/mezu/repos/infra/helm/data"
 alias cd-ihi="cd ~/code/mezu/repos/infra/helm/infra"
 alias cd-ihp="cd ~/code/mezu/repos/infra/helm/platform"
 
+## Labs
+alias cd-labs="cd ~/code/mezu/labs"
+
 ## Docker code
 alias cd-d="cd ~/code/mezu/repos/docker"
 
