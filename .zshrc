@@ -9,6 +9,9 @@ zstyle :compinstall filename '~/.zshrc'
 autoload -Uz compinit
 compinit
 
+autoload bashcompinit
+bashcompinit
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -107,7 +110,7 @@ test -f /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh && source /opt/homebrew/opt
 # Loading Alviere utils
 test -d ~/code/mezu/repos/ops/utils && export PATH="${PATH}:${HOME}/code/mezu/repos/ops/utils"
 test -d ~/code/mezu/repos/docker/generic-builder/bin && export PATH="${PATH}:${HOME}/code/mezu/repos/docker/generic-builder/bin"
-test -d /opt/homebrew/opt/mysql-client/bin && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+test -d /opt/homebrew/opt/mysql-client/bin && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"e
 
 # Loading Personal utils
 test -d ~/code/mezu/repos/renato.batista/utils && export PATH="${PATH}:${HOME}/code/mezu/repos/renato.batista/utils"
@@ -135,3 +138,8 @@ test -f "/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundl
 export PATH="/Users/renato.batista/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
+# kubeswitch
+INSTALLATION_PATH=$(brew --prefix switch) && source $INSTALLATION_PATH/switch.sh
+
+# Unset context for current session
+# nohup switch -u 2>&1 > /dev/null
