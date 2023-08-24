@@ -1,6 +1,6 @@
 # https://gist.github.com/ChristopherA/a579274536aab36ea9966f301ff14f3f
-# brew bundle dump --file=~/.private/Brewfile
-# brew bundle install --file=~/.private/Brewfile
+# brew bundle dump --file=~/dotfiles/.brewfile
+# brew bundle install --file=~/dotfiles/.brewfile
 
 tap "cantino/mcfly"
 tap "danielfoehrkn/switch"
