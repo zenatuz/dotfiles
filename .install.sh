@@ -68,56 +68,38 @@ echo "Instaling additional packages with brew"
 echo 
 #############################################
 
-brew tap cantino/mcfly
-
-brew install \
-  ansible \
-  aws-iam-authenticator \
-  aws-vault \
-  awscli \
-  azure-cli \
-  exa \
-  fzf \
-  git \
-  helm \
-  helmfile \
-  httpie \
-  jq \
-  k9s \
-  kubecm \
-  kubectx \
-  kubernetes-cli \
-  mcfly \
-  ncurses \
-  packer \
-  tfk8s \
-  tldr \
-  warrensbox/tap/tfswitch \
-  yadm
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "Installing additional desktop packages and fonts for MacOS"
-
-  brew tap homebrew/cask-fonts
-  brew install 1password-cli
-
-  brew install --cask 1password
-  brew install --cask dbeaver-community
-  brew install --cask fig
-  brew install --cask font-fira-code-nerd-font
-  brew install --cask google-chrome
-  brew install --cask grammarly-desktop
-  brew install --cask iterm2
-  brew install --cask lens
-  brew install --cask monitorcontrol
-  brew install --cask pocket-casts
-  brew install --cask rancher
-  brew install --cask rectangle
-  brew install --cask slack
-  brew install --cask spotify
-  brew install --cask postman
-  brew install --cask visual-studio-code
+  echo "Installing cli packages, desktop packages and fonts for MacOS"
+  brew bundle install --file=~/dotfiles/.brewfile
 fi
+
+# if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+#   brew tap cantino/mcfly
+#   brew install \
+#     ansible \
+#     aws-iam-authenticator \
+#     aws-vault \
+#     awscli \
+#     azure-cli \
+#     exa \
+#     fzf \
+#     git \
+#     helm \
+#     helmfile \
+#     httpie \
+#     jq \
+#     k9s \
+#     kubecm \
+#     kubectx \
+#     kubernetes-cli \
+#     mcfly \
+#     ncurses \
+#     packer \
+#     tfk8s \
+#     tldr \
+#     warrensbox/tap/tfswitch \
+#     yadm
+# fi
 
 echo ""
 echo "Instaling Helm plugins"
