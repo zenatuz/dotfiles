@@ -51,13 +51,13 @@ There is a way to easy install packages for both OSX and Linux using `brew` and 
 Run this command to update the brew file based on what you are running.
 
 ```bash
-brew bundle dump --file=~/dotfiles/.brewfile
+brew bundle dump --file=.brewfile 
 ```
 
 ### Install all the packages listed on the brewfile
 
 ```bash
- brew bundle install --file=~/dotfiles/.brewfile
+ brew bundle install --file=.brewfile
 ```
 
 ## Font

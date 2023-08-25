@@ -69,39 +69,8 @@ echo ""
 echo "Instaling additional packages with brew"
 echo 
 #############################################
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "Installing cli packages, desktop packages and fonts for MacOS"
-  brew bundle install --file=~/dotfiles/.brewfile
-fi
-
-# if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-#   brew tap cantino/mcfly
-#   brew install \
-#     ansible \
-#     aws-iam-authenticator \
-#     aws-vault \
-#     awscli \
-#     azure-cli \
-#     exa \
-#     fzf \
-#     git \
-#     helm \
-#     helmfile \
-#     httpie \
-#     jq \
-#     k9s \
-#     kubecm \
-#     kubectx \
-#     kubernetes-cli \
-#     mcfly \
-#     ncurses \
-#     packer \
-#     tfk8s \
-#     tldr \
-#     warrensbox/tap/tfswitch \
-#     yadm
-# fi
+echo "Installing cli packages, desktop packages and fonts for MacOS"
+brew bundle install --file=~/dotfiles/.brewfile
 
 echo ""
 echo "Instaling Helm plugins"
