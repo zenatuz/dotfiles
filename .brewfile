@@ -1,7 +1,3 @@
-# https://gist.github.com/ChristopherA/a579274536aab36ea9966f301ff14f3f
-# brew bundle dump --file=~/dotfiles/.brewfile
-# brew bundle install --file=~/dotfiles/.brewfile
-
 tap "cantino/mcfly"
 tap "danielfoehrkn/switch"
 tap "fairwindsops/tap"
@@ -10,10 +6,10 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
+tap "mas-cli/tap"
 tap "warrensbox/tap"
 brew "ansible"
 brew "asciinema"
-# brew "atlantis"
 brew "aws-iam-authenticator"
 brew "aws-vault"
 brew "awscli"
@@ -48,23 +44,23 @@ brew "yadm"
 brew "danielfoehrkn/switch/switch"
 brew "fairwindsops/tap/nova"
 brew "hashicorp/tap/terraform-ls"
+brew "mas-cli/tap/mas"
 brew "warrensbox/tap/tfswitch"
 cask "1password"
-# cask "1password-cli"
 cask "bitwarden"
 cask "browserosaurus"
-# cask "dbeaver-community"
 cask "fig"
 cask "font-fira-code-nerd-font"
 cask "iterm2"
-# cask "lens"
 cask "monitorcontrol"
-# cask "ngrok"
 cask "pocket-casts"
-# cask "postman"
 cask "rancher"
 cask "rectangle"
 cask "spotify"
 cask "visual-studio-code"
-# cask "warp"
-
+mas "Amphetamine", id: 937984704
+mas "iBar", id: 6443843900
+mas "iScreen Shoter", id: 1596559494
+mas "MeetingBar", id: 1532419400
+mas "MenubarClock", id: 492167985
+mas "Unsplash Wallpapers", id: 1284863847

@@ -43,7 +43,26 @@ cd ~
 yadm clone git@github.com:zenatuz/dotfiles.git
 ```
 
+## Brewfile
+
+There is a way to easy install packages for both OSX and Linux using `brew` and `brewfile`, it's described on this link <https://gist.github.com/ChristopherA/a579274536aab36ea9966f301ff14f3f>
+
+### Keep brewfile updated
+Run this command to update the brew file based on what you are running.
+
+```bash
+brew bundle dump --file=~/dotfiles/.brewfile
+```
+
+### Install all the packages listed on the brewfile
+
+```bash
+ brew bundle install --file=~/dotfiles/.brewfile
+```
+
 ## Font
+
+> The font is already installed with brew for OSX. This install step is necessary only for Windows/WSL.
 
 To enjoy this setting at its utmost performance, install **Firacode** from `Nerd Fonts` on your OS, and select `Firacode Nerd Font Retina` on your Terminal and Editor.
 
@@ -74,4 +93,5 @@ To enforce some resource limitations on the WSL environment.
 2 - Create/Edit the .wslconfig with:
 - `notepad "%HOMEPATH%/.wslconfig"`
 
-> Use the example on the file `.windows\.wslconfig`. More settings can be seen at the: [Official Documentation](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig).
+> Use the example on the file [.windows/.wslconfig](.windows/.wslconfig). 
+More settings can be seen at the: [Official Documentation](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig).
