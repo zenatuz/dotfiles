@@ -51,7 +51,7 @@ There is a way to easy install packages for both OSX and Linux using `brew` and 
 Run this command to update the brew file based on what you are running.
 
 ```bash
-brew bundle dump --file=.brewfile 
+brew bundle dump --file=.brewfile --force
 ```
 
 ### Install all the packages listed on the brewfile
