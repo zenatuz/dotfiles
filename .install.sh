@@ -24,6 +24,11 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
       fi
 fi
 
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Installing Xcode Command Line Tools"    
+    xcode-select --install
+fi
+
 # Installing oh-my-zsh
 echo ""
 echo "Installing oh-my-zsh"
