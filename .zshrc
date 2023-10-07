@@ -12,6 +12,10 @@ compinit
 autoload bashcompinit
 bashcompinit
 
+# Disable error message: Insecure completion-dependent directories detected
+# https://pascalnaber.wordpress.com/2019/10/05/have-a-great-looking-terminal-and-a-more-effective-shell-with-oh-my-zsh-on-wsl-2-using-windows/
+ZSH_DISABLE_COMPFIX=true
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -43,10 +47,6 @@ plugins=(
 [[ ! -f ~/.kubecm ]] || source ~/.kubecm
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Disable error message: Insecure completion-dependent directories detected
-# https://pascalnaber.wordpress.com/2019/10/05/have-a-great-looking-terminal-and-a-more-effective-shell-with-oh-my-zsh-on-wsl-2-using-windows/
-ZSH_DISABLE_COMPFIX=true
-
 # FIX WSL2 INTEROP
 # https://github.com/microsoft/WSL/issues/5065
 
@@ -67,8 +67,7 @@ HISTFILE=~/.zsh_history
 # Aliases and Functions
 test -f  ~/.zsh/zsh-custom.sh && source ~/.zsh/zsh-custom.sh
 
-# Starting ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
-
+# Start ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
 if [ -z "$SSH_AUTH_SOCK" ]; then
    # Check for a currently running instance of the agent
    RUNNING_AGENT="`ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]'`"
@@ -79,6 +78,7 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
    eval `cat $HOME/.ssh/ssh-agent` > /dev/null
 fi
 # To verify the key inside the remote container or host, type: ssh-add -l
+
 
 # Bind Keys - Mac
 # https://medium.com/@elhayefrat/how-to-fix-the-home-and-end-buttons-for-an-external-keyboard-in-mac-4da773a0d3a2
@@ -92,30 +92,18 @@ export PATH=$PATH:~/bin
 # Set Defaul Platform for Docker
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
-# Loading Brew
-##############
+# Load Brew
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
 test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Loading Krew
+# Load Krew
 test -d ${HOME}/.krew/bin && export PATH="${PATH}:${HOME}/.krew/bin"
 
-# Loading kube-ps1
-# source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
-# PS1='$(kube_ps1)'$PS1
-
+# Load kube-ps1
 test -f /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh && source /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh
 
-# Loading Alviere utils
-test -d ~/code/mezu/repos/ops/utils && export PATH="${PATH}:${HOME}/code/mezu/repos/ops/utils"
-test -d ~/code/mezu/repos/docker/generic-builder/bin && export PATH="${PATH}:${HOME}/code/mezu/repos/docker/generic-builder/bin"
-test -d /opt/homebrew/opt/mysql-client/bin && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"e
-
-# Loading Personal utils
-test -d ~/code/mezu/repos/renato.batista/utils && export PATH="${PATH}:${HOME}/code/mezu/repos/renato.batista/utils"
-
-# Loading Mcfly
+# Load Mcfly
 eval "$(mcfly init zsh)"
 
 # Startup commands
@@ -123,19 +111,10 @@ eval "$(mcfly init zsh)"
 
 test -d /opt/homebrew/opt/mysql-client/ && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
-# Load NetskopeCA if available
-
-test -f "/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem" && \
-    export REQUESTS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem &&\
-    export CURL_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem &&\
-    export SSL_CERT_FILE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem &&\
-    export GIT_SSL_CAPATH=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem &&\
-    export AWS_CA_BUNDLE=/Library/Application\ Support/Netskope/STAgent/data/netskope-cert-bundle.pem
-
 (( ! ${+functions[p10k]} )) || p10k finalize
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/renato.batista/.rd/bin:$PATH"
+export PATH="${HOME}/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 # kubeswitch
