@@ -43,6 +43,7 @@ brew "fairwindsops/tap/nova"
 brew "hashicorp/tap/terraform-ls"
 brew "mas-cli/tap/mas"
 brew "warrensbox/tap/tfswitch"
+cask "1password"
 cask "browserosaurus"
 cask "dropbox"
 cask "font-fira-code-nerd-font"
@@ -55,7 +56,6 @@ cask "slack"
 cask "spotify"
 cask "visual-studio-code"
 mas "Amphetamine", id: 937984704
-mas "Bitwarden", id: 1352778147
 mas "iBar", id: 6443843900
 mas "iScreen Shoter", id: 1596559494
 mas "MeetingBar", id: 1532419400
