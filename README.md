@@ -1,6 +1,6 @@
 # My personal dotfiles
 
-This repo keep my personal customization files that I use to personalize my terminal experience.
+I use this repo to keeping my personal customization files that I use to personalize my terminal experience.
 
 I got this idea from this video <https://www.youtube.com/watch?v=AK2JE2YsKto>, after that, I got a lot of more customizations.
 
@@ -28,13 +28,13 @@ This is how your prompt will look like after cloning the settings with YADM.
 
 - **Home directory**
 
-![screenshot-01.png](./.dotfiles/screenshot-01.png "Home Directory")
+![screenshot-01.png](./.images/screenshot-01.png "Home Directory")
 
 - **Some project with git**
 
-![screenshot-02.png](./.dotfiles/screenshot-02.png "Project with git")
+![screenshot-02.png](./.images/screenshot-02.png "Project with git")
 
-> To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+> To customize the prompt, run `p10k configure` or edit ~/.p10k.zsh.
 
 ## Getting the DOTFILEs, only
 
@@ -93,7 +93,7 @@ brew install --cask "font-fira-code-nerd-font"
 
 On the terminal settings, click on the terminal you want to change the font (powershell/ubuntu/git bash, etc), go to **appearance**, then **Font face** and select `FiraCode Nerd Font Mono`.
 
-![screenshot-03.png](./.dotfiles/screenshot-03.png "Font settings on Windows Terminal")
+![screenshot-03.png](./.images/screenshot-03.png "Font settings on Windows Terminal")
 
 #### **VSCode**
 
@@ -103,19 +103,23 @@ In the VSCode `settings.json` apply these settings to enable **`Firacode Font`**
     "terminal.integrated.fontFamily": "Fira Code",
 ```
 
-![screenshot-04.png](./.dotfiles/screenshot-04.png "VSCode Integrated Terminal with ZSH and Firacode Font")
+![screenshot-04.png](./.images/screenshot-04.png "VSCode Integrated Terminal with ZSH and Firacode Font")
 
-## WSL Additional Settings
+## Windows/WSL Additional Settings
 
-To enforce some resource limitations on the WSL environment.
+It is possible to enforce some resource limitations on the WSL environment.
 
 1 - Turn off all WSL instances such as docker-desktop
 
-`wsl --shutdown`
+```powershell
+wsl --shutdown
+```
 
 2 - Create/Edit the `.wslconfig` file with this content:
 
-`notepad "%HOMEPATH%/.wslconfig"`
+```powershell
+notepad "%HOMEPATH%/.wslconfig"
+```
 
 ```ini
 [wsl2]
