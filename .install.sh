@@ -95,7 +95,7 @@ rm -rf ~/.zshrc ~/.p10k.zsh ~/dotfiles
 
 # Cloning dotfiles with yadm
 cd ~
-yadm clone git@github.com:zenatuz/dotfiles.git
+yadm clone https://github.com/zenatuz/dotfiles.git
 
 sudo -k
 
