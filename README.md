@@ -6,7 +6,9 @@ I got this idea from this video <https://www.youtube.com/watch?v=AK2JE2YsKto>, a
 
 > This can be applied on Linux, Mac or Windows (WSL).
 
-There is a script called [.install.sh](.install.sh) that do the initial setup of all tools (**zsh, oh-my-zsh, powerlevel10k theme, oh-my-zsh plugins, brew packages and yadm**), and then applies the YADM at the end, which gets the current customizations on your home directory `~/`.
+## Install script
+
+This script [.install.sh](.install.sh) can be used do the initial setup the tools (**zsh, oh-my-zsh, powerlevel10k theme, oh-my-zsh plugins, brew packages and yadm**), and then applies the YADM at the end, which gets the current customizations on your home directory `~/`.
 
 You can run the script directly with the following command:
 
@@ -62,22 +64,44 @@ brew bundle dump --file=.brewfile --force
 
 ## Font
 
-> The font is already installed with brew for OSX. This install step is necessary only for Windows/WSL.
+To enjoy this setting at its utmost performance, install **Firacode** Font on your OS, and select `Firacode Nerd Font Retina` on your Terminal and Code Editor.
 
-To enjoy this setting at its utmost performance, install **Firacode** from `Nerd Fonts` on your OS, and select `Firacode Nerd Font Retina` on your Terminal and Editor.
+> The font is already installed with brew for OSX. This install step is necessary only for Windows/WSL/Linux
+> More info about Firacode font can be found on the repo: <https://github.com/tonsky/FiraCode>
 
-https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/FiraCode.zip
+### Windows
+
+#### Chocolatey
+
+#### Manual
+
+Download this file, extract and install the font https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip
+
+
+**Windows with powershell**
+
+```powershell
+choco install firacode
+```
+
+**MacOS with brew**
+
+```brew
+brew install --cask "font-fira-code-nerd-font"
+```
 
 ### **Windows Terminal**
+
+On the terminal settings, click on the terminal you want to change the font (powershell/ubuntu/git bash, etc), go to **appearance**, then **Font face** and select `Fira Code`.
 
 ![screenshot-03.png](./.dotfiles/screenshot-03.png "Font settings on Windows Terminal")
 
 ### **VSCode**
 
-In the VSCode `settings.json` apply these settings to enable **`Firacode Nerd Font`** on the integrated terminal.
+In the VSCode `settings.json` apply these settings to enable **`Firacode Font`** on the integrated terminal.
 
 ```json
-    "terminal.integrated.fontFamily": "FuraCode Nerd Font Retina",
+    "terminal.integrated.fontFamily": "Fira Code",
 ```
 
 ![screenshot-04.png](./.dotfiles/screenshot-04.png "VSCode Integrated Terminal with ZSH and Firacode Font")
@@ -88,10 +112,16 @@ To enforce some resource limitations on the WSL environment.
 
 1 - Turn off all WSL instances such as docker-desktop
 
-- `wsl --shutdown`
+`wsl --shutdown`
 
-2 - Create/Edit the .wslconfig with:
-- `notepad "%HOMEPATH%/.wslconfig"`
+2 - Create/Edit the `.wslconfig` file with this content:
 
-> Use the example on the file [.windows/.wslconfig](.windows/.wslconfig). 
+`notepad "%HOMEPATH%/.wslconfig"`
+
+```ini
+[wsl2]
+memory=4GB   # Limits VM memory in WSL 2 up to 4GB
+processors=4 # Makes the WSL 2 VM use two virtual processors
+```
+
 More settings can be seen at the: [Official Documentation](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig).
