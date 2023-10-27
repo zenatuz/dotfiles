@@ -53,6 +53,9 @@ echo
 #############################################
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh/themes/powerlevel10k/
 
+# Clone dotfiles repo
+cd ~ && git clone https://github.com/zenatuz/dotfiles.git
+
 # Instaling homebrew
 echo ""
 echo "Instaling homebrew"
@@ -64,7 +67,6 @@ echo ""
 echo "Loading Brew"
 echo 
 #############################################
-
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
 test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 test -d /opt/homebrew/ && eval "$(/opt/homebrew/bin/brew shellenv)"
