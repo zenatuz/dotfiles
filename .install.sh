@@ -76,7 +76,7 @@ echo ""
 echo "Instaling additional packages with brew"
 echo 
 #############################################
-echo "Installing cli packages, desktop packages and fonts for MacOS"
+echo "Installing brew packages. Desktop packages and fonts (only if MacOS)"
 brew bundle install --file=~/dotfiles/.brewfile
 
 echo ""
