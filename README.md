@@ -64,24 +64,21 @@ brew bundle dump --file=.brewfile --force
 
 ## Font
 
-To enjoy this setting at its utmost performance, install **Firacode** Font on your OS, and select `Firacode Nerd Font Retina` on your Terminal and Code Editor.
+To enjoy this setting at its utmost performance, install **Firacode** Font on your OS, and select `FiraCode Nerd Font Mono` on your Terminal and Code Editor.
 
 > The font is already installed with brew for OSX. This install step is necessary only for Windows/WSL/Linux
 > More info about Firacode font can be found on the repo: <https://github.com/tonsky/FiraCode>
 
 ### Windows
 
-#### Chocolatey
+**Manual Install**
 
-#### Manual
-
-Download this file, extract and install the font https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip
-
+Follow instructions from <https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode>.
 
 **Windows with powershell**
 
 ```powershell
-choco install firacode
+choco install nerd-fonts-firacode
 ```
 
 **MacOS with brew**
@@ -90,13 +87,15 @@ choco install firacode
 brew install --cask "font-fira-code-nerd-font"
 ```
 
-### **Windows Terminal**
+### Configure the Font
 
-On the terminal settings, click on the terminal you want to change the font (powershell/ubuntu/git bash, etc), go to **appearance**, then **Font face** and select `Fira Code`.
+#### **Windows Terminal**
+
+On the terminal settings, click on the terminal you want to change the font (powershell/ubuntu/git bash, etc), go to **appearance**, then **Font face** and select `FiraCode Nerd Font Mono`.
 
 ![screenshot-03.png](./.dotfiles/screenshot-03.png "Font settings on Windows Terminal")
 
-### **VSCode**
+#### **VSCode**
 
 In the VSCode `settings.json` apply these settings to enable **`Firacode Font`** on the integrated terminal.
 
