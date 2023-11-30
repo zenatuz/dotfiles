@@ -55,24 +55,28 @@ cask "browserosaurus"
 cask "dropbox"
 cask "font-fira-code-nerd-font"
 cask "gimp"
+cask "imageoptim"
 cask "iterm2"
 cask "monitorcontrol"
-cask "mos"
+cask "notion"
+cask "onyx"
 cask "pocket-casts"
 cask "rancher"
+cask "raycast"
 cask "rectangle"
+cask "shottr"
 cask "slack"
 cask "spotify"
+cask "teamviewer"
 cask "visual-studio-code"
 mas "1Password for Safari", id: 1569813296
 mas "Amphetamine", id: 937984704
 mas "Azure VPN Client", id: 1553936137
+mas "CopyClip", id: 595191960
 mas "iBar", id: 6443843900
-mas "iScreen Shoter", id: 1596559494
 mas "MeetingBar", id: 1532419400
 mas "MenubarClock", id: 492167985
 mas "Microsoft Remote Desktop", id: 1295203466
-mas "Prime Video", id: 545519333
 mas "Telegram", id: 747648890
 mas "Unsplash Wallpapers", id: 1284863847
 vscode "1nVitr0.blocksort"
@@ -94,7 +98,9 @@ vscode "ms-vscode-remote.vscode-remote-extensionpack"
 vscode "ms-vscode.azurecli"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vscode.remote-server"
+vscode "plibither8.remove-comments"
 vscode "redhat.vscode-yaml"
+vscode "thamaraiselvam.remove-blank-lines"
 vscode "Tim-Koehler.helm-intellisense"
 vscode "timkmecl.chatgpt"
 vscode "Tyriar.sort-lines"
