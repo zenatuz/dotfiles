@@ -64,46 +64,46 @@ brew bundle dump --file=.brewfile --force
 
 ## Font
 
-To enjoy this setting at its utmost performance, install **Firacode** Font on your OS, and select `FiraCode Nerd Font Mono` on your Terminal and Code Editor.
+To enjoy this setting at its utmost performance, install **MesloLGS NF** Font on your OS, and select `MesloLGS NF` on your Terminal and Code Editor.
 
 > The font is already installed with brew for OSX. This install step is necessary only for Windows/WSL/Linux
-> More info about Firacode font can be found on the repo: <https://github.com/tonsky/FiraCode>
+> More info about MesloLGS font can be found on the repo: <https://github.com/romkatv/powerlevel10k#manual-font-installation>
 
 ### Windows
 
 **Manual Install**
 
-Follow instructions from <https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode>.
+Follow instructions from <https://github.com/romkatv/powerlevel10k#manual-font-installation.
 
 **Windows with powershell**
 
 ```powershell
-choco install nerd-fonts-firacode
+choco install nerd-fonts-meslo
 ```
 
 **MacOS with brew**
 
 ```brew
-brew install --cask "font-fira-code-nerd-font"
+brew install --cask font-meslo-lg-nerd-font
 ```
 
 ### Configure the Font
 
 #### **Windows Terminal**
 
-On the terminal settings, click on the terminal you want to change the font (powershell/ubuntu/git bash, etc), go to **appearance**, then **Font face** and select `FiraCode Nerd Font Mono`.
+On the terminal settings, click on the terminal you want to change the font (powershell/ubuntu/git bash, etc), go to **appearance**, then **Font face** and select `MesloLGM Nerd Font`.
 
 ![screenshot-03.png](./.images/screenshot-03.png "Font settings on Windows Terminal")
 
 #### **VSCode**
 
-In the VSCode `settings.json` apply these settings to enable **`Firacode Font`** on the integrated terminal.
+In the VSCode `settings.json` apply these settings to enable **`MesloLGS NF`** on the integrated terminal.
 
 ```json
-    "terminal.integrated.fontFamily": "Fira Code",
+    "terminal.integrated.fontFamily": "MesloLGS NF",
 ```
 
-![screenshot-04.png](./.images/screenshot-04.png "VSCode Integrated Terminal with ZSH and Firacode Font")
+![screenshot-04.png](./.images/screenshot-04.png "VSCode Integrated Terminal with ZSH and MesloLGS font")
 
 ## Windows/WSL Additional Settings
 
