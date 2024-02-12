@@ -72,7 +72,6 @@ cask "spotify"
 cask "teamviewer"
 cask "tunnelbear"
 cask "visual-studio-code"
-mas "1Password for Safari", id: 1569813296
 mas "Amphetamine", id: 937984704
 mas "Azure VPN Client", id: 1553936137
 mas "CopyClip", id: 595191960
@@ -82,31 +81,3 @@ mas "MenubarClock", id: 492167985
 mas "Microsoft Remote Desktop", id: 1295203466
 mas "Telegram", id: 747648890
 mas "Unsplash Wallpapers", id: 1284863847
-vscode "1nVitr0.blocksort"
-vscode "DavidAnson.vscode-markdownlint"
-vscode "esbenp.prettier-vscode"
-vscode "foxundermoon.shell-format"
-vscode "GitHub.github-vscode-theme"
-vscode "hashicorp.hcl"
-vscode "hashicorp.terraform"
-vscode "linhmtran168.mac-ca-vscode"
-vscode "mhutchie.git-graph"
-vscode "ms-python.black-formatter"
-vscode "ms-python.python"
-vscode "ms-vscode-remote.remote-containers"
-vscode "ms-vscode-remote.remote-ssh"
-vscode "ms-vscode-remote.remote-ssh-edit"
-vscode "ms-vscode-remote.remote-wsl"
-vscode "ms-vscode-remote.vscode-remote-extensionpack"
-vscode "ms-vscode.azurecli"
-vscode "ms-vscode.remote-explorer"
-vscode "ms-vscode.remote-server"
-vscode "plibither8.remove-comments"
-vscode "redhat.vscode-yaml"
-vscode "thamaraiselvam.remove-blank-lines"
-vscode "Tim-Koehler.helm-intellisense"
-vscode "timkmecl.chatgpt"
-vscode "Tyriar.sort-lines"
-vscode "VisualStudioExptTeam.intellicode-api-usage-examples"
-vscode "VisualStudioExptTeam.vscodeintellicode"
-vscode "vscode-icons-team.vscode-icons"
