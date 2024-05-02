@@ -10,17 +10,15 @@ I got this idea from this video <https://www.youtube.com/watch?v=AK2JE2YsKto>, a
 
 This script [.install.sh](.install.sh) can be used do the initial setup the tools (**zsh, oh-my-zsh, powerlevel10k theme, oh-my-zsh plugins, brew packages and yadm**), and then applies the YADM at the end, which gets the current customizations on your home directory `~/`.
 
-You can run the script directly with the following command:
+### Download the script
+curl -LO https://raw.githubusercontent.com/zenatuz/dotfiles/main/.install.sh
 
-```bash
-curl -s -L https://raw.githubusercontent.com/zenatuz/dotfiles/main/.install.sh | bash
-```
+### Make the script executable
+chmod +x .install.sh
 
-In the end, run the command to define ZSH as the default shell:
+### Run the script locally
+./.install.sh
 
-```bash
-chsh -s $(which zsh)
-```
 
 ## Prompt
 
