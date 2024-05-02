@@ -10,15 +10,12 @@ I got this idea from this video <https://www.youtube.com/watch?v=AK2JE2YsKto>, a
 
 This script [.install.sh](.install.sh) can be used do the initial setup the tools (**zsh, oh-my-zsh, powerlevel10k theme, oh-my-zsh plugins, brew packages and yadm**), and then applies the YADM at the end, which gets the current customizations on your home directory `~/`.
 
-### Download the script
-`curl -LO https://raw.githubusercontent.com/zenatuz/dotfiles/main/.install.sh`
-
-### Make the script executable
-`chmod +x .install.sh`
-
-### Run the script locally
-`./.install.sh`
-
+### Download and execute the script
+```bash 
+curl -LO https://raw.githubusercontent.com/zenatuz/dotfiles/main/.install.sh
+chmod +x .install.sh
+./.install.sh
+```
 
 ## Prompt
 
