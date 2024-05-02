@@ -140,7 +140,7 @@ install_brew_packages() {
     print_header "Installing additional packages with Brew"
     if command_exists brew; then
         # Check if the Brewfile exists locally, otherwise download it
-        local brewfile_path=~/dotfiles/.brewfile
+        local brewfile_path="$HOME/.brewfile"
         if [[ ! -f "$brewfile_path" ]]; then
             echo "Brewfile not found locally. Downloading from URL..."
             curl -fsSL -o "$brewfile_path" $brewfile_url
@@ -150,6 +150,7 @@ install_brew_packages() {
         echo "Brew is not installed. Skipping brew packages installation."
     fi
 }
+
 
 # Function to install Helm plugins
 install_helm_plugins() {
@@ -192,7 +193,6 @@ install_helm_plugins() {
     fi
 }
 
-
 # Function to clone dotfiles repo with YADM
 clone_dotfiles() {
     print_header "Cloning dotfiles repo with YADM"
@@ -201,8 +201,15 @@ clone_dotfiles() {
         exit 1
     fi
 
-    yadm clone https://github.com/zenatuz/dotfiles.git
+    local yadm_repo="$HOME/.local/share/yadm/repo.git"
+    if [ -d "$yadm_repo" ]; then
+        echo "YADM repository already exists. Skipping clone."
+    else
+        yadm clone https://github.com/zenatuz/dotfiles.git
+    fi
 }
+
+
 
 # Main script
 
