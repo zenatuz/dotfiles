@@ -47,9 +47,11 @@ brew "yamllint"
 brew "fairwindsops/tap/nova"
 brew "fairwindsops/tap/pluto"
 brew "hashicorp/tap/terraform-ls"
-brew "mas-cli/tap/mas"
 brew "warrensbox/tap/tfswitch"
 brew "danielfoehrkn/switch/switch"
+
+if OS.mac?
+brew "mas-cli/tap/mas"
 cask "1password"
 cask "browserosaurus"
 cask "dropbox"
@@ -80,3 +82,4 @@ mas "MenubarClock", id: 492167985
 mas "Microsoft Remote Desktop", id: 1295203466
 mas "Telegram", id: 747648890
 mas "Unsplash Wallpapers", id: 1284863847
+end
