@@ -6,7 +6,6 @@ tap "homebrew/bundle"
 tap "warrensbox/tap"
 brew "ansible"
 brew "asciinema"
-brew "awscli"
 brew "aztfexport"
 brew "azure-cli"
 brew "eza"
@@ -29,7 +28,6 @@ brew "librsvg"
 brew "mcfly"
 brew "ncurses"
 brew "neovim"
-brew "opentofu"
 brew "packer"
 brew "pyenv"
 brew "pyenv-virtualenv"
@@ -62,24 +60,23 @@ cask "iterm2"
 cask "monitorcontrol"
 cask "notion"
 cask "onyx"
-cask "pgadmin4"
 cask "pocket-casts"
 cask "rancher"
 cask "raycast"
 cask "rectangle"
-cask "shottr"
 cask "slack"
 cask "spotify"
 cask "teamviewer"
 cask "tunnelbear"
 cask "visual-studio-code"
+cask "jordanbaird-ice"
 mas "Amphetamine", id: 937984704
 mas "Azure VPN Client", id: 1553936137
 mas "CopyClip", id: 595191960
-mas "iBar", id: 6443843900
 mas "MeetingBar", id: 1532419400
 mas "MenubarClock", id: 492167985
 mas "Microsoft Remote Desktop", id: 1295203466
 mas "Telegram", id: 747648890
 mas "Unsplash Wallpapers", id: 1284863847
+mas "Lightshot Screenshot", id: 526298438
 end
