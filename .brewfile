@@ -96,7 +96,6 @@ if OS.mac?
   # Mac App Store
   mas "Amphetamine", id: 937984704                  # Keep Mac awake
   mas "Azure VPN Client", id: 1553936137           # Azure VPN
-  mas "CopyClip", id: 595191960                    # ? — Clipboard manager
   mas "MeetingBar", id: 1532419400                 # Meeting status bar
   mas "Microsoft Remote Desktop", id: 1295203466   # RDP client
   mas "MenubarClock", id: 492167985                # ? — Clock in menu bar
