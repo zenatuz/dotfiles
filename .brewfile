@@ -92,12 +92,12 @@ if OS.mac?
   cask "stats"                      # System monitor in menu bar
 
   cask "browserosaurus"             # Browser chooser per-link
+  cask "meetingbar"                 # Next meeting in menu bar
+  cask "microsoft-remote-desktop"   # RDP client
 
-  # Mac App Store
+  # Mac App Store (only available here, no cask alternative)
   mas "Amphetamine", id: 937984704                  # Keep Mac awake
   mas "Azure VPN Client", id: 1553936137           # Azure VPN
-  mas "MeetingBar", id: 1532419400                 # Meeting status bar
-  mas "Microsoft Remote Desktop", id: 1295203466   # RDP client
   mas "MenubarClock", id: 492167985                # Clock in menu bar
   mas "Unsplash Wallpapers", id: 1284863847        # Wallpaper app
   mas "Lightshot Screenshot", id: 526298438        # Screenshot tool
