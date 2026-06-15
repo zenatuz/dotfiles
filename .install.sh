@@ -187,10 +187,8 @@ install_brew_packages() {
 
     if command_exists brew; then
         local brewfile_path="$HOME/.brewfile"
-        if [[ ! -f "$brewfile_path" ]]; then
-            echo "  Downloading Brewfile..."
-            curl -fsSL -o "$brewfile_path" "$BREWFILE_URL"
-        fi
+        echo "  Downloading Brewfile..."
+        curl -fsSL -o "$brewfile_path" "$BREWFILE_URL"
         echo "  Installing packages (this may take a while)..."
         brew bundle install --file="$brewfile_path" --quiet
     else
@@ -204,9 +202,7 @@ install_helm_plugins() {
 
     if command_exists helm; then
         local plugins_file="/tmp/helmlist"
-        if [[ ! -f "$plugins_file" ]]; then
-            curl -fsSL -o "$plugins_file" "$HELMLIST_URL"
-        fi
+        curl -fsSL -o "$plugins_file" "$HELMLIST_URL"
 
         if [[ -f "$plugins_file" ]]; then
             while IFS= read -r line || [[ -n "$line" ]]; do
