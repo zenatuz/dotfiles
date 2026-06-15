@@ -1,82 +1,101 @@
-tap "cantino/mcfly"
-tap "danielfoehrkn/switch"
-tap "fairwindsops/tap"
-tap "hashicorp/tap"
 tap "homebrew/bundle"
-tap "warrensbox/tap"
-brew "ansible"
-brew "asciinema"
-brew "aztfexport"
-brew "azure-cli"
-brew "eza"
-brew "fzf"
-brew "git"
-brew "go-task"
-brew "netpbm"
-brew "helm"
-brew "helmfile"
-brew "httpie"
-brew "jq"
-brew "k9s"
-brew "krew"
-brew "kube-ps1"
-brew "kubecm"
-brew "kubeconform"
-brew "kubectx"
-brew "kubent"
-brew "librsvg"
-brew "mcfly"
-brew "ncurses"
-brew "neovim"
-brew "packer"
-brew "pyenv"
-brew "pyenv-virtualenv"
-brew "terraform-docs"
-brew "tfk8s"
-brew "tldr"
-brew "tree"
-brew "watch"
-brew "wget"
-brew "yadm"
-brew "yamllint"
-brew "fairwindsops/tap/nova"
-brew "fairwindsops/tap/pluto"
-brew "hashicorp/tap/terraform-ls"
-brew "warrensbox/tap/tfswitch"
-brew "danielfoehrkn/switch/switch"
+tap "hashicorp/tap"
+tap "fairwindsops/tap"
 
+# ─── Shell & Terminal ──────────────────────────────────────────────
+brew "eza"                          # Modern ls replacement (exa successor)
+brew "fzf"                          # Fuzzy finder
+brew "zoxide"                       # Smarter cd (replaces z)
+brew "bat"                          # cat with syntax highlighting
+brew "ripgrep"                      # Blazing fast grep replacement
+brew "fd"                           # Fast find replacement
+brew "mcfly"                        # Smart shell history
+brew "tldr"                         # Simplified man pages
+brew "tree"                         # Directory tree viewer
+brew "watch"                        # Command repeater
+brew "bottom"                       # System monitor (btm)
+brew "dust"                         # Disk usage analyzer (du replacement)
+
+# ─── Git ───────────────────────────────────────────────────────────
+brew "git"                          # Latest git
+brew "git-delta"                    # Better git diff output
+brew "lazygit"                      # Git TUI
+
+# ─── Development ───────────────────────────────────────────────────
+brew "jq"                           # JSON processor
+brew "httpie"                       # HTTP client
+brew "neovim"                       # Modern vim
+brew "go-task"                      # Task runner (Makefile alternative)
+brew "pyenv"                        # Python version manager
+brew "pyenv-virtualenv"             # Python virtualenv manager
+
+# ─── Cloud (Azure) ─────────────────────────────────────────────────
+brew "azure-cli"                    # Azure CLI
+brew "aztfexport"                   # Export Azure resources to Terraform
+brew "hashicorp/tap/terraform-ls"   # Terraform Language Server
+
+# ─── Terraform ─────────────────────────────────────────────────────
+brew "terraform-docs"               # Generate Terraform docs
+brew "warrensbox/tap/tfswitch"      # Terraform version switcher
+
+# ─── Kubernetes ────────────────────────────────────────────────────
+brew "helm"                         # Kubernetes package manager
+brew "k9s"                          # Kubernetes TUI
+brew "krew"                         # kubectl plugin manager
+brew "kube-ps1"                     # Kubernetes context in prompt
+brew "kubectx"                      # Switch k8s contexts + namespaces (includes kubens)
+brew "kubeconform"                  # Kubernetes manifest validation
+brew "kubent"                       # Detect deprecated k8s APIs
+brew "fairwindsops/tap/nova"        # Scan Helm charts for updates
+brew "fairwindsops/tap/pluto"       # Detect deprecated k8s resources
+brew "popeye"                       # K8s cluster sanitizer
+brew "kube-linter"                  # K8s manifest linter
+brew "stern"                        # Multi-pod k8s log tailing
+
+# ─── Containers ────────────────────────────────────────────────────
+brew "trivy"                        # Container/vulnerability scanner
+brew "dive"                         # Docker image layer inspection
+brew "kind"                         # Kubernetes in Docker (local clusters)
+
+# ─── Security / IaC Scanning ──────────────────────────────────────
+brew "checkov"                      # Infrastructure-as-Code scanning
+brew "yamllint"                     # YAML linter
+
+# ─── System ────────────────────────────────────────────────────────
+brew "wget"                         # File downloader
+brew "ncurses"                      # Terminal handling library
+brew "gpg"                          # GPG signing
+brew "pre-commit"                   # Git pre-commit hooks
+
+# ─── macOS-specific ────────────────────────────────────────────────
 if OS.mac?
-tap "homebrew/cask"
-tap "homebrew/cask-fonts"
-tap "mas-cli/tap"
-brew "mas-cli/tap/mas"
-cask "1password"
-cask "browserosaurus"
-cask "dropbox"
-cask "font-meslo-lg-nerd-font"
-cask "gimp"
-cask "imageoptim"
-cask "iterm2"
-cask "monitorcontrol"
-cask "notion"
-cask "onyx"
-cask "pocket-casts"
-cask "rancher"
-cask "raycast"
-cask "rectangle"
-cask "slack"
-cask "spotify"
-cask "teamviewer"
-cask "tunnelbear"
-cask "visual-studio-code"
-cask "jordanbaird-ice"
-mas "Amphetamine", id: 937984704
-mas "Azure VPN Client", id: 1553936137
-mas "CopyClip", id: 595191960
-mas "MeetingBar", id: 1532419400
-mas "MenubarClock", id: 492167985
-mas "Microsoft Remote Desktop", id: 1295203466
-mas "Telegram", id: 747648890
-mas "Unsplash Wallpapers", id: 1284863847
-mas "Lightshot Screenshot", id: 526298438
+  tap "homebrew/cask"
+  tap "homebrew/cask-fonts"
+  tap "mas-cli/tap"
+
+  # CLI
+  brew "mas-cli/tap/mas"            # Mac App Store CLI
+
+  # Apps (casks)
+  cask "1password"                  # Password manager
+  cask "font-meslo-lg-nerd-font"    # Nerd Font for Powerlevel10k
+  cask "iterm2"                     # Terminal emulator
+  cask "raycast"                    # Spotlight replacement / launcher
+  cask "rectangle"                  # Window management
+  cask "visual-studio-code"         # Code editor
+  cask "slack"                      # Communication
+  cask "notion"                     # Notes / docs
+  cask "spotify"                    # Music
+  cask "jordanbaird-ice"            # Menu bar manager
+  cask "monitorcontrol"             # External monitor controls
+  cask "orbstack"                   # Lightweight Docker Desktop alternative
+  cask "stats"                      # System monitor in menu bar
+
+  # Mac App Store
+  mas "Amphetamine", id: 937984704                  # Keep Mac awake
+  mas "Azure VPN Client", id: 1553936137           # Azure VPN
+  mas "CopyClip 2", id: 1020812363                 # Clipboard manager
+  mas "MeetingBar", id: 1532419400                 # Meeting status bar
+  mas "Microsoft Remote Desktop", id: 1295203466   # RDP client
+  mas "Telegram", id: 747648890                    # Messaging
 end

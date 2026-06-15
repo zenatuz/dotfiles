@@ -1,63 +1,86 @@
-# ALIASES COMMANDS
-###################################################
+# ═══════════════════════════════════════════════════════════════════
+# ALIASES
+# ═══════════════════════════════════════════════════════════════════
 
-# Alias: Show aliases
-alias aliases="cat ~/.zsh/zsh-aliases.sh"
+# ─── Navigation ───────────────────────────────────────────────────
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias aliases="cat ~/.zsh/zsh-custom.sh"
 
-# Alias: Show Functions
-alias functions="grep '()' ~/.zsh/zsh-functions.sh"
-
-# Alias: Use eza to show icons when ls
+# ─── ls (eza) ─────────────────────────────────────────────────────
 alias ls="eza --icons --group-directories-first"
-
-# Alias: Short for 'ls -l'
 alias ll="ls -l"
-
-# Alias: Short for 'ls -la'
 alias la="ls -la"
+alias lla="ls -la"
 
-# Alias: Export variables on .env files on current directory
-# alias setdotenv="if [ -f .env ]; then;export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst);fi"
+# ─── Modern tool replacements ──────────────────────────────────────
+alias cat="bat"
+alias grep="rg"
+alias find="fd"
+alias du="dust"
+alias ps="procs"
+alias top="btm"
+alias df="duf"
 
-# Alias: Fix corrupted history file
-alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history"
+# ─── Git ──────────────────────────────────────────────────────────
+alias g="git"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git log --oneline --graph"
+alias gs="git status"
+alias gd="git diff"
+alias gds="git diff --staged"
+alias gco="git checkout"
+alias gcb="git checkout -b"
+alias gb="git branch"
+alias gm="git merge"
+alias gr="git rebase"
+alias gst="git stash"
+alias lazyg="lazygit"
 
-# Alias: Short for update repositories
-alias update="brew update > /dev/null"
+# ─── Kubernetes ───────────────────────────────────────────────────
+alias k="kubectl"
+alias kctx="kubectx"
+alias kns="kubens"
+alias k9s="k9s -A"
+alias k9s-all="k9s -A"
+alias stern="stern --tail 50"
 
-# Alias: Use Nvim as default text-editor
+# ─── Local clusters ───────────────────────────────────────────────
+alias k9s-orb="k9s --context orbstack"
+alias kctx-orb="kubectx orbstack"
+
+# ─── Docker / Containers ──────────────────────────────────────────
+alias d-up="docker compose up --remove-orphans"
+alias d-down="docker compose down"
+alias d-ps="docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}'"
+alias dive="dive --ci"
+
+# ─── nvim ─────────────────────────────────────────────────────────
 alias vi="nvim"
 alias vim="nvim"
 
-# Alias: Httpie default parameters
+# ─── httpie ───────────────────────────────────────────────────────
 alias http="http --follow --all"
 
-# Alias: kubectl
-alias k="kubectl"
+# ─── System ───────────────────────────────────────────────────────
+alias c="clear"
+alias h="history"
+alias hg="history | grep"
+alias path='echo "${PATH//:/\n}"'
+alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history"
+alias update="brew update && brew upgrade && brew cleanup"
+alias ip="curl -s https://checkip.amazonaws.com 2>/dev/null || echo 'checkip unavailable'"
+alias localip="ipconfig getifaddr en0 2>/dev/null || hostname -I 2>/dev/null | awk '{print \$1}'"
+alias ports="lsof -i -P -n | grep LISTEN"
 
-# Alias: kubectx
-alias kctx="kubectx"
+# ═══════════════════════════════════════════════════════════════════
+# FUNCTIONS
+# ═══════════════════════════════════════════════════════════════════
 
-# Alias: k9s
-alias k9s="k9s -A"
-
-# Alias: docker
-alias d-up="docker-compose up --remove-orphans"
-
-# Alias: kubeswitch - https://github.com/danielfoehrKn/kubeswitch
-alias kubectx='switch'
-alias kctx='switch'
-
-## local-clusters
-alias k9s-rancher="k9s --context rancher-desktop"
-alias kctx-rancher="kubectx rancher-desktop"
-
-### FUNCTIONS
-###################################################
-
-# GIT FUNCTIONS
-##################################
-
+# ─── Git: pull all repos in current directory ─────────────────────
 git_pull_current() {
     R='\033[0;31m'
     G='\033[0;32m'
@@ -66,10 +89,8 @@ git_pull_current() {
     CURRENT_DIR=$(pwd)
     echo "----------------------------------------"
     for DIR in $(find $CURRENT_DIR -maxdepth 2 -name .git -type d | sort | rev | cut -d "/" -f2 | rev); do
-        # echo "dir: $DIR"
         cd "$CURRENT_DIR/$DIR"
         CURRENT_BRANCH=$(git branch --show-current)
-
         echo "Updating '$DIR'"
 
         if [[ $CURRENT_BRANCH != "master" ]]; then
@@ -78,55 +99,13 @@ git_pull_current() {
             echo "Current branch:$G $CURRENT_BRANCH $NOCOLOR"
         fi
 
-        # echo "Current Branch:$Y `git branch --show-current` $NOCOLOR" &&
-        git fetch origin &&
-            git pull &&
-            cd ..
+        git fetch origin && git pull && cd ..
         echo "----------------------------------------"
     done
     cd $CURRENT_DIR
 }
 
-# git_pull_all() {
-#     echo "\n>>>>> Updating Infra <<<<<\n"
-#     cd-i
-#     git_pull_current
-
-#     echo "\n>>>>> Updating Terraform-APS <<<<<\n"
-#     cd-itaps
-#     git_pull_current
-
-#     echo "\n>>>>> Updating Terraform-Modules <<<<<\n"
-#     cd-itm
-#     git_pull_current
-
-#     echo "\n>>>>> Updating Terraform-Deploy <<<<<\n"
-#     cd-itd
-#     git_pull_current
-
-#     echo "\n>>>>> Updating General Helm-charts <<<<<\n"
-#     cd-ih
-#     git_pull_current
-
-#     echo "\n>>>>> Updating Infra (new structure) Helm-charts <<<<<\n"
-#     cd-ihi
-#     git_pull_current
-
-#     echo "\n>>>>> Updating Platform Helm-charts <<<<<\n"
-#     cd-ihp
-#     git_pull_current
-
-#     echo "\n>>>>> Updating Tasks <<<<<\n"
-#     cd-itask
-#     git_pull_current
-
-#     echo "\n>>>>> Updating Docker Images <<<<<\n"
-#     cd-d
-#     git_pull_current
-
-#     cd ~
-# }
-
+# ─── Git: show repo details ──────────────────────────────────────
 git_details() {
     R='\033[0;31m'
     G='\033[0;32m'
@@ -152,28 +131,26 @@ git_details() {
     done
 }
 
-git_remove_merged() { # Git_Remove_local_branchs_already_merged
+# ─── Git: remove merged branches ─────────────────────────────────
+git_remove_merged() {
     git branch --merged >/tmp/merged-branches &&
         vi /tmp/merged-branches &&
         xargs git branch -d </tmp/merged-branches
 }
 
-# DOCKER FUNCTIONS
-##################################
-
-docker_clean_containers() { # Docker_Clean_all_containers
+# ─── Docker: clean all containers ────────────────────────────────
+docker_clean_containers() {
     docker container stop $(docker container ls -aq)
     docker container rm $(docker container ls -aq)
 }
 
-docker_clean_images() { # Docker_Prune_images
+# ─── Docker: prune images ────────────────────────────────────────
+docker_clean_images() {
     docker image prune -a
 }
 
-# KUBERNETES FUNCTIONS
-##################################
-
-k8s_clean_k8s_jobs() { # K8S_Clean_jobs_on_current_NS
+# ─── K8s: clean old jobs and error pods ──────────────────────────
+k8s_clean_jobs() {
     echo "deleting Error pods"
     kubectl get pods | awk 'IF $3 == "Error" { print $1}' | while read pod; do
         echo $pod
@@ -196,13 +173,40 @@ k8s_clean_k8s_jobs() { # K8S_Clean_jobs_on_current_NS
     done
 }
 
-k8s_get_pods_alb() { # Kubectl get pods with readiness gates (alb ingress)
-    kubectl get pods -o wide -A | awk '{if ($10 != "<none>" ) print $0}'
+# ─── K8s: get pods with readiness gates (ALB ingress) ────────────
+k8s_get_pods_alb() {
+    kubectl get pods -o wide -A | awk '{if ($10 != "<none>") print $0}'
 }
 
-# CURL
-########
+# ─── Utils: curl status code ─────────────────────────────────────
 curl_sc() {
     URL=$1
     curl -L --max-redirs 5 -I $URL 2>/dev/null | head -n 1 | cut -d$' ' -f2
+}
+
+# ─── Utils: extract any archive ──────────────────────────────────
+extract() {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xjf $1     ;;
+            *.tar.gz)    tar xzf $1     ;;
+            *.bz2)       bunzip2 $1     ;;
+            *.rar)       unrar e $1     ;;
+            *.gz)        gunzip $1      ;;
+            *.tar)       tar xf $1      ;;
+            *.tbz2)      tar xjf $1     ;;
+            *.tgz)       tar xzf $1     ;;
+            *.zip)       unzip $1       ;;
+            *.Z)         uncompress $1  ;;
+            *.7z)        7z x $1        ;;
+            *)           echo "'$1' cannot be extracted via extract()" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+# ─── Utils: create a directory and cd into it ────────────────────
+mkcd() {
+    mkdir -p "$1" && cd "$1"
 }

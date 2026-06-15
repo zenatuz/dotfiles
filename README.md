@@ -1,125 +1,162 @@
-# My personal dotfiles
+# Zenatuz Dotfiles 🚀
 
-I use this repo to keeping my personal customization files that I use to personalize my terminal experience.
+Personal dotfiles for macOS (primary), Linux/WSL (secondary). Zsh + Oh My Zsh + Powerlevel10k.
 
-I got this idea from this video <https://www.youtube.com/watch?v=AK2JE2YsKto>, after that, I got a lot of more customizations.
+> Forked/stolen from [alrra/dotfiles](https://github.com/alrra/dotfiles) and [Lucatronlk/dotfiles-ubuntu](https://github.com/Lucatronlk/dotfiles-ubuntu).
 
-> This can be applied on Linux, Mac or Windows (WSL).
-
-## Install script
-
-This script [.install.sh](.install.sh) can be used do the initial setup the tools (**zsh, oh-my-zsh, powerlevel10k theme, oh-my-zsh plugins, brew packages and yadm**), and then applies the YADM at the end, which gets the current customizations on your home directory `~/`.
-
-### Download and execute the script
-```bash 
-curl -LO https://raw.githubusercontent.com/zenatuz/dotfiles/main/.install.sh
-chmod +x .install.sh
-./.install.sh
-```
-
-## Prompt
-
-This is how your prompt will look like after cloning the settings with YADM.
-
-- **Home directory**
-
-![screenshot-01.png](./.images/screenshot-01.png "Home Directory")
-
-- **Some project with git**
-
-![screenshot-02.png](./.images/screenshot-02.png "Project with git")
-
-> To customize the prompt, run `p10k configure` or edit ~/.p10k.zsh.
-
-## Getting the DOTFILEs, only
-
-If you only want to get the files without installing anything new, just use YADM in your home directory.
+## Quick Install (fresh machine)
 
 ```bash
-cd ~
-yadm clone git@github.com:zenatuz/dotfiles.git
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/zenatuz/dotfiles/main/.install.sh)"
 ```
 
-## Brewfile
+This will install:
+- **Homebrew** + packages from `.brewfile`
+- **Oh My Zsh** + plugins (autosuggestions, syntax-highlighting)
+- **Powerlevel10k** theme
+- **Helm plugins** (diff, secrets, git)
+- Clone dotfiles with **yadm**
 
-There is a way to easy install packages for both OSX and Linux using `brew` and `brewfile`, it's described on this link <https://gist.github.com/ChristopherA/a579274536aab36ea9966f301ff14f3f>
+## What's Included
 
-### Keep brewfile updated
-Run this command to update the brew file based on what you are running.
+### Shell
+
+| Tool | What | Why |
+|------|------|-----|
+| [eza](https://eza.rocks/) | `ls` replacement | Icons, colors, tree view |
+| [zoxide](https://github.com/ajeetdsouza/zoxide) | Smarter `cd` | Learn your habits, jump anywhere |
+| [bat](https://github.com/sharkdp/bat) | `cat` replacement | Syntax highlighting, line numbers |
+| [ripgrep](https://github.com/BurntSushi/ripgrep) | `grep` replacement | Blazing fast, recursive by default |
+| [fd](https://github.com/sharkdp/fd) | `find` replacement | Fast, intuitive |
+| [fzf](https://github.com/junegunn/fzf) | Fuzzy finder | Ctrl+R, Ctrl+T, fuzzy everything |
+| [mcfly](https://github.com/cantino/mcfly) | Shell history | Smart suggestions with AI |
+| [bottom](https://github.com/ClementTsang/bottom) | System monitor | `btm` — better than `top` |
+| [dust](https://github.com/bootandy/dust) | Disk usage | `du` but visual |
+| [git-delta](https://github.com/dandavison/delta) | Git diff | Syntax-highlighted, side-by-side |
+
+### Kubernetes & Cloud (Azure)
+
+| Tool | What |
+|------|------|
+| `kubectl` via [krew](https://krew.sigs.k8s.io/) | Plugin manager |
+| [k9s](https://k9scli.io/) | Kubernetes TUI |
+| [kubectx](https://github.com/ahmetb/kubectx) | Context/namespace switcher |
+| [stern](https://github.com/stern/stern) | Multi-pod log tailing |
+| [popeye](https://popeyecli.io/) | Cluster sanitizer |
+| [kube-linter](https://github.com/stackrox/kube-linter) | Manifest linting |
+| [kubeconform](https://github.com/yannh/kubeconform) | Schema validation |
+| [nova](https://github.com/FairwindsOps/nova) | Outdated Helm charts |
+| [pluto](https://github.com/FairwindsOps/pluto) | Deprecated K8s APIs |
+| [kubent](https://github.com/doitintl/kube-no-trouble) | K8s API deprecations |
+| [helm](https://helm.sh/) | Package manager |
+| [trivy](https://github.com/aquasecurity/trivy) | Container/vuln scanner |
+| [dive](https://github.com/wagoodman/dive) | Docker image layers |
+| [kind](https://kind.sigs.k8s.io/) | K8s in Docker (local clusters) |
+| Azure CLI + `aztfexport` | Azure resource export |
+
+### Infrastructure as Code
+
+| Tool | What |
+|------|------|
+| Terraform via `tfswitch` | Version management |
+| `terraform-docs` | Auto-generate docs |
+| `terraform-ls` | LSP for VS Code/Neovim |
+| [checkov](https://www.checkov.io/) | IaC security scanning |
+
+### macOS Apps (via Brew Bundle)
+
+- [Orbstack](https://orbstack.dev/) — Docker Desktop alternative (lightweight)
+- [Raycast](https://raycast.com/) — Spotlight replacement
+- [Rectangle](https://rectangleapp.com/) — Window management
+- [Ice](https://github.com/jordanbaird/Ice) — Menu bar manager
+- [Stats](https://github.com/exelban/Stats) — System monitor menu bar
+- [iTerm2](https://iterm2.com/) — Terminal emulator
+- [1Password](https://1password.com/) — Password manager
+- [Amphetamine](https://apps.apple.com/app/id937984704) — Keep Mac awake
+- Azure VPN Client, Microsoft Remote Desktop
+
+## Manual Setup
+
+### After first install
+
+```bash
+# Once everything is installed, restart your terminal
+# or source the config
+source ~/.zshrc
+
+# Customize prompt
+p10k configure
+
+# Set your git identity (create ~/.gitconfig.local)
+git config --file ~/.gitconfig.local user.name "Your Name"
+git config --file ~/.gitconfig.local user.email "your@email.com"
+```
+
+### Machine-specific overrides
+
+Create `~/.zshrc.local` for machine-specific settings (not tracked by yadm):
+
+```bash
+#!/bin/zsh
+
+# Example: project-specific paths
+export PATH="$HOME/projects/my-tools:$PATH"
+
+# Example: work-specific aliases
+alias kprod="kubectx prod-cluster"
+```
+
+### Font
+
+Install **MesloLGS NF** (already in Brewfile for macOS):
+
+- **macOS**: `brew install --cask font-meslo-lg-nerd-font`
+- **Windows/WSL**: [Manual download](https://github.com/romkatv/powerlevel10k#manual-font-installation)
+
+Configure your terminal → Font face: `MesloLGS NF`
+
+### Updating Packages
+
+```bash
+# Update brew and all packages
+brew update && brew upgrade && brew cleanup
+
+# Or use the alias
+update
+```
+
+### Regenerate Brewfile
 
 ```bash
 brew bundle dump --file=.brewfile --force
 ```
 
-### Install all the packages listed on the brewfile
+### Just the dotfiles (without setup script)
+
+If you only want the configs without the installer:
 
 ```bash
- brew bundle install --file=.brewfile
+cd ~
+yadm clone https://github.com/zenatuz/dotfiles.git
+# or if you already have yadm set up:
+yadm pull
 ```
 
-## Font
+## Structure
 
-To enjoy this setting at its utmost performance, install **MesloLGS NF** Font on your OS, and select `MesloLGS NF` on your Terminal and Code Editor.
-
-> The font is already installed with brew for OSX. This install step is necessary only for Windows/WSL/Linux
-> More info about MesloLGS font can be found on the repo: <https://github.com/romkatv/powerlevel10k#manual-font-installation>
-
-### Windows
-
-**Manual Install**
-
-Follow instructions from <https://github.com/romkatv/powerlevel10k#manual-font-installation.
-
-**Windows with powershell**
-
-```powershell
-choco install nerd-fonts-meslo
 ```
-
-**MacOS with brew**
-
-```brew
-brew install --cask font-meslo-lg-nerd-font
+.
+├── .brewfile          # Homebrew packages (macOS + Linux)
+├── .editorconfig      # Editor settings
+├── .gitconfig         # Git configuration (with delta, aliases)
+├── .gitignore         # Git ignore rules
+├── .helmlist          # Helm plugins
+├── .install.sh        # One-shot setup script
+├── .p10k.zsh          # Powerlevel10k theme
+├── .vimrc             # Neovim/Vim config
+├── .zshrc             # Zsh configuration (main)
+├── .zsh/
+│   ├── zsh-custom.sh  # Aliases & functions
+│   └── plugins/       # Zsh plugins (autosuggestions, syntax-highlighting)
+└── .images/           # Screenshots
 ```
-
-### Configure the Font
-
-#### **Windows Terminal**
-
-On the terminal settings, click on the terminal you want to change the font (powershell/ubuntu/git bash, etc), go to **appearance**, then **Font face** and select `MesloLGM Nerd Font`.
-
-![screenshot-03.png](./.images/screenshot-03.png "Font settings on Windows Terminal")
-
-#### **VSCode**
-
-In the VSCode `settings.json` apply these settings to enable **`MesloLGS NF`** on the integrated terminal.
-
-```json
-    "terminal.integrated.fontFamily": "MesloLGS NF",
-```
-
-![screenshot-04.png](./.images/screenshot-04.png "VSCode Integrated Terminal with ZSH and MesloLGS font")
-
-## Windows/WSL Additional Settings
-
-It is possible to enforce some resource limitations on the WSL environment.
-
-1 - Turn off all WSL instances such as docker-desktop
-
-```powershell
-wsl --shutdown
-```
-
-2 - Create/Edit the `.wslconfig` file with this content:
-
-```powershell
-notepad "%HOMEPATH%/.wslconfig"
-```
-
-```ini
-[wsl2]
-memory=4GB   # Limits VM memory in WSL 2 up to 4GB
-processors=4 # Makes the WSL 2 VM use two virtual processors
-```
-
-More settings can be seen at the: [Official Documentation](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig).

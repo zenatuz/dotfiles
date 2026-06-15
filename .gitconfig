@@ -1,0 +1,118 @@
+# ═══════════════════════════════════════════════════════════════════
+# Git Configuration
+# ═══════════════════════════════════════════════════════════════════
+#
+# Machine-specific settings (user.name, user.email, signing key)
+# go into ~/.gitconfig.local which is auto-included below.
+
+[color]
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[alias]
+    # Shortcuts
+    a = add
+    aa = add --all
+    ap = add --patch
+    b = branch
+    ba = branch --all --sort=-committerdate
+    c = commit
+    ca = commit --amend
+    can = commit --amend --no-edit
+    co = checkout
+    cob = checkout -b
+    d = diff
+    ds = diff --staged
+    f = fetch --all --prune
+    l = log --oneline --graph --decorate
+    la = log --oneline --graph --decorate --all
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    m = merge --no-ff
+    p = pull --rebase --autostash
+    pl = pull
+    ps = push
+    pst = push --tags
+    rb = rebase
+    rbi = rebase --interactive
+    s = status --short --branch
+    st = status
+    sw = switch
+    t = tag --sort=-version:refname
+
+    # Cleanup
+    prune-local = !git branch --merged | grep -v '\\*\\|master\\|main\\|develop' | xargs -r git branch -d
+    prune-remote = !git remote prune origin
+
+    # Search
+    gr = grep -Ii
+    ss = !git stash show -p
+
+    # Log
+    last = log -1 HEAD
+    standup = log --since=\"yesterday\" --oneline --all --no-merges --author=\"$(git config user.email)\"
+
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = copies
+
+[fetch]
+    prune = true
+    pruneTags = true
+
+[help]
+    autocorrect = 1
+
+[merge]
+    conflictstyle = diff3
+
+[pull]
+    rebase = true
+
+[push]
+    default = current
+    autoSetupRemote = true
+
+[rebase]
+    autoSquash = true
+    autoStash = true
+
+[status]
+    showUntrackedFiles = all
+
+[url "git@github.com:"]
+    insteadOf = gh:
+
+# ─── Delta (git diff viewer) ─────────────────────────────────────
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+[delta]
+    navigate = true
+    light = false
+    side-by-side = true
+    line-numbers = true
+    syntax-theme = Dracula
+
+[include]
+    path = ~/.gitconfig.local

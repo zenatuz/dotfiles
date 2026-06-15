@@ -1,222 +1,214 @@
 #!/bin/bash
+#
+# .install.sh
+# One-shot setup for a fresh macOS / Linux machine.
+# macOS-first with Linux (WSL/Ubuntu) support.
 
-brewfile_url="https://raw.githubusercontent.com/zenatuz/dotfiles/main/.brewfile"
-helmlist_url="https://raw.githubusercontent.com/zenatuz/dotfiles/main/.helmlist"
+set -e
 
-# Function to check if a directory exists
-directory_exists() {
-    [[ -d "$1" ]]
-}
+# ─── REPO URLS ────────────────────────────────────────────────────
+BREWFILE_URL="https://raw.githubusercontent.com/zenatuz/dotfiles/main/.brewfile"
+HELMLIST_URL="https://raw.githubusercontent.com/zenatuz/dotfiles/main/.helmlist"
+DOTFILES_REPO="https://github.com/zenatuz/dotfiles.git"
 
-# Function to check if a command is available
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
+# ─── Helpers ──────────────────────────────────────────────────────
+command_exists() { command -v "$1" >/dev/null 2>&1; }
+dir_exists() { [[ -d "$1" ]]; }
 
-# Function to print a section header
 print_header() {
     echo "========================================"
-    echo "$1"
+    echo "  $1"
     echo "========================================"
 }
 
-# Function to print a sub-section header
 print_subheader() {
-    echo "--- $1 ---"
+    echo "  --- $1 ---"
 }
 
-# Function to install packages on Ubuntu
+# ─── Step 1: System requirements ──────────────────────────────────
 install_ubuntu_packages() {
-    print_header "Installing Ubuntu requirements and ZSH"
-    
-    # List of packages to be installed
-    local packages=("apt-transport-https" "build-essential" "curl" "file" "git" "procps" "socat" "software-properties-common" "wget" "zsh")
-    
-    # Initialize flag to track if any package needs to be installed
-    local install_required=false
+    print_header "Installing Ubuntu requirements"
 
-    # Check if each package is installed, and set install_required flag if not installed
+    local packages=(
+        "apt-transport-https" "build-essential" "curl" "file"
+        "git" "procps" "socat" "software-properties-common"
+        "wget" "zsh" "unzip"
+    )
+
+    local install_required=false
     for package in "${packages[@]}"; do
         if ! dpkg -l | grep -q "^ii\s*$package"; then
             install_required=true
             break
         fi
     done
-    
-    # Install packages if required, otherwise print a message
+
     if $install_required; then
         sudo apt-get update -qq && \
         sudo apt-get install -y -qq "${packages[@]}"
     else
-        echo "Ubuntu requirements and ZSH are already installed."
+        echo "  Ubuntu requirements already installed."
     fi
 }
 
-
-
-
-# Function to install Xcode Command Line Tools on macOS
 install_xcode_tools() {
-    print_header "Installing Xcode Command Line Tools"
-    xcode-select --install
+    print_header "Checking Xcode Command Line Tools"
+    if ! xcode-select -p &>/dev/null; then
+        echo "  Installing Xcode CLT..."
+        xcode-select --install
+    else
+        echo "  Xcode CLT already installed."
+    fi
 }
 
-# Function to install Homebrew on both Linux and macOS
+# ─── Step 2: Homebrew ─────────────────────────────────────────────
 install_brew() {
-    print_header "Checking and Installing Homebrew"
+    print_header "Installing Homebrew"
     if ! command_exists brew; then
-        echo "Installing Homebrew..."
+        echo "  Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
-        echo "Homebrew is already installed."
+        echo "  Homebrew already installed."
     fi
 
-    # Ensure Brew environment is loaded
+    # Ensure brew is in PATH for both macOS ARM and Linux
     if command_exists brew; then
-        echo "Loading Brew environment..."
-        local brew_path
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            brew_path="/usr/local/bin"
-        else
-            brew_path="$(brew --prefix)/bin"
-        fi
-
-        if ! grep -qF "$brew_path" ~/.bashrc; then
-            echo "eval \"\$($brew_path/brew shellenv)\"" >> ~/.bashrc
-            eval "$(brew shellenv)"
+        if [[ "$(uname -m)" == "arm64" ]] && [[ "$OSTYPE" == "darwin"* ]]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         fi
     else
-        echo "Brew installation failed."
+        echo "  ERROR: Brew installation failed."
         exit 1
     fi
 }
 
-# Function to install oh-my-zsh and plugins
+# ─── Step 3: oh-my-zsh + plugins ──────────────────────────────────
 install_oh_my_zsh() {
-    print_header "Checking and Installing oh-my-zsh and Plugins"
-    if ! directory_exists "$HOME/.oh-my-zsh"; then
-        echo "Installing oh-my-zsh..."
+    print_header "Installing oh-my-zsh and plugins"
+
+    if ! dir_exists "$HOME/.oh-my-zsh"; then
+        echo "  Installing oh-my-zsh..."
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     else
-        echo "oh-my-zsh is already installed."
+        echo "  oh-my-zsh already installed."
     fi
 
-    print_subheader "Installing oh-my-zsh plugins and auto-completions"
-    if ! directory_exists "$HOME/.zsh/plugins/zsh-autosuggestions"; then
-        echo "Installing zsh-autosuggestions plugin..."
-        git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/plugins/zsh-autosuggestions
+    print_subheader "ZSH plugins"
+
+    if ! dir_exists "$HOME/.zsh/plugins/zsh-autosuggestions"; then
+        echo "  Installing zsh-autosuggestions..."
+        git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/plugins/zsh-autosuggestions
     else
-        echo "zsh-autosuggestions plugin is already installed."
+        echo "  zsh-autosuggestions already installed."
     fi
 
-    if ! directory_exists "$HOME/.zsh/plugins/zsh-syntax-highlighting"; then
-        echo "Installing zsh-syntax-highlighting plugin..."
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting
+    if ! dir_exists "$HOME/.zsh/plugins/zsh-syntax-highlighting"; then
+        echo "  Installing zsh-syntax-highlighting..."
+        git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/plugins/zsh-syntax-highlighting
     else
-        echo "zsh-syntax-highlighting plugin is already installed."
-    fi
-
-    if ! directory_exists "$HOME/.zsh/plugins/git.plugin.zsh"; then
-        echo "Installing git.plugin.zsh plugin..."
-        curl https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/plugins/git/git.plugin.zsh --output ~/.zsh/plugins/git.plugin.zsh --silent
-    else
-        echo "git.plugin.zsh plugin is already installed."
+        echo "  zsh-syntax-highlighting already installed."
     fi
 }
 
-# Function to install powerlevel10k theme
+# ─── Step 4: Powerlevel10k ───────────────────────────────────────
 install_powerlevel10k() {
-    print_header "Installing oh-my-zsh powerlevel10k theme"
-    if ! directory_exists "$HOME/.zsh/themes/powerlevel10k"; then
-        echo "Installing Powerlevel10k theme..."
+    print_header "Installing Powerlevel10k theme"
+    if ! dir_exists "$HOME/.zsh/themes/powerlevel10k"; then
+        echo "  Installing..."
         git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh/themes/powerlevel10k/
     else
-        echo "Powerlevel10k theme is already installed."
+        echo "  Powerlevel10k already installed."
     fi
 }
 
-# Function to install additional packages with brew
+# ─── Step 5: Brew packages ────────────────────────────────────────
 install_brew_packages() {
-    print_header "Installing additional packages with Brew"
+    print_header "Installing Brew packages"
+
     if command_exists brew; then
-        # Check if the Brewfile exists locally, otherwise download it
         local brewfile_path="$HOME/.brewfile"
         if [[ ! -f "$brewfile_path" ]]; then
-            echo "Brewfile not found locally. Downloading from URL..."
-            curl -fsSL -o "$brewfile_path" $brewfile_url
+            echo "  Downloading Brewfile..."
+            curl -fsSL -o "$brewfile_path" "$BREWFILE_URL"
         fi
+        echo "  Installing packages (this may take a while)..."
         brew bundle install --file="$brewfile_path" --quiet
     else
-        echo "Brew is not installed. Skipping brew packages installation."
+        echo "  Brew not installed. Skipping."
     fi
 }
 
-
-# Function to install Helm plugins
+# ─── Step 6: Helm plugins ─────────────────────────────────────────
 install_helm_plugins() {
-    print_header "Installing Helm plugins from list file"
+    print_header "Installing Helm plugins"
+
     if command_exists helm; then
-        local plugins_file="helmlist"
-        
-        # Check if the local file exists, otherwise download it from the URL
+        local plugins_file="/tmp/helmlist"
         if [[ ! -f "$plugins_file" ]]; then
-            local plugins_url="$helmlist_url"
-            echo "Helm plugins list file not found locally. Downloading from $plugins_url..."
-            curl -fsSL -o "$plugins_file" "$plugins_url"
+            curl -fsSL -o "$plugins_file" "$HELMLIST_URL"
         fi
-        
+
         if [[ -f "$plugins_file" ]]; then
             while IFS= read -r line || [[ -n "$line" ]]; do
-                # Skip empty lines and comments
                 if [[ ! "$line" =~ ^\s*$|^# ]]; then
                     local plugin_name=$(echo "$line" | awk '{print $1}')
                     local plugin_source=$(echo "$line" | awk '{print $2}')
-                    
-                    # Check if the plugin is already installed
+
                     if helm plugin list | grep -q "$plugin_name"; then
-                        echo "$plugin_name plugin is already installed."
+                        echo "  $plugin_name already installed."
                     else
-                        # Install the plugin silently
+                        echo "  Installing $plugin_name..."
                         helm plugin install "$plugin_source" >/dev/null 2>&1
                     fi
                 fi
             done < "$plugins_file"
-        else
-            echo "Failed to download Helm plugins list file."
         fi
-        
-        # List installed plugins
-        echo "Installed Helm plugins:"
+
+        echo "  Installed plugins:"
         helm plugin list
     else
-        echo "Helm is not installed. Skipping Helm plugins installation."
+        echo "  Helm not installed. Skipping."
     fi
 }
 
-# Function to clone dotfiles repo with YADM
+# ─── Step 7: Clone dotfiles with yadm ─────────────────────────────
 clone_dotfiles() {
-    print_header "Cloning dotfiles repo with YADM"
-    if ! command_exists yadm; then
-        echo "YADM is not installed. Please install YADM manually."
-        exit 1
-    fi
+    print_header "Setting up dotfiles"
 
-    local yadm_repo="$HOME/.local/share/yadm/repo.git"
-    if [ -d "$yadm_repo" ]; then
-        echo "YADM repository already exists. Skipping clone."
+    if command_exists yadm; then
+        local yadm_repo="$HOME/.local/share/yadm/repo.git"
+        if [ -d "$yadm_repo" ]; then
+            echo "  yadm repo already exists. Updating..."
+            yadm pull
+        else
+            echo "  Cloning dotfiles with yadm..."
+            yadm clone "$DOTFILES_REPO"
+        fi
     else
-        yadm clone https://github.com/zenatuz/dotfiles.git
+        echo "  yadm not installed yet. Installing..."
+        brew install yadm
+        yadm clone "$DOTFILES_REPO"
     fi
 }
 
+# ═══════════════════════════════════════════════════════════════════
+# MAIN
+# ═══════════════════════════════════════════════════════════════════
 
+echo ""
+echo "  ╔══════════════════════════════════════════╗"
+echo "  ║       Zenatuz Dotfiles Installer         ║"
+echo "  ╚══════════════════════════════════════════╝"
+echo ""
 
-# Main script
-
-# Determine OS and run appropriate functions
+# Detect OS
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    echo "  OS: Linux"
     install_ubuntu_packages
 elif [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "  OS: macOS"
     install_xcode_tools
 fi
 
@@ -227,7 +219,14 @@ install_brew_packages
 install_helm_plugins
 clone_dotfiles
 
-echo "========================================"
-echo "Installation process is now complete!"
-echo "========================================"
-exit 0
+echo ""
+echo "  ╔══════════════════════════════════════════╗"
+echo "  ║      Installation complete! 🎉          ║"
+echo "  ╚══════════════════════════════════════════╝"
+echo ""
+echo "  Next steps:"
+echo "    1. Restart your terminal or run: source ~/.zshrc"
+echo "    2. (macOS) Configure Orbstack or Docker Desktop"
+echo "    3. Run p10k configure to customize your prompt"
+echo "    4. Set up local overrides in ~/.zshrc.local (optional)"
+echo ""
