@@ -124,14 +124,15 @@ install_brew() {
         echo "  Homebrew already installed."
     fi
 
-    # Ensure brew is in PATH for both macOS ARM and Linux
-    if command_exists brew; then
-        if [[ "$(uname -m)" == "arm64" ]] && [[ "$OSTYPE" == "darwin"* ]]; then
-            eval "$(/opt/homebrew/bin/brew shellenv)"
-        elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        fi
-    else
+    # Source brew shellenv regardless of how brew was installed
+    # (needed because freshly-installed brew isn't in PATH yet)
+    if [[ "$(uname -m)" == "arm64" ]] && [[ "$OSTYPE" == "darwin"* ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" 2>/dev/null
+    fi
+
+    if ! command_exists brew; then
         echo "  ERROR: Brew installation failed."
         exit 1
     fi
