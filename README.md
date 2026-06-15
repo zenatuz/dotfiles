@@ -61,7 +61,7 @@ This will install:
 
 | Tool | What |
 |------|------|
-| Terraform via `tfswitch` | Version management |
+| `tenv` | Terraform/OpenTofu version management |
 | `terraform-docs` | Auto-generate docs |
 | `terraform-ls` | LSP for VS Code/Neovim |
 | [checkov](https://www.checkov.io/) | IaC security scanning |

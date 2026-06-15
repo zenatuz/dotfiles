@@ -1,7 +1,3 @@
-tap "homebrew/bundle"
-tap "hashicorp/tap"
-tap "fairwindsops/tap"
-
 # ─── Shell & Terminal ──────────────────────────────────────────────
 brew "eza"                          # Modern ls replacement (exa successor)
 brew "fzf"                          # Fuzzy finder
@@ -28,11 +24,11 @@ brew "pyenv-virtualenv"             # Python virtualenv manager
 # ─── Cloud (Azure) ─────────────────────────────────────────────────
 brew "azure-cli"                    # Azure CLI
 brew "aztfexport"                   # Export Azure resources to Terraform
-brew "hashicorp/tap/terraform-ls"   # Terraform Language Server
+brew "terraform-ls"                 # Terraform Language Server
 
 # ─── Terraform ─────────────────────────────────────────────────────
 brew "terraform-docs"               # Generate Terraform docs
-brew "warrensbox/tap/tfswitch"      # Terraform version switcher
+brew "tenv"                         # Terraform version manager (tfenv/switch replacement)
 
 # ─── Kubernetes ────────────────────────────────────────────────────
 brew "helm"                         # Kubernetes package manager
@@ -41,8 +37,8 @@ brew "krew"                         # kubectl plugin manager
 brew "kubectx"                      # Switch k8s contexts + namespaces (includes kubens)
 brew "kubeconform"                  # Kubernetes manifest validation
 brew "kubent"                       # Detect deprecated k8s APIs
-brew "fairwindsops/tap/nova"        # Scan Helm charts for updates
-brew "fairwindsops/tap/pluto"       # Detect deprecated k8s resources
+brew "nova"                         # Scan Helm charts for updates
+brew "pluto"                        # Detect deprecated k8s resources
 brew "popeye"                       # K8s cluster sanitizer
 brew "kube-linter"                  # K8s manifest linter
 brew "stern"                        # Multi-pod k8s log tailing
