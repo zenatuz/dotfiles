@@ -190,7 +190,9 @@ install_brew_packages() {
         echo "  Downloading Brewfile..."
         curl -fsSL -o "$brewfile_path" "$BREWFILE_URL"
         echo "  Installing packages (this may take a while)..."
-        brew bundle install --file="$brewfile_path" --quiet
+        brew bundle install --file="$brewfile_path" --quiet || {
+            echo "  ⚠️  Some packages failed. Check the output above."
+        }
     else
         echo "  Brew not installed. Skipping."
     fi
