@@ -186,6 +186,10 @@ install_brew_packages() {
     print_header "Installing Brew packages"
 
     if command_exists brew; then
+        # Pre-install ncurses to avoid parallel lock when eza+tree install simultaneously
+        echo "  Pre-installing ncurses (base dependency)..."
+        brew install ncurses --quiet 2>/dev/null || true
+
         local brewfile_path="$HOME/.brewfile"
         echo "  Downloading Brewfile..."
         curl -fsSL -o "$brewfile_path" "$BREWFILE_URL"
