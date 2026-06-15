@@ -60,14 +60,10 @@ brew "pre-commit"                   # Git pre-commit hooks
 
 # ─── macOS-specific ────────────────────────────────────────────────
 if OS.mac?
-  tap "homebrew/cask"
-  tap "homebrew/cask-fonts"
-  tap "mas-cli/tap"
-
   # CLI
-  brew "mas-cli/tap/mas"            # Mac App Store CLI
+  brew "mas"                        # Mac App Store CLI (in homebrew-core since 2024)
 
-  # Apps (casks)
+  # Apps (casks) — homebrew/cask is built-in, no tap needed
   cask "1password"                  # Password manager
   cask "font-meslo-lg-nerd-font"    # Nerd Font for Starship + terminal icons
   cask "iterm2"                     # Terminal emulator
