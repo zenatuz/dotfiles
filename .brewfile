@@ -88,7 +88,7 @@ if OS.mac?
   cask "spotify"                    # Music
   cask "jordanbaird-ice"            # Menu bar manager
   cask "monitorcontrol"             # External monitor controls
-  cask "orbstack"                   # Lightweight Docker Desktop alternative
+  cask "rancher"                    # Kubernetes desktop (Docker Desktop alternative)
   cask "stats"                      # System monitor in menu bar
 
   cask "browserosaurus"             # Browser chooser per-link
