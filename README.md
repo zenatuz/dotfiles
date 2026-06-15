@@ -13,7 +13,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/zenatuz/dotfiles/main/.i
 
 **Test a branch (e.g. `mac-migration`):**
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/zenatuz/dotfiles/mac-migration/.install.sh)" -- mac-migration
+curl -fsSL https://raw.githubusercontent.com/zenatuz/dotfiles/mac-migration/.install.sh | bash -s -- mac-migration
 ```
 
 This will install:
