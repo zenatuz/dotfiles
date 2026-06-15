@@ -1,6 +1,6 @@
 # Zenatuz Dotfiles 🚀
 
-Personal dotfiles for macOS (primary), Linux/WSL (secondary). Zsh + Oh My Zsh + Powerlevel10k.
+Personal dotfiles for macOS (primary), Linux (secondary). Zsh + Oh My Zsh + Powerlevel10k.
 
 > Forked/stolen from [alrra/dotfiles](https://github.com/alrra/dotfiles) and [Lucatronlk/dotfiles-ubuntu](https://github.com/Lucatronlk/dotfiles-ubuntu).
 
@@ -71,7 +71,7 @@ This will install:
 
 ### macOS Apps (via Brew Bundle)
 
-- [Orbstack](https://orbstack.dev/) — Docker Desktop alternative (lightweight)
+- [Rancher Desktop](https://rancherdesktop.io/) — Kubernetes + Docker Desktop alternative
 - [Raycast](https://raycast.com/) — Spotlight replacement
 - [Rectangle](https://rectangleapp.com/) — Window management
 - [Ice](https://github.com/jordanbaird/Ice) — Menu bar manager
@@ -116,8 +116,9 @@ alias kprod="kubectx prod-cluster"
 
 Install **MesloLGS NF** (already in Brewfile for macOS):
 
-- **macOS**: `brew install --cask font-meslo-lg-nerd-font`
-- **Windows/WSL**: [Manual download](https://github.com/romkatv/powerlevel10k#manual-font-installation)
+```bash
+brew install --cask font-meslo-lg-nerd-font
+```
 
 Configure your terminal → Font face: `MesloLGS NF`
 
@@ -164,5 +165,4 @@ yadm pull
 ├── .zsh/
 │   ├── zsh-custom.sh  # Aliases & functions
 │   └── plugins/       # Zsh plugins (autosuggestions, syntax-highlighting)
-└── .images/           # Screenshots
 ```
