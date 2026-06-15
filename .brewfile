@@ -91,15 +91,7 @@ if OS.mac?
   cask "orbstack"                   # Lightweight Docker Desktop alternative
   cask "stats"                      # System monitor in menu bar
 
-  # ── Candidatos a remoção (vamos decidir juntos) ──
-  cask "browserosaurus"             # ? — Browser chooser
-  cask "dropbox"                    # ? — Cloud storage
-  cask "gimp"                       # ? — Image editor
-  cask "imageoptim"                 # ? — Image optimization
-  cask "onyx"                       # ? — Mac maintenance tool
-  cask "pocket-casts"               # ? — Podcast app
-  cask "teamviewer"                 # ? — Remote desktop
-  cask "tunnelbear"                 # ? — VPN service
+  cask "browserosaurus"             # Browser chooser per-link
 
   # Mac App Store
   mas "Amphetamine", id: 937984704                  # Keep Mac awake
