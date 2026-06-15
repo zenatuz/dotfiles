@@ -173,7 +173,26 @@ install_helm_plugins() {
     fi
 }
 
-# ─── Step 7: Clone dotfiles with yadm ─────────────────────────────
+# ─── Step 7: Create local config files ─────────────────────────────
+create_local_configs() {
+    if [[ ! -f "$HOME/.gitconfig.local" ]]; then
+        echo ""
+        echo "  ─── Git local config ───"
+        echo "  ~/.gitconfig.local not found. Let's set your identity:"
+        read -p "  Name: " git_name
+        read -p "  Email: " git_email
+        cat > "$HOME/.gitconfig.local" <<-EOF
+[user]
+    name = $git_name
+    email = $git_email
+EOF
+        echo "  Created ~/.gitconfig.local"
+    else
+        echo "  ~/.gitconfig.local already exists. Skipping."
+    fi
+}
+
+# ─── Step 8: Clone dotfiles with yadm ─────────────────────────────
 clone_dotfiles() {
     print_header "Setting up dotfiles"
 
@@ -217,6 +236,7 @@ install_oh_my_zsh
 install_powerlevel10k
 install_brew_packages
 install_helm_plugins
+create_local_configs
 clone_dotfiles
 
 echo ""
@@ -226,7 +246,7 @@ echo "  ╚═══════════════════════
 echo ""
 echo "  Next steps:"
 echo "    1. Restart your terminal or run: source ~/.zshrc"
-echo "    2. (macOS) Configure Orbstack or Docker Desktop"
+echo "    2. (macOS) Rancher Desktop will be installed for K8s/Docker"
 echo "    3. Run p10k configure to customize your prompt"
 echo "    4. Set up local overrides in ~/.zshrc.local (optional)"
 echo ""
