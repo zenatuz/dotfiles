@@ -8,8 +8,18 @@ set -e
 
 # ─── REPO URLS ────────────────────────────────────────────────────
 # Pass a branch name as first argument to test a branch (e.g. `mac-migration`).
-# Defaults to `main` for production use.
-BRANCH="${1:-main}"
+# Pass --skip-backup to skip backing up current dotfiles.
+ARGS=()
+SKIP_BACKUP=false
+for arg in "$@"; do
+    if [[ "$arg" == "--skip-backup" ]]; then
+        SKIP_BACKUP=true
+    else
+        ARGS+=("$arg")
+    fi
+done
+
+BRANCH="${ARGS[0]:-main}"
 
 BREWFILE_URL="https://raw.githubusercontent.com/zenatuz/dotfiles/$BRANCH/.brewfile"
 HELMLIST_URL="https://raw.githubusercontent.com/zenatuz/dotfiles/$BRANCH/.helmlist"
@@ -24,6 +34,48 @@ print_header() {
     echo "========================================"
     echo "  $1"
     echo "========================================"
+}
+
+# ─── Step 0: Backup existing dotfiles ─────────────────────────────
+# Creates ~/dotfiles-backup-<timestamp>/ with a copy of everything
+# the installer might touch. Skips if --skip-backup is passed or
+# BACKUP_DISABLE=1 is set (useful for repeated runs on a clean VM).
+backup_dotfiles() {
+    [[ "$1" == "--skip-backup" || "${BACKUP_DISABLE:-0}" == "1" ]] && return 0
+
+    local backup_dir="$HOME/dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
+    local files_to_backup=(
+        ".zshrc" ".zsh" ".config/starship.toml" ".vimrc"
+        ".gitconfig" ".gitconfig.local" ".gitignore"
+        ".editorconfig" ".brewfile" ".p10k.zsh"
+    )
+
+    # Check if any of these files/dirs actually exist
+    local has_anything=false
+    for f in "${files_to_backup[@]}"; do
+        [[ -e "$HOME/$f" ]] && { has_anything=true; break; }
+    done
+
+    if ! $has_anything; then
+        echo "  No existing dotfiles found — nothing to back up."
+        return 0
+    fi
+
+    echo "  Backing up current dotfiles to: $backup_dir"
+    mkdir -p "$backup_dir"
+
+    for f in "${files_to_backup[@]}"; do
+        local src="$HOME/$f"
+        if [[ -e "$src" ]]; then
+            local dest_dir="$backup_dir/$(dirname "$f")"
+            mkdir -p "$dest_dir"
+            cp -r "$src" "$dest_dir/"
+            echo "    ✓ $f"
+        fi
+    done
+
+    echo "  Backup complete → $backup_dir"
+    echo "  Restore with: cp -r $backup_dir/. ~/"
 }
 
 # ─── Step 1: System requirements ──────────────────────────────────
@@ -233,6 +285,10 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     echo "  OS: macOS"
     install_xcode_tools
 fi
+
+# Step 0: Backup existing dotfiles before making changes
+$SKIP_BACKUP && export BACKUP_DISABLE=1
+backup_dotfiles
 
 install_brew
 install_zsh_plugins
