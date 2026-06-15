@@ -130,9 +130,9 @@ install_brew() {
     # Source brew shellenv regardless of how brew was installed
     # (needed because freshly-installed brew isn't in PATH yet)
     if [[ "$(uname -m)" == "arm64" ]] && [[ "$OSTYPE" == "darwin"* ]]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)" 2>/dev/null
+        eval "$(/opt/homebrew/bin/brew shellenv)"
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" 2>/dev/null
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     fi
 
     if ! command_exists brew; then
