@@ -2,8 +2,6 @@
 
 Personal dotfiles for macOS (primary), Linux (secondary). Zsh + Oh My Zsh + Powerlevel10k.
 
-> Forked/stolen from [alrra/dotfiles](https://github.com/alrra/dotfiles) and [Lucatronlk/dotfiles-ubuntu](https://github.com/Lucatronlk/dotfiles-ubuntu).
-
 ## Quick Install (fresh machine)
 
 **Stable (main):**
