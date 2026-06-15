@@ -1,1 +1,16 @@
+# Brew
 .brewfile.lock.json
+
+# Local overrides (machine-specific, not tracked)
+.zshrc.local
+.gitconfig.local
+.vimrc.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~

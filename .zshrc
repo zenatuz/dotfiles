@@ -1,124 +1,72 @@
-# Enable auto-update for Oh My Zsh
-zstyle ':omz:update' mode auto
+# ═══════════════════════════════════════════════════════════════════
+# Zsh Configuration — Starship Prompt
+# ═══════════════════════════════════════════════════════════════════
 
-# This will check for updates every 7 days
-zstyle ':omz:update' frequency 7
-
-# Compinstall - Shell completion
-zstyle :compinstall filename '~/.zshrc'
+# ─── Completions ─────────────────────────────────────────────────
 autoload -Uz compinit
 compinit
 
 autoload bashcompinit
 bashcompinit
 
-# Disable error message: Insecure completion-dependent directories detected
-# https://pascalnaber.wordpress.com/2019/10/05/have-a-great-looking-terminal-and-a-more-effective-shell-with-oh-my-zsh-on-wsl-2-using-windows/
-ZSH_DISABLE_COMPFIX=true
+# ─── Starship Prompt ──────────────────────────────────────────────
+eval "$(starship init zsh)"
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# ─── ZSH Plugins ─────────────────────────────────────────────────
+test -f ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh \
+  && source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+test -f ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  && source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# SET ZSH THEME
-source ~/.zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
-
-# Load p10k theme settings
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Load ZSH Plugins
-test -f ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh &&  source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-test -f ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh && source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-test -f ~/.zsh/plugins/git.plugin.zsh && source ~/.zsh/plugins/git.plugin.zsh
-
-plugins=(
-  git
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-)
-
-# Load ZSH Auto-completion
-
-# Load other stuff
-[[ ! -f ~/.kubecm ]] || source ~/.kubecm
+# ─── fzf (key bindings + completions) ─────────────────────────────
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# FIX WSL2 INTEROP
-# https://github.com/microsoft/WSL/issues/5065
-
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    fix_wsl2_interop() {
-        for i in $(pstree -np -s $$ | grep -o -E '[0-9]+'); do
-            if [[ -e "/run/WSL/${i}_interop" ]]; then
-                export WSL_INTEROP=/run/WSL/${i}_interop
-            fi
-        done
-    }
-fi
-
-# History file
-SAVEHIST=10000  # Save 10k lines in history file
+# ─── History ──────────────────────────────────────────────────────
+SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
-# Aliases and Functions
-test -f  ~/.zsh/zsh-custom.sh && source ~/.zsh/zsh-custom.sh
+# ─── Aliases & Functions ─────────────────────────────────────────
+test -f ~/.zsh/zsh-custom.sh && source ~/.zsh/zsh-custom.sh
 
-# Start ssh-agent to share ssh keys with remote container on VSCODE » https://code.visualstudio.com/docs/remote/containers#_using-ssh-keys
-if [ -z "$SSH_AUTH_SOCK" ]; then
-   # Check for a currently running instance of the agent
-   RUNNING_AGENT="`ps -ax | grep 'ssh-agent -s' | grep -v grep | wc -l | tr -d '[:space:]'`"
-   if [ "$RUNNING_AGENT" = "0" ]; then
-        # Launch a new instance of the agent
-        ssh-agent -s &> $HOME/.ssh/ssh-agent
-   fi
-   eval `cat $HOME/.ssh/ssh-agent` > /dev/null
+# ─── SSH Agent ───────────────────────────────────────────────────
+# macOS handles ssh-agent via keychain automatically.
+# This only starts it for Linux/WSL where it's not managed.
+if [[ "$OSTYPE" != "darwin"* ]] && [ -z "$SSH_AUTH_SOCK" ]; then
+  ssh-agent -s &> $HOME/.ssh/ssh-agent
+  eval "$(cat $HOME/.ssh/ssh-agent)" > /dev/null
 fi
-# To verify the key inside the remote container or host, type: ssh-add -l
 
-
-# Bind Keys - Mac
-# https://medium.com/@elhayefrat/how-to-fix-the-home-and-end-buttons-for-an-external-keyboard-in-mac-4da773a0d3a2
-
+# ─── Key Bindings ────────────────────────────────────────────────
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 
-# PATH
+# ─── PATH ────────────────────────────────────────────────────────
 export PATH=$PATH:~/bin
 
-# Set Defaul Platform for Docker
-export DOCKER_DEFAULT_PLATFORM=linux/amd64
-
-# Load Brew
+# ─── Brew (macOS ARM / Linux) ────────────────────────────────────
+test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
 test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Load Krew
+# ─── Krew (kubectl plugins) ─────────────────────────────────────
 test -d ${HOME}/.krew/bin && export PATH="${PATH}:${HOME}/.krew/bin"
 
-# Load kube-ps1
-test -f /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh && source /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh
+# ─── Mcfly (shell history) ───────────────────────────────────────
+if command -v mcfly &> /dev/null; then
+  eval "$(mcfly init zsh)"
+fi
 
-# Load Mcfly
-eval "$(mcfly init zsh)"
+# ─── Zoxide (smarter cd) ─────────────────────────────────────────
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init zsh)"
+fi
 
-# Startup commands
-# yadm pull > /dev/null
+# ─── MySQL Client ────────────────────────────────────────────────
+test -d /opt/homebrew/opt/mysql-client/ \
+  && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
-test -d /opt/homebrew/opt/mysql-client/ && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+# ─── Rancher Desktop ─────────────────────────────────────────────
+test -d ~/.rd/bin && export PATH="$HOME/.rd/bin:$PATH"
 
-(( ! ${+functions[p10k]} )) || p10k finalize
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="${HOME}/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
-# kubeswitch
-INSTALLATION_PATH=$(brew --prefix switch) && source $INSTALLATION_PATH/switch.sh
-
-# Unset context for current session
-# nohup switch -u 2>&1 > /dev/null
+# ─── Local overrides (machine-specific, not tracked) ────────────
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
