@@ -12,7 +12,6 @@ alias aliases="cat ~/.zsh/zsh-custom.sh"
 alias ls="eza --icons --group-directories-first"
 alias ll="ls -l"
 alias la="ls -la"
-alias lla="ls -la"
 
 # ─── Modern tool replacements ──────────────────────────────────────
 alias cat="bat"
@@ -40,7 +39,6 @@ alias k="kubectl"
 alias kctx="kubectx"
 alias kns="kubens"
 alias k9s="k9s -A"
-alias k9s-all="k9s -A"
 alias stern="stern --tail 50"
 
 # ─── Local clusters ───────────────────────────────────────────────

@@ -38,7 +38,6 @@ brew "warrensbox/tap/tfswitch"      # Terraform version switcher
 brew "helm"                         # Kubernetes package manager
 brew "k9s"                          # Kubernetes TUI
 brew "krew"                         # kubectl plugin manager
-brew "kube-ps1"                     # Kubernetes context in prompt
 brew "kubectx"                      # Switch k8s contexts + namespaces (includes kubens)
 brew "kubeconform"                  # Kubernetes manifest validation
 brew "kubent"                       # Detect deprecated k8s APIs
