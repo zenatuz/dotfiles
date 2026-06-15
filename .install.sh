@@ -6,6 +6,9 @@
 
 set -e
 
+# Always work from the user's home directory
+cd "$HOME"
+
 # ─── REPO URLS ────────────────────────────────────────────────────
 # Pass a branch name as first argument to test a branch (e.g. `mac-migration`).
 # Pass --skip-backup to skip backing up current dotfiles.
