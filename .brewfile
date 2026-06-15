@@ -85,7 +85,6 @@ if OS.mac?
   # Mac App Store (only available here, no cask alternative)
   mas "Amphetamine", id: 937984704                  # Keep Mac awake
   mas "Azure VPN Client", id: 1553936137           # Azure VPN
-  mas "MenubarClock", id: 492167985                # Clock in menu bar
   mas "Unsplash Wallpapers", id: 1284863847        # Wallpaper app
   mas "Lightshot Screenshot", id: 526298438        # Screenshot tool
 end
