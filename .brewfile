@@ -99,7 +99,6 @@ if OS.mac?
   mas "MeetingBar", id: 1532419400                 # Meeting status bar
   mas "Microsoft Remote Desktop", id: 1295203466   # RDP client
   mas "MenubarClock", id: 492167985                # ? — Clock in menu bar
-  mas "Telegram", id: 747648890                    # Messaging
   mas "Unsplash Wallpapers", id: 1284863847        # ? — Wallpaper app
   mas "Lightshot Screenshot", id: 526298438        # ? — Screenshot tool
 end
