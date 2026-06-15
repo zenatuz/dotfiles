@@ -105,7 +105,7 @@ sigint_symbol = "🚦"
 signal_symbol = "⚡"
 map_symbol = true
 recognize_signal_code = true
-piped = true
+pipestatus = true
 
 # ─── Time ──────────────────────────────────────────────────────────
 [time]
