@@ -63,7 +63,6 @@ alias c="clear"
 alias h="history"
 alias hg="history | grep"
 alias path='echo "${PATH//:/\n}"'
-alias fixhistory="cd ~;mv .zsh_history .zsh_history_bad;strings -eS .zsh_history_bad > .zsh_history;fc -R .zsh_history"
 alias update="brew update && brew upgrade && brew cleanup"
 alias ip="curl -s https://checkip.amazonaws.com 2>/dev/null || echo 'checkip unavailable'"
 alias localip="ipconfig getifaddr en0 2>/dev/null || hostname -I 2>/dev/null | awk '{print \$1}'"
@@ -145,31 +144,27 @@ docker_clean_images() {
 # ─── K8s: clean old jobs and error pods ──────────────────────────
 k8s_clean_jobs() {
     echo "deleting Error pods"
-    kubectl get pods | awk 'IF $3 == "Error" { print $1}' | while read pod; do
-        echo $pod
-        kubectl delete pod $pod
+    kubectl get pods | awk '{if ($3 == "Error") print $1}' | while read pod; do
+        echo "$pod"
+        kubectl delete pod "$pod"
     done
     echo "deleting ContainerCannotRun pods"
-    kubectl get pods | awk 'IF $3 == "ContainerCannotRun" { print $1}' | while read pod; do
-        echo $pod
-        kubectl delete pod $pod
+    kubectl get pods | awk '{if ($3 == "ContainerCannotRun") print $1}' | while read pod; do
+        echo "$pod"
+        kubectl delete pod "$pod"
     done
-    echo "deleting incomplete jobs older then 1h"
-    kubectl get jobs | awk 'IF $2 == "0/1"  && $4 ~ /h|d/ {print $1}' | while read job; do
-        echo $job
-        kubectl delete job $job
+    echo "deleting incomplete jobs older than 1h"
+    kubectl get jobs | awk '{if ($2 == "0/1" && $4 ~ /h|d/) print $1}' | while read job; do
+        echo "$job"
+        kubectl delete job "$job"
     done
-    echo "deleting complete jobs older then 1d"
-    kubectl get jobs | awk 'IF $2 == "1/1"  && $4 ~ /d/ {print $1}' | while read job; do
-        echo $job
-        kubectl delete job $job
+    echo "deleting complete jobs older than 1d"
+    kubectl get jobs | awk '{if ($2 == "1/1" && $4 ~ /d/) print $1}' | while read job; do
+        echo "$job"
+        kubectl delete job "$job"
     done
 }
 
-# ─── K8s: get pods with readiness gates (ALB ingress) ────────────
-k8s_get_pods_alb() {
-    kubectl get pods -o wide -A | awk '{if ($10 != "<none>") print $0}'
-}
 
 # ─── Utils: curl status code ─────────────────────────────────────
 curl_sc() {

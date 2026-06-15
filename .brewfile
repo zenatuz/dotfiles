@@ -73,7 +73,7 @@ if OS.mac?
 
   # Apps (casks)
   cask "1password"                  # Password manager
-  cask "font-meslo-lg-nerd-font"    # Nerd Font for Powerlevel10k
+  cask "font-meslo-lg-nerd-font"    # Nerd Font for Starship + terminal icons
   cask "iterm2"                     # Terminal emulator
   cask "raycast"                    # Spotlight replacement / launcher
   cask "rectangle"                  # Window management

@@ -172,15 +172,24 @@ create_local_configs() {
     if [[ ! -f "$HOME/.gitconfig.local" ]]; then
         echo ""
         echo "  ─── Git local config ───"
-        echo "  ~/.gitconfig.local not found. Let's set your identity:"
-        read -p "  Name: " git_name
-        read -p "  Email: " git_email
-        cat > "$HOME/.gitconfig.local" <<-EOF
+        echo "  ~/.gitconfig.local not found."
+        echo "  Set your identity after install with:"
+        echo '    git config --file ~/.gitconfig.local user.name "Your Name"'
+        echo '    git config --file ~/.gitconfig.local user.email "your@email.com"'
+        echo ""
+        # Interactive prompt only works with a real terminal (not curl | bash)
+        if [[ -t 0 ]]; then
+            read -p "  Name: " git_name
+            read -p "  Email: " git_email
+            cat > "$HOME/.gitconfig.local" <<-EOF
 [user]
     name = $git_name
     email = $git_email
 EOF
-        echo "  Created ~/.gitconfig.local"
+            echo "  Created ~/.gitconfig.local from your input."
+        else
+            echo "  (non-interactive mode — create manually after install)"
+        fi
     else
         echo "  ~/.gitconfig.local already exists. Skipping."
     fi

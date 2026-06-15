@@ -42,7 +42,6 @@ bindkey "^[[F" end-of-line
 
 # ─── PATH ────────────────────────────────────────────────────────
 export PATH=$PATH:~/bin
-export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
 # ─── Brew (macOS ARM / Linux) ────────────────────────────────────
 test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
