@@ -18,10 +18,6 @@ alias lla="ls -la"
 alias cat="bat"
 alias grep="rg"
 alias find="fd"
-alias du="dust"
-alias ps="procs"
-alias top="btm"
-alias df="duf"
 
 # ─── Git ──────────────────────────────────────────────────────────
 alias g="git"
@@ -38,7 +34,6 @@ alias gb="git branch"
 alias gm="git merge"
 alias gr="git rebase"
 alias gst="git stash"
-alias lazyg="lazygit"
 
 # ─── Kubernetes ───────────────────────────────────────────────────
 alias k="kubectl"
@@ -49,8 +44,8 @@ alias k9s-all="k9s -A"
 alias stern="stern --tail 50"
 
 # ─── Local clusters ───────────────────────────────────────────────
-alias k9s-orb="k9s --context orbstack"
-alias kctx-orb="kubectx orbstack"
+alias k9s-rch="k9s --context rancher-desktop"
+alias kctx-rch="kubectx rancher-desktop"
 
 # ─── Docker / Containers ──────────────────────────────────────────
 alias d-up="docker compose up --remove-orphans"

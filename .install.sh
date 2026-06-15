@@ -26,10 +26,6 @@ print_header() {
     echo "========================================"
 }
 
-print_subheader() {
-    echo "  --- $1 ---"
-}
-
 # ─── Step 1: System requirements ──────────────────────────────────
 install_ubuntu_packages() {
     print_header "Installing Ubuntu requirements"

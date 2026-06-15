@@ -35,8 +35,6 @@ This will install:
 | [fzf](https://github.com/junegunn/fzf) | Fuzzy finder | Ctrl+R, Ctrl+T, fuzzy everything |
 | [mcfly](https://github.com/cantino/mcfly) | Shell history | Smart suggestions with AI |
 | [starship](https://starship.rs/) | Prompt | Cross-shell, fast, infinitely customizable |
-| [bottom](https://github.com/ClementTsang/bottom) | System monitor | `btm` — better than `top` |
-| [dust](https://github.com/bootandy/dust) | Disk usage | `du` but visual |
 | [git-delta](https://github.com/dandavison/delta) | Git diff | Syntax-highlighted, side-by-side |
 
 ### Kubernetes & Cloud (Azure)
