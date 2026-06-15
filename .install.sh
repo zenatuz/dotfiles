@@ -89,18 +89,9 @@ install_brew() {
     fi
 }
 
-# ─── Step 3: oh-my-zsh + plugins ──────────────────────────────────
-install_oh_my_zsh() {
-    print_header "Installing oh-my-zsh and plugins"
-
-    if ! dir_exists "$HOME/.oh-my-zsh"; then
-        echo "  Installing oh-my-zsh..."
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-    else
-        echo "  oh-my-zsh already installed."
-    fi
-
-    print_subheader "ZSH plugins"
+# ─── Step 3: ZSH plugins (zsh-autosuggestions, syntax-highlighting) ─
+install_zsh_plugins() {
+    print_header "Installing ZSH plugins"
 
     if ! dir_exists "$HOME/.zsh/plugins/zsh-autosuggestions"; then
         echo "  Installing zsh-autosuggestions..."
@@ -117,14 +108,16 @@ install_oh_my_zsh() {
     fi
 }
 
-# ─── Step 4: Powerlevel10k ───────────────────────────────────────
-install_powerlevel10k() {
-    print_header "Installing Powerlevel10k theme"
-    if ! dir_exists "$HOME/.zsh/themes/powerlevel10k"; then
-        echo "  Installing..."
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh/themes/powerlevel10k/
-    else
-        echo "  Powerlevel10k already installed."
+# ─── Step 4: Starship prompt ───────────────────────────────────────
+install_starship() {
+    print_header "Installing Starship prompt"
+    if command_exists brew; then
+        if ! command_exists starship; then
+            echo "  Installing Starship..."
+            brew install starship
+        else
+            echo "  Starship already installed."
+        fi
     fi
 }
 
@@ -237,8 +230,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 install_brew
-install_oh_my_zsh
-install_powerlevel10k
+install_zsh_plugins
+install_starship
 install_brew_packages
 install_helm_plugins
 create_local_configs
@@ -252,6 +245,6 @@ echo ""
 echo "  Next steps:"
 echo "    1. Restart your terminal or run: source ~/.zshrc"
 echo "    2. (macOS) Rancher Desktop will be installed for K8s/Docker"
-echo "    3. Run p10k configure to customize your prompt"
+echo "    3. Customize prompt by editing ~/.config/starship.toml"
 echo "    4. Set up local overrides in ~/.zshrc.local (optional)"
 echo ""

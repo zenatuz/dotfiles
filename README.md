@@ -1,6 +1,6 @@
 # Zenatuz Dotfiles 🚀
 
-Personal dotfiles for macOS (primary), Linux (secondary). Zsh + Oh My Zsh + Powerlevel10k.
+Personal dotfiles for macOS (primary), Linux (secondary). Zsh + Starship.
 
 ## Quick Install (fresh machine)
 
@@ -16,8 +16,8 @@ curl -fsSL https://raw.githubusercontent.com/zenatuz/dotfiles/mac-migration/.ins
 
 This will install:
 - **Homebrew** + packages from `.brewfile`
-- **Oh My Zsh** + plugins (autosuggestions, syntax-highlighting)
-- **Powerlevel10k** theme
+- **Starship** prompt
+- **ZSH plugins** (autosuggestions, syntax-highlighting)
 - **Helm plugins** (diff, secrets, git)
 - Clone dotfiles with **yadm**
 
@@ -34,6 +34,7 @@ This will install:
 | [fd](https://github.com/sharkdp/fd) | `find` replacement | Fast, intuitive |
 | [fzf](https://github.com/junegunn/fzf) | Fuzzy finder | Ctrl+R, Ctrl+T, fuzzy everything |
 | [mcfly](https://github.com/cantino/mcfly) | Shell history | Smart suggestions with AI |
+| [starship](https://starship.rs/) | Prompt | Cross-shell, fast, infinitely customizable |
 | [bottom](https://github.com/ClementTsang/bottom) | System monitor | `btm` — better than `top` |
 | [dust](https://github.com/bootandy/dust) | Disk usage | `du` but visual |
 | [git-delta](https://github.com/dandavison/delta) | Git diff | Syntax-highlighted, side-by-side |
@@ -87,9 +88,6 @@ This will install:
 # Once everything is installed, restart your terminal
 # or source the config
 source ~/.zshrc
-
-# Customize prompt
-p10k configure
 
 # Set your git identity (create ~/.gitconfig.local)
 git config --file ~/.gitconfig.local user.name "Your Name"
@@ -152,14 +150,15 @@ yadm pull
 ```
 .
 ├── .brewfile          # Homebrew packages (macOS + Linux)
+├── .config/
+│   └── starship.toml  # Starship prompt configuration
 ├── .editorconfig      # Editor settings
 ├── .gitconfig         # Git configuration (with delta, aliases)
 ├── .gitignore         # Git ignore rules
 ├── .helmlist          # Helm plugins
 ├── .install.sh        # One-shot setup script
-├── .p10k.zsh          # Powerlevel10k theme
 ├── .vimrc             # Neovim/Vim config
-├── .zshrc             # Zsh configuration (main)
+├── .zshrc             # Zsh configuration
 ├── .zsh/
 │   ├── zsh-custom.sh  # Aliases & functions
 │   └── plugins/       # Zsh plugins (autosuggestions, syntax-highlighting)
