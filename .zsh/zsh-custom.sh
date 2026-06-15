@@ -72,73 +72,11 @@ alias ports="lsof -i -P -n | grep LISTEN"
 # FUNCTIONS
 # ═══════════════════════════════════════════════════════════════════
 
-# ─── Git: pull all repos in current directory ─────────────────────
-git_pull_current() {
-    R='\033[0;31m'
-    G='\033[0;32m'
-    NOCOLOR='\033[0m'
-
-    CURRENT_DIR=$(pwd)
-    echo "----------------------------------------"
-    for DIR in $(find $CURRENT_DIR -maxdepth 2 -name .git -type d | sort | rev | cut -d "/" -f2 | rev); do
-        cd "$CURRENT_DIR/$DIR"
-        CURRENT_BRANCH=$(git branch --show-current)
-        echo "Updating '$DIR'"
-
-        if [[ $CURRENT_BRANCH != "master" ]]; then
-            echo "Current branch:$R $CURRENT_BRANCH $NOCOLOR"
-        else
-            echo "Current branch:$G $CURRENT_BRANCH $NOCOLOR"
-        fi
-
-        git fetch origin && git pull && cd ..
-        echo "----------------------------------------"
-    done
-    cd $CURRENT_DIR
-}
-
-# ─── Git: show repo details ──────────────────────────────────────
-git_details() {
-    R='\033[0;31m'
-    G='\033[0;32m'
-    O='\033[0;33m'
-    Y='\033[1;33m'
-    NOCOLOR='\033[0m'
-
-    for i in $(find . -maxdepth 2 -name .git -type d | sort); do
-        REPOSITORY=$(echo $i | cut -d '/' -f2)
-        URL=$(git --git-dir=$i --work-tree $i config --get remote.origin.url)
-        CURRENT_BRANCH=$(git --git-dir=$i --work-tree $i branch --show-current)
-
-        echo "Repo Name:$Y $REPOSITORY $NOCOLOR"
-
-        if [[ $CURRENT_BRANCH != "master" ]]; then
-            echo "Current branch:$R $CURRENT_BRANCH $NOCOLOR"
-        else
-            echo "Current branch:$G $CURRENT_BRANCH $NOCOLOR"
-        fi
-
-        echo "Repo URL:$O $URL $NOCOLOR"
-        echo "------------------------------"
-    done
-}
-
 # ─── Git: remove merged branches ─────────────────────────────────
 git_remove_merged() {
     git branch --merged >/tmp/merged-branches &&
         vi /tmp/merged-branches &&
         xargs git branch -d </tmp/merged-branches
-}
-
-# ─── Docker: clean all containers ────────────────────────────────
-docker_clean_containers() {
-    docker container stop $(docker container ls -aq)
-    docker container rm $(docker container ls -aq)
-}
-
-# ─── Docker: prune images ────────────────────────────────────────
-docker_clean_images() {
-    docker image prune -a
 }
 
 # ─── K8s: clean old jobs and error pods ──────────────────────────
@@ -164,8 +102,6 @@ k8s_clean_jobs() {
         kubectl delete job "$job"
     done
 }
-
-
 # ─── Utils: curl status code ─────────────────────────────────────
 curl_sc() {
     URL=$1
