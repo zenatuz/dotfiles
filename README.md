@@ -6,8 +6,14 @@ Personal dotfiles for macOS (primary), Linux/WSL (secondary). Zsh + Oh My Zsh + 
 
 ## Quick Install (fresh machine)
 
+**Stable (main):**
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/zenatuz/dotfiles/main/.install.sh)"
+```
+
+**Test a branch (e.g. `mac-migration`):**
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/zenatuz/dotfiles/mac-migration/.install.sh)" -- mac-migration
 ```
 
 This will install:

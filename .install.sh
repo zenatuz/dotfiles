@@ -7,9 +7,14 @@
 set -e
 
 # ─── REPO URLS ────────────────────────────────────────────────────
-BREWFILE_URL="https://raw.githubusercontent.com/zenatuz/dotfiles/main/.brewfile"
-HELMLIST_URL="https://raw.githubusercontent.com/zenatuz/dotfiles/main/.helmlist"
+# Pass a branch name as first argument to test a branch (e.g. `mac-migration`).
+# Defaults to `main` for production use.
+BRANCH="${1:-main}"
+
+BREWFILE_URL="https://raw.githubusercontent.com/zenatuz/dotfiles/$BRANCH/.brewfile"
+HELMLIST_URL="https://raw.githubusercontent.com/zenatuz/dotfiles/$BRANCH/.helmlist"
 DOTFILES_REPO="https://github.com/zenatuz/dotfiles.git"
+DOTFILES_BRANCH="$BRANCH"
 
 # ─── Helpers ──────────────────────────────────────────────────────
 command_exists() { command -v "$1" >/dev/null 2>&1; }
@@ -203,7 +208,7 @@ clone_dotfiles() {
             yadm pull
         else
             echo "  Cloning dotfiles with yadm..."
-            yadm clone "$DOTFILES_REPO"
+            yadm clone --branch "$DOTFILES_BRANCH" "$DOTFILES_REPO"
         fi
     else
         echo "  yadm not installed yet. Installing..."
