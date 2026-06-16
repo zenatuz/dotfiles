@@ -71,7 +71,7 @@ if OS.mac?
   # Apps (casks) — homebrew/cask is built-in, no tap needed
   cask "1password"                  # Password manager
   cask "font-meslo-lg-nerd-font"    # Nerd Font for Starship + terminal icons
-  cask "ghostty"                     # GPU-accelerated terminal (replaces iterm2)
+  cask "ghostty"                    # GPU-accelerated terminal (replaces iterm2)
   cask "iterm2"                     # Terminal emulator
   cask "raycast"                    # Spotlight replacement / launcher
   cask "rectangle"                  # Window management
@@ -83,7 +83,6 @@ if OS.mac?
   cask "monitorcontrol"             # External monitor controls
   cask "rancher"                    # Kubernetes desktop (Docker Desktop alternative)
   cask "stats"                      # System monitor in menu bar
-
   cask "browserosaurus"             # Browser chooser per-link
   cask "meetingbar"                 # Next meeting in menu bar
   cask "microsoft-remote-desktop"   # RDP client
