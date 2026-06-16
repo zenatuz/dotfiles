@@ -38,7 +38,7 @@ This will install:
 
 | Tool | What |
 |------|------|
-| `kubectl` via [krew](https://krew.sigs.k8s.io/) | Plugin manager |
+| [krew](https://krew.sigs.k8s.io/) | kubectl plugin manager |
 | [k9s](https://k9scli.io/) | Kubernetes TUI |
 | [kubectx](https://github.com/ahmetb/kubectx) | Context/namespace switcher |
 | [stern](https://github.com/stern/stern) | Multi-pod log tailing |
@@ -52,15 +52,15 @@ This will install:
 | [trivy](https://github.com/aquasecurity/trivy) | Container/vuln scanner |
 | [dive](https://github.com/wagoodman/dive) | Docker image layers |
 | [kind](https://kind.sigs.k8s.io/) | K8s in Docker (local clusters) |
-| Azure CLI + `aztfexport` | Azure resource export |
+| [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/) | Azure resource management + export |
 
 ### Infrastructure as Code
 
 | Tool | What |
 |------|------|
-| `tenv` | Terraform/OpenTofu version management |
-| `terraform-docs` | Auto-generate docs |
-| `terraform-ls` | LSP for VS Code/Neovim |
+| [tenv](https://github.com/tofuutils/tenv) | Terraform/OpenTofu version manager |
+| [terraform-docs](https://terraform-docs.io/) | Auto-generate Terraform docs |
+| [terraform-ls](https://github.com/hashicorp/terraform-ls) | Terraform Language Server |
 | [checkov](https://www.checkov.io/) | IaC security scanning |
 
 ### macOS Apps (via Brew Bundle)
