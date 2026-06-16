@@ -86,10 +86,10 @@ if OS.mac?
   cask "browserosaurus"             # Browser chooser per-link
   cask "meetingbar"                 # Next meeting in menu bar
   cask "microsoft-remote-desktop"   # RDP client
+  cask "ksnip"                      # Screenshot & annotation tool (free, open-source)
 
   # Mac App Store (only available here, no cask alternative)
-  mas "Amphetamine", id: 937984704                  # Keep Mac awake
-  mas "Azure VPN Client", id: 1553936137           # Azure VPN
-  mas "Unsplash Wallpapers", id: 1284863847        # Wallpaper app
-  cask "ksnip"                       # Screenshot & annotation tool (free, open-source)
+  mas "Amphetamine", id: 937984704                   # Keep Mac awake
+  mas "Azure VPN Client", id: 1553936137             # Azure VPN
+  mas "Unsplash Wallpapers", id: 1284863847          # Wallpaper app
 end
