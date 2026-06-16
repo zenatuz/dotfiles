@@ -1,3 +1,15 @@
+" ─── Visual ──────────────────────────────────────────────────
+set number
+set cursorline
+syntax on
+
+" ─── Behaviour ─────────────────────────────────────────────
+set incsearch
+set hlsearch
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+
 " Home/End keys for external keyboards
 map  <C-A> <Home>
 imap <C-A> <Home>

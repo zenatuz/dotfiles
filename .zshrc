@@ -9,8 +9,28 @@ compinit
 autoload bashcompinit
 bashcompinit
 
+# ─── Azure CLI Completion ────────────────────────────────────────
+test -f /opt/homebrew/share/zsh/site-functions/_az && source /opt/homebrew/share/zsh/site-functions/_az
+
+# ─── kubectl Completion ──────────────────────────────────────────
+if command -v kubectl &> /dev/null; then
+  source <(kubectl completion zsh)
+fi
+
 # ─── Starship Prompt ──────────────────────────────────────────────
 eval "$(starship init zsh)"
+
+# ─── Transient Prompt (replace with ❯ after Enter) ────────────────
+function _starship_transient_prompt() {
+  print -n '\r\e[K'
+  print -Pn '%B%F{green}❯%f%b '
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook preexec _starship_transient_prompt
+
+# ─── Window Title (show current dir) ──────────────────────────────
+function set_win_title() { echo -ne "\033]0; ${PWD/#$HOME/~} \007" }
+precmd_functions+=(set_win_title)
 
 # ─── ZSH Plugins ─────────────────────────────────────────────────
 test -f ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh \
