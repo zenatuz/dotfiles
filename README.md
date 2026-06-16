@@ -1,32 +1,30 @@
 # Zenatuz Dotfiles 🚀
 
-Personal dotfiles for macOS (primary), Linux (secondary). Zsh + Starship.
+Personal dotfiles for **DevOps Engineer** — macOS (primary), Linux (secondary).  
+Terminal: **Ghostty** + **Starship** prompt with Kubernetes, Azure, Terraform modules.
 
 ## Quick Install (fresh machine)
 
-**Stable (main):**
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/zenatuz/dotfiles/main/.install.sh)"
 ```
 
-**Test a branch (e.g. `mac-migration`):**
-```bash
-curl -fsSL https://raw.githubusercontent.com/zenatuz/dotfiles/mac-migration/.install.sh | bash -s -- mac-migration
-```
-
 This will install:
 - **Homebrew** + packages from `.brewfile`
-- **Starship** prompt
+- **Ghostty** terminal (GPU-accelerated)
+- **Starship** prompt with DevOps modules
 - **ZSH plugins** (autosuggestions, syntax-highlighting)
 - **Helm plugins** (diff, secrets, git)
 - Clone dotfiles with **yadm**
 
 ## What's Included
 
-### Shell
+### Shell & Terminal
 
 | Tool | What | Why |
 |------|------|-----|
+| [Ghostty](https://ghostty.org/) | Terminal emulator | GPU-accelerated, native macOS |
+| [Starship](https://starship.rs/) | Prompt | Kubernetes, Azure, Terraform modules |
 | [eza](https://eza.rocks/) | `ls` replacement | Icons, colors, tree view |
 | [zoxide](https://github.com/ajeetdsouza/zoxide) | Smarter `cd` | Learn your habits, jump anywhere |
 | [bat](https://github.com/sharkdp/bat) | `cat` replacement | Syntax highlighting, line numbers |
@@ -34,7 +32,6 @@ This will install:
 | [fd](https://github.com/sharkdp/fd) | `find` replacement | Fast, intuitive |
 | [fzf](https://github.com/junegunn/fzf) | Fuzzy finder | Ctrl+R, Ctrl+T, fuzzy everything |
 | [mcfly](https://github.com/cantino/mcfly) | Shell history | Smart suggestions with AI |
-| [starship](https://starship.rs/) | Prompt | Cross-shell, fast, infinitely customizable |
 | [git-delta](https://github.com/dandavison/delta) | Git diff | Syntax-highlighted, side-by-side |
 
 ### Kubernetes & Cloud (Azure)
@@ -68,15 +65,24 @@ This will install:
 
 ### macOS Apps (via Brew Bundle)
 
+- [Ghostty](https://ghostty.org/) — GPU-accelerated terminal emulator
 - [Rancher Desktop](https://rancherdesktop.io/) — Kubernetes + Docker Desktop alternative
 - [Raycast](https://raycast.com/) — Spotlight replacement
 - [Rectangle](https://rectangleapp.com/) — Window management
 - [Ice](https://github.com/jordanbaird/Ice) — Menu bar manager
 - [Stats](https://github.com/exelban/Stats) — System monitor menu bar
-- [iTerm2](https://iterm2.com/) — Terminal emulator
 - [1Password](https://1password.com/) — Password manager
 - [Amphetamine](https://apps.apple.com/app/id937984704) — Keep Mac awake
 - Azure VPN Client, Microsoft Remote Desktop
+
+## Starship Prompt
+
+The prompt is optimized for DevOps workflows with modules shown on demand:
+
+- **Left side**: username, hostname, directory, git, terraform, docker context, command duration, exit status
+- **Right side**: Kubernetes context (`󰥋`), Azure subscription (``), battery, time
+- **Transient prompt**: full prompt replaced by `❯` after pressing Enter (cleaner output)
+- **Notifications**: long-running commands (>30s) notify when terminal is unfocused
 
 ## Manual Setup
 
@@ -149,13 +155,19 @@ yadm pull
 .
 ├── .brewfile          # Homebrew packages (macOS + Linux)
 ├── .config/
-│   └── starship.toml  # Starship prompt configuration
+│   ├── ghostty/
+│   │   └── config     # Ghostty terminal config (theme, font, opacity)
+│   ├── nvim/
+│   │   └── init.vim   # Neovim config (sources .vimrc)
+│   └── starship.toml  # Starship prompt with k8s/azure/terraform
 ├── .editorconfig      # Editor settings
 ├── .gitconfig         # Git configuration (with delta, aliases)
 ├── .gitignore         # Git ignore rules
 ├── .helmlist          # Helm plugins
 ├── .install.sh        # One-shot setup script
-├── .vimrc             # Neovim/Vim config
+├── .ssh/
+│   └── config         # SSH hosts (GitHub, Azure DevOps)
+├── .vimrc             # Vim/Neovim config (line numbers, syntax, indentation)
 ├── .zshrc             # Zsh configuration
 ├── .zsh/
 │   ├── zsh-custom.sh  # Aliases & functions
