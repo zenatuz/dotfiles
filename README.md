@@ -36,44 +36,47 @@ This will install:
 
 ### Kubernetes & Cloud (Azure)
 
-| Tool | What |
-|------|------|
-| [krew](https://krew.sigs.k8s.io/) | kubectl plugin manager |
-| [k9s](https://k9scli.io/) | Kubernetes TUI |
-| [kubectx](https://github.com/ahmetb/kubectx) | Context/namespace switcher |
-| [stern](https://github.com/stern/stern) | Multi-pod log tailing |
-| [popeye](https://popeyecli.io/) | Cluster sanitizer |
-| [kube-linter](https://github.com/stackrox/kube-linter) | Manifest linting |
-| [kubeconform](https://github.com/yannh/kubeconform) | Schema validation |
-| [nova](https://github.com/FairwindsOps/nova) | Outdated Helm charts |
-| [pluto](https://github.com/FairwindsOps/pluto) | Deprecated K8s APIs |
-| [kubent](https://github.com/doitintl/kube-no-trouble) | K8s API deprecations |
-| [helm](https://helm.sh/) | Package manager |
-| [trivy](https://github.com/aquasecurity/trivy) | Container/vuln scanner |
-| [dive](https://github.com/wagoodman/dive) | Docker image layers |
-| [kind](https://kind.sigs.k8s.io/) | K8s in Docker (local clusters) |
-| [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/) | Azure resource management + export |
+| Tool | What | Why |
+|------|------|-----|
+| [krew](https://krew.sigs.k8s.io/) | kubectl plugin manager | Discover and install k8s plugins |
+| [k9s](https://k9scli.io/) | Kubernetes TUI | Cluster management from terminal |
+| [kubectx](https://github.com/ahmetb/kubectx) | Context/namespace switcher | Fast cluster hopping |
+| [stern](https://github.com/stern/stern) | Multi-pod log tailing | Aggregate logs across pods |
+| [popeye](https://popeyecli.io/) | Cluster sanitizer | Best practices & security checks |
+| [kube-linter](https://github.com/stackrox/kube-linter) | Manifest linting | Catch misconfigs before deploy |
+| [kubeconform](https://github.com/yannh/kubeconform) | Schema validation | Validate against K8s schemas |
+| [nova](https://github.com/FairwindsOps/nova) | Outdated Helm charts | Detect stale charts in clusters |
+| [pluto](https://github.com/FairwindsOps/pluto) | Deprecated K8s APIs | Find removed API versions |
+| [kubent](https://github.com/doitintl/kube-no-trouble) | K8s API deprecations | Prevent upgrade breakage |
+| [helm](https://helm.sh/) | Package manager | Deploy and manage charts |
+| [trivy](https://github.com/aquasecurity/trivy) | Container/vuln scanner | Scan images, IaC, repos |
+| [dive](https://github.com/wagoodman/dive) | Docker image layers | Inspect layer efficiency |
+| [kind](https://kind.sigs.k8s.io/) | K8s in Docker | Local clusters for testing |
+| [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/) | Azure resource management | CLI for Azure + resource export |
 
 ### Infrastructure as Code
 
-| Tool | What |
-|------|------|
-| [tenv](https://github.com/tofuutils/tenv) | Terraform/OpenTofu version manager |
-| [terraform-docs](https://terraform-docs.io/) | Auto-generate Terraform docs |
-| [terraform-ls](https://github.com/hashicorp/terraform-ls) | Terraform Language Server |
-| [checkov](https://www.checkov.io/) | IaC security scanning |
+| Tool | What | Why |
+|------|------|-----|
+| [tenv](https://github.com/tofuutils/tenv) | Terraform/OpenTofu version manager | Switch TF versions per project |
+| [terraform-docs](https://terraform-docs.io/) | Auto-generate Terraform docs | Always-updated module docs |
+| [terraform-ls](https://github.com/hashicorp/terraform-ls) | Terraform Language Server | Autocomplete + validation in editor |
+| [checkov](https://www.checkov.io/) | IaC security scanning | Catch misconfigs in TF/K8s/YAML |
 
 ### macOS Apps (via Brew Bundle)
 
-- [Ghostty](https://ghostty.org/) — GPU-accelerated terminal emulator
-- [Rancher Desktop](https://rancherdesktop.io/) — Kubernetes + Docker Desktop alternative
-- [Raycast](https://raycast.com/) — Spotlight replacement
-- [Rectangle](https://rectangleapp.com/) — Window management
-- [Ice](https://github.com/jordanbaird/Ice) — Menu bar manager
-- [Stats](https://github.com/exelban/Stats) — System monitor menu bar
-- [1Password](https://1password.com/) — Password manager
-- [Amphetamine](https://apps.apple.com/app/id937984704) — Keep Mac awake
-- Azure VPN Client, Microsoft Remote Desktop
+| App | What | Why |
+|-----|------|-----|
+| [Ghostty](https://ghostty.org/) | GPU-accelerated terminal emulator | Blazing fast, native macOS feel |
+| [Rancher Desktop](https://rancherdesktop.io/) | Kubernetes + Docker Desktop alternative | Local K8s without Docker license |
+| [Raycast](https://raycast.com/) | Spotlight replacement | Quick launcher + extensions |
+| [Rectangle](https://rectangleapp.com/) | Window management | Snap windows with keyboard |
+| [Ice](https://github.com/jordanbaird/Ice) | Menu bar manager | Organize menu bar icons |
+| [Stats](https://github.com/exelban/Stats) | System monitor menu bar | CPU, RAM, disk, network at a glance |
+| [1Password](https://1password.com/) | Password manager | Secrets, SSH keys, tokens |
+| [Amphetamine](https://apps.apple.com/app/id937984704) | Keep Mac awake | Prevent sleep during long runs |
+| [Azure VPN Client](https://apps.apple.com/app/id1553936137) | Azure VPN | Connect to Azure VPN gateways |
+| [Microsoft Remote Desktop](https://apps.microsoft.com/detail/9WZDNCRFJ3PS) | RDP client | Remote desktop to Windows VMs |
 
 ## Starship Prompt
 
