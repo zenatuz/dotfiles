@@ -74,7 +74,8 @@ if OS.mac?
   cask "ghostty"                    # GPU-accelerated terminal (replaces iterm2)
   cask "iterm2"                     # Terminal emulator
   cask "raycast"                    # Spotlight replacement / launcher
-  cask "rectangle"                  # Window management
+  cask "alt-tab"                      # Windows-style window switcher (open-source)
+  cask "rectangle"                    # Window management
   cask "visual-studio-code"         # Code editor
   cask "slack"                      # Communication
   cask "notion"                     # Notes / docs
