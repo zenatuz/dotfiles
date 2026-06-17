@@ -158,11 +158,11 @@ ensure_git_identity() {
         return 0
     fi
 
-    # Try to read from ~/.gitconfig.local
+    # Try to read from ~/.gitconfig.local using git's own parser
     local local_file="$HOME/.gitconfig.local"
     if [[ -f "$local_file" ]]; then
-        name="$(grep -E '^\s*name\s*=' "$local_file" 2>/dev/null | sed 's/.*=\s*//' | head -1)"
-        email="$(grep -E '^\s*email\s*=' "$local_file" 2>/dev/null | sed 's/.*=\s*//' | head -1)"
+        name="$(git config -f "$local_file" user.name 2>/dev/null || true)"
+        email="$(git config -f "$local_file" user.email 2>/dev/null || true)"
     fi
 
     if [[ -z "$name" || -z "$email" ]]; then
@@ -173,13 +173,31 @@ ensure_git_identity() {
         echo '    git config --global user.name "Your Name"'
         echo '    git config --global user.email "your@email.com"'
         echo ""
+        echo "  Or set them right now:"
+        printf "  Name: " && read -r git_name
+        printf "  Email: " && read -r git_email
+        if [[ -n "$git_name" && -n "$git_email" ]]; then
+            git config --global user.name "$git_name"
+            git config --global user.email "$git_email"
+            name="$git_name"
+            email="$git_email"
+        else
+            echo "  Aborting — set identity manually and re-run."
+            exit 1
+        fi
+    fi
+
+    # Validate: reject empty/whitespace-only names
+    if echo "$name" | grep -Eq '^[[:space:]]*$|^[[:space:]]*<'; then
+        echo "  ERROR: Invalid git user.name '$name' in ~/.gitconfig.local"
+        echo "  Fix it with: git config --global user.name \"Your Name\""
         exit 1
     fi
 
     # Set globally temporarily so yadm pull / rebase works
     git config --global user.name "$name"
     git config --global user.email "$email"
-    echo "  Git identity set from ~/.gitconfig.local: $name <$email>"
+    echo "  Git identity: $name <$email>"
 }
 
 # ─── Step 3: ZSH plugins (zsh-autosuggestions, syntax-highlighting) ─
