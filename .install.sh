@@ -165,39 +165,31 @@ ensure_git_identity() {
         email="$(git config -f "$local_file" user.email 2>/dev/null || true)"
     fi
 
-    if [[ -z "$name" || -z "$email" ]]; then
-        echo ""
-        echo "  ─── Git Identity Required ───"
-        echo "  yadm needs user.name and user.email to sync dotfiles."
-        echo "  Set them first, then re-run the script:"
-        echo '    git config --global user.name "Your Name"'
-        echo '    git config --global user.email "your@email.com"'
-        echo ""
-        echo "  Or set them right now:"
-        printf "  Name: " && read -r git_name
-        printf "  Email: " && read -r git_email
-        if [[ -n "$git_name" && -n "$git_email" ]]; then
-            git config --global user.name "$git_name"
-            git config --global user.email "$git_email"
-            name="$git_name"
-            email="$git_email"
-        else
-            echo "  Aborting — set identity manually and re-run."
-            exit 1
-        fi
+    # Fallback to known defaults if identity is missing or invalid
+    local bad_name=false
+    if echo "$name" | grep -Eq '^[[:space:]]*$|^[[:space:]]*<'; then
+        bad_name=true
+    fi
+    local bad_email=false
+    if echo "$email" | grep -Eq '^[[:space:]]*$|^[[:space:]]*<'; then
+        bad_email=true
     fi
 
-    # Validate: reject empty/whitespace-only names
-    if echo "$name" | grep -Eq '^[[:space:]]*$|^[[:space:]]*<'; then
-        echo "  ERROR: Invalid git user.name '$name' in ~/.gitconfig.local"
-        echo "  Fix it with: git config --global user.name \"Your Name\""
-        exit 1
+    if [[ -z "$name" || -z "$email" || "$bad_name" == true || "$bad_email" == true ]]; then
+        name="Renato Batista"
+        email="zenatuz@gmail.com"
+        # Also write to .gitconfig.local so it persists across yadm rebases
+        echo "  Setting git identity: $name <$email>"
+        cat > "$local_file" <<-EOF
+[user]
+    name = $name
+    email = $email
+EOF
     fi
 
     # Set globally temporarily so yadm pull / rebase works
     git config --global user.name "$name"
     git config --global user.email "$email"
-    echo "  Git identity: $name <$email>"
 }
 
 # ─── Step 3: ZSH plugins (zsh-autosuggestions, syntax-highlighting) ─
