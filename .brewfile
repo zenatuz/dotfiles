@@ -79,7 +79,7 @@ if OS.mac?
   cask "slack"                      # Communication
   cask "notion"                     # Notes / docs
   cask "spotify"                    # Music
-  cask "jordanbaird-ice"            # Menu bar manager
+  cask "thaw"                       # Menu bar manager (ice replacement)
   cask "monitorcontrol"             # External monitor controls
   cask "rancher"                    # Kubernetes desktop (Docker Desktop alternative)
   cask "stats"                      # System monitor in menu bar
@@ -92,6 +92,7 @@ if OS.mac?
   # Mac App Store (only available here, no cask alternative)
   mas "Amphetamine", id: 937984704                  # Keep Mac awake
   mas "Azure VPN Client", id: 1553936137           # Azure VPN
+  cask "vpukhanov/tools/vipinator"   # VPN manager menubar
   mas "Unsplash Wallpapers", id: 1284863847        # Wallpaper app
   cask "shottr"                      # Screenshot & annotation tool (clean Mac-native UI)
 end
