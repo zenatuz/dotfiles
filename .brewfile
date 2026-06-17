@@ -27,7 +27,7 @@ brew "pyenv-virtualenv"             # Python virtualenv manager
 
 # ─── Cloud (Azure) ─────────────────────────────────────────────────
 brew "azure-cli"                    # Azure CLI
-tap "azure/kubelogin"               # AKS kubelogin tap
+# brew "azure/kubelogin/kubelogin" is auto-tapped via fully-qualified name — no explicit tap needed
 brew "azure/kubelogin/kubelogin"    # AKS credential helper (needed for kubelogin to connect AKS clusters)
 brew "aztfexport"                   # Export Azure resources to Terraform
 brew "terraform-ls"                 # Terraform Language Server
@@ -87,7 +87,7 @@ if OS.mac?
   cask "meetingbar"                 # Next meeting in menu bar
   cask "microsoft-remote-desktop"   # RDP client
   cask "deepl"                      # AI translation desktop app
-  cask "logitech-options-plus"      # Logitech peripheral manager
+  cask "logi-options+"              # Logitech peripheral manager
 
   # Mac App Store (only available here, no cask alternative)
   mas "Amphetamine", id: 937984704                  # Keep Mac awake
