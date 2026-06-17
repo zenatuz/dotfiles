@@ -43,7 +43,7 @@ brew "krew"                         # kubectl plugin manager
 brew "kubectx"                      # Switch k8s contexts + namespaces (includes kubens)
 brew "kubeconform"                  # Kubernetes manifest validation
 brew "kubent"                       # Detect deprecated k8s APIs
-brew "nova"                         # Scan Helm charts for updates
+brew "nova", args: ["--formula"]    # Scan Helm charts for updates
 brew "pluto"                        # Detect deprecated k8s resources
 brew "popeye"                       # K8s cluster sanitizer
 brew "kube-linter"                  # K8s manifest linter

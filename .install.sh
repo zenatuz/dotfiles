@@ -24,7 +24,6 @@ done
 
 BRANCH="${ARGS[0]:-main}"
 
-BREWFILE_URL="https://raw.githubusercontent.com/zenatuz/dotfiles/$BRANCH/.brewfile"
 HELMLIST_URL="https://raw.githubusercontent.com/zenatuz/dotfiles/$BRANCH/.helmlist"
 DOTFILES_REPO="https://github.com/zenatuz/dotfiles.git"
 DOTFILES_BRANCH="$BRANCH"
@@ -149,6 +148,40 @@ install_brew() {
     fi
 }
 
+# Ensure git identity is set — needed by yadm pull to stash/merge
+ensure_git_identity() {
+    local name email
+    name="$(git config user.name 2>/dev/null || true)"
+    email="$(git config user.email 2>/dev/null || true)"
+
+    if [[ -n "$name" && -n "$email" ]]; then
+        return 0
+    fi
+
+    # Try to read from ~/.gitconfig.local
+    local local_file="$HOME/.gitconfig.local"
+    if [[ -f "$local_file" ]]; then
+        name="$(grep -E '^\s*name\s*=' "$local_file" 2>/dev/null | sed 's/.*=\s*//' | head -1)"
+        email="$(grep -E '^\s*email\s*=' "$local_file" 2>/dev/null | sed 's/.*=\s*//' | head -1)"
+    fi
+
+    if [[ -z "$name" || -z "$email" ]]; then
+        echo ""
+        echo "  ─── Git Identity Required ───"
+        echo "  yadm needs user.name and user.email to sync dotfiles."
+        echo "  Set them first, then re-run the script:"
+        echo '    git config --global user.name "Your Name"'
+        echo '    git config --global user.email "your@email.com"'
+        echo ""
+        exit 1
+    fi
+
+    # Set globally temporarily so yadm pull / rebase works
+    git config --global user.name "$name"
+    git config --global user.email "$email"
+    echo "  Git identity set from ~/.gitconfig.local: $name <$email>"
+}
+
 # ─── Step 3: ZSH plugins (zsh-autosuggestions, syntax-highlighting) ─
 install_zsh_plugins() {
     print_header "Installing ZSH plugins"
@@ -191,8 +224,11 @@ install_brew_packages() {
         brew install ncurses --quiet 2>/dev/null || true
 
         local brewfile_path="$HOME/.brewfile"
-        echo "  Downloading Brewfile..."
-        curl -fsSL -o "$brewfile_path" "$BREWFILE_URL"
+        if [[ ! -f "$brewfile_path" ]]; then
+            echo "  ERROR: $brewfile_path not found. yadm should have provisioned it."
+            echo "  Try: brew bundle --file=\"$brewfile_path\" after the install finishes."
+            return 1
+        fi
         echo "  Installing packages (this may take a while)..."
         brew bundle install --file="$brewfile_path" --quiet || {
             echo "  ⚠️  Some packages failed. Check the output above."
@@ -304,13 +340,14 @@ fi
 $SKIP_BACKUP && export BACKUP_DISABLE=1
 backup_dotfiles
 
+ensure_git_identity
 install_brew
 install_zsh_plugins
 install_starship
-install_brew_packages
 install_helm_plugins
 create_local_configs
 clone_dotfiles
+install_brew_packages
 
 echo ""
 echo "  ╔══════════════════════════════════════════╗"
