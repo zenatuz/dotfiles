@@ -5,7 +5,7 @@ add_newline = true
 
 # ─── Prompt Format ───────────────────────────────────────────
 format = """
-$os\
+$custom.os_icon\
 $username\
 $hostname\
 $directory\
@@ -122,10 +122,12 @@ discharging_symbol = "󰂃 "
 unknown_symbol = "󰂑 "
 empty_symbol = "󰂎 "
 
-# ─── OS Icon (Apple/Tux) ──────────────────────────────────────
-[os]
-disabled = false
-format = "[$symbol] "
-# Sem style definido = herda a cor padrão do terminal (branco)
-# Argonaut distorce "bold white" como vermelho
+# ─── OS Icon (Apple  / Tux) ──────────────────────────────────
+# Usa Nerd Font nf-dev-apple (U+E711) em branco puro #ffffff
+# Custom module evita defaults de cor do [os] interno do Starship
+[custom.os_icon]
+command = """python3 -c 'import sys; sys.stdout.write(chr(0xE711) if sys.platform == "darwin" else chr(0xE712))'"""
+when = true
+format = "[$output](#ffffff) "
+
 
