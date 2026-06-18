@@ -5,7 +5,6 @@ add_newline = true
 
 # ─── Prompt Format ───────────────────────────────────────────
 format = """
-$custom.os_icon\
 $username\
 $hostname\
 $directory\
@@ -37,7 +36,7 @@ style = "bold red"
 # ─── Kubernetes ───────────────────────────────────────────────
 [kubernetes]
 disabled = false
-format = "[󰥋 $context( \\($namespace\\))]($style) "
+format = "[󰥋 $context( \($namespace\))]($style) "
 style = "bold blue"
 
 # ─── Azure ────────────────────────────────────────────────────
@@ -121,12 +120,3 @@ charging_symbol = "󰂄 "
 discharging_symbol = "󰂃 "
 unknown_symbol = "󰂑 "
 empty_symbol = "󰂎 "
-
-# ─── OS Icon (Apple  / Tux) ──────────────────────────────────
-# Usa Nerd Font nf-dev-apple (U+E711) em branco puro #ffffff
-[custom.os_icon]
-command = "os-icon"
-when = true
-format = "[$output](#ffffff) "
-
-

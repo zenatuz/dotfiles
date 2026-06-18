@@ -64,7 +64,7 @@ bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 
 # ─── PATH ────────────────────────────────────────────────────────
-export PATH=$PATH:~/bin:~/.local/bin
+export PATH=$PATH:~/bin
 
 # ─── Brew (macOS ARM / Linux) ────────────────────────────────────
 test -d /opt/homebrew && eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -93,6 +93,3 @@ test -d ~/.rd/bin && export PATH="$HOME/.rd/bin:$PATH"
 
 # ─── Local overrides (machine-specific, not tracked) ────────────
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-
-# ─── Cmd+N fix: always start in $HOME ──────────────────────────
-cd
