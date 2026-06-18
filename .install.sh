@@ -240,8 +240,8 @@ install_brew_packages() {
             return 1
         fi
         echo "  Installing packages (this may take a while)..."
-        # Silence third-party deprecation warnings (e.g. vipinator) that can't be fixed here
-        brew bundle install --file="$brewfile_path" --quiet 2>/dev/null || {
+        # Filter third-party deprecation warnings (e.g. vipinator) from stderr
+        brew bundle install --file="$brewfile_path" --quiet 2>&1 | grep -v 'deprecated\|depends_on macos' || {
             echo "  ⚠️  Some packages failed. Check the output above."
         }
     else
@@ -267,11 +267,20 @@ install_helm_plugins() {
                 plugin_name=$(echo "$line" | awk '{print $1}')
                 plugin_source=$(echo "$line" | awk '{print $2}')
 
-                if helm plugin list | grep -q "$plugin_name"; then
+                # Derive the directory name from the git repo URL
+                local plugin_dir_name
+                plugin_dir_name=$(basename "$plugin_source" .git)
+
+                # Use directory existence for detection — helm plugin list
+                # may show a different name than our helmlist label (e.g.
+                # "helm-diff" in helmlist but "diff" in `helm plugin list`)
+                local helm_plugins_dir
+                helm_plugins_dir=$(helm env HELM_PLUGINS)
+
+                if [[ -d "$helm_plugins_dir/$plugin_dir_name" ]]; then
                     echo "  $plugin_name already installed."
                 else
                     echo "  Installing $plugin_name..."
-                    # HELM_BIN is required by some plugins (e.g. helm-secrets install hook)
                     HELM_BIN="$(command -v helm)" helm plugin install "$plugin_source" --verify=false || echo "  ⚠️  Failed to install $plugin_name"
                 fi
             done < "$plugins_file"
