@@ -14,11 +14,13 @@ $git_status\
 $terraform\
 $docker_context\
 $cmd_duration\
+$fill\
+$kubernetes | $azure | $battery $time\
 $line_break\
 $status\
 $character"""
 
-right_format = """$kubernetes | $azure | $battery $time"""
+right_format = ""
 
 # ─── Directory ────────────────────────────────────────────────
 [directory]
