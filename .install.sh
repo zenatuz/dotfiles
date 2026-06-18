@@ -240,7 +240,8 @@ install_brew_packages() {
             return 1
         fi
         echo "  Installing packages (this may take a while)..."
-        brew bundle install --file="$brewfile_path" --quiet || {
+        # Silence third-party deprecation warnings (e.g. vipinator) that can't be fixed here
+        brew bundle install --file="$brewfile_path" --quiet 2>/dev/null || {
             echo "  ⚠️  Some packages failed. Check the output above."
         }
     else
@@ -270,7 +271,8 @@ install_helm_plugins() {
                     echo "  $plugin_name already installed."
                 else
                     echo "  Installing $plugin_name..."
-                    helm plugin install "$plugin_source" --verify=false || echo "  ⚠️  Failed to install $plugin_name"
+                    # HELM_BIN is required by some plugins (e.g. helm-secrets install hook)
+                    HELM_BIN="$(command -v helm)" helm plugin install "$plugin_source" --verify=false || echo "  ⚠️  Failed to install $plugin_name"
                 fi
             done < "$plugins_file"
         fi
