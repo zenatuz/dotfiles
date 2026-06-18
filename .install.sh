@@ -258,20 +258,24 @@ install_helm_plugins() {
 
         if [[ -f "$plugins_file" ]]; then
             while IFS= read -r line || [[ -n "$line" ]]; do
-                if [[ ! "$line" =~ ^\s*$|^# ]]; then
-                    local plugin_name=$(echo "$line" | awk '{print $1}')
-                    local plugin_source=$(echo "$line" | awk '{print $2}')
+                # Skip blank lines and comments (POSIX-safe, works on macOS bash 3.x)
+                [[ "$line" =~ ^[[:space:]]*$ || "$line" =~ ^[[:space:]]*# ]] && continue
 
-                    if helm plugin list | grep -q "$plugin_name"; then
-                        echo "  $plugin_name already installed."
-                    else
-                        echo "  Installing $plugin_name..."
-                        helm plugin install "$plugin_source" >/dev/null 2>&1
-                    fi
+                local plugin_name
+                local plugin_source
+                plugin_name=$(echo "$line" | awk '{print $1}')
+                plugin_source=$(echo "$line" | awk '{print $2}')
+
+                if helm plugin list | grep -q "$plugin_name"; then
+                    echo "  $plugin_name already installed."
+                else
+                    echo "  Installing $plugin_name..."
+                    helm plugin install "$plugin_source" || echo "  ⚠️  Failed to install $plugin_name"
                 fi
             done < "$plugins_file"
         fi
 
+        echo ""
         echo "  Installed plugins:"
         helm plugin list
     else
