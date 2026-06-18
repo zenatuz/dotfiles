@@ -20,6 +20,17 @@ fi
 # ─── Starship Prompt ──────────────────────────────────────────────
 eval "$(starship init zsh)"
 
+# Blank line between commands (skip on first prompt)
+typeset -i _first_prompt=1
+_preexec_hook() { _first_prompt=0 }
+_precmd_hook() {
+  if (( _first_prompt == 0 )); then
+    print ""
+  fi
+}
+preexec_functions+=(_preexec_hook)
+precmd_functions+=(_precmd_hook)
+
 # ─── Suppress PROMPT_SP (the stray % on partial lines) ────────────
 unsetopt PROMPT_SP
 

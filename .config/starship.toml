@@ -6,19 +6,18 @@ add_newline = false
 
 # ─── Prompt Format ───────────────────────────────────────────
 format = """
+$os\
 $git_branch\
 $terraform\
 $docker_context\
 $cmd_duration\
 $jobs\
 $status\
-$azure | $kubernetes\
 $fill\
-$time\
+$azure|$kubernetes|$time\
 $line_break\
 $username\
 $hostname\
-$os\
 $directory\
 $git_status\
 $character"""
@@ -27,9 +26,10 @@ right_format = ""
 
 # ─── Directory ────────────────────────────────────────────────
 [directory]
-truncation_length = 3
+truncation_length = 4
 truncate_to_repo = true
 style = "bold text"
+home_symbol = "󰋜 "
 
 [directory.substitutions]
 "Documents" = "󰈙 "
@@ -65,14 +65,14 @@ disabled = false
 [kubernetes]
 disabled = false
 symbol = "󱃾"
-format = ' [$symbol]($style) $context'
+format = '[$symbol]($style) $context'
 style = "bold text"
 
 # ─── Azure ────────────────────────────────────────────────────
 [azure]
 disabled = false
 symbol = ""
-format = ' [$symbol]($style) $subscription'
+format = '[$symbol]($style) $subscription'
 style = "bold text"
 
 # ─── Terraform ────────────────────────────────────────────────
@@ -97,15 +97,13 @@ min_time_to_notify = 30_000
 # ─── Exit Status ──────────────────────────────────────────────
 [status]
 disabled = false
-format = "[$symbol$status]($style) "
-style = "bold red"
-map_symbol = true
-pipestatus = true
+format = "[$status]($style) "
+style = "bold text"
 
 # ─── Character ────────────────────────────────────────────────
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
+success_symbol = "[❯](bold text)"
+error_symbol = "[❯](bold text)"
 
 # ─── Time (right prompt) ──────────────────────────────────────
 [time]
