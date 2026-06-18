@@ -125,6 +125,6 @@ empty_symbol = "󰂎 "
 # ─── OS Icon (Apple/Tux) ──────────────────────────────────────
 [os]
 disabled = false
-style = "bold blue"
+style = "bold white"
 format = "[$symbol]($style) "
 
