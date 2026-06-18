@@ -270,7 +270,7 @@ install_helm_plugins() {
                     echo "  $plugin_name already installed."
                 else
                     echo "  Installing $plugin_name..."
-                    helm plugin install "$plugin_source" || echo "  ⚠️  Failed to install $plugin_name"
+                    helm plugin install "$plugin_source" --verify=false || echo "  ⚠️  Failed to install $plugin_name"
                 fi
             done < "$plugins_file"
         fi
@@ -370,7 +370,7 @@ echo "  ╚═══════════════════════
 echo ""
 echo "  Next steps:"
 echo "    1. Restart your terminal or run: source ~/.zshrc"
-echo "    2. (macOS) Rancher Desktop will be installed for K8s/Docker"
+echo "    2. (macOS) Colima + Docker provides local containers (replaces Docker Desktop)"
 echo "    3. Customize prompt by editing ~/.config/starship.toml"
 echo "    4. Set up local overrides in ~/.zshrc.local (optional)"
 echo ""

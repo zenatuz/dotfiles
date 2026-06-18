@@ -50,6 +50,9 @@ brew "kube-linter"                  # K8s manifest linter
 brew "stern"                        # Multi-pod k8s log tailing
 
 # ─── Containers ────────────────────────────────────────────────────
+brew "colima"                       # Lightweight container runtime (replaces Docker Desktop)
+brew "docker"                       # Docker CLI
+brew "docker-compose"               # Docker Compose (standalone v2)
 brew "trivy"                        # Container/vulnerability scanner
 brew "dive"                         # Docker image layer inspection
 brew "kind"                         # Kubernetes in Docker (local clusters)
@@ -82,7 +85,6 @@ if OS.mac?
   cask "spotify"                    # Music
   cask "thaw"                       # Menu bar manager (ice replacement)
   cask "monitorcontrol"             # External monitor controls
-  cask "rancher"                    # Kubernetes desktop (Docker Desktop alternative)
   cask "stats"                      # System monitor in menu bar
   cask "browserosaurus"             # Browser chooser per-link
   cask "meetingbar"                 # Next meeting in menu bar
