@@ -7,6 +7,7 @@ add_newline = true
 format = """
 $username\
 $hostname\
+$os\
 $directory\
 $git_branch\
 $git_status\
@@ -37,13 +38,13 @@ style = "bold red"
 [kubernetes]
 disabled = false
 format = '[󰥋 $context( \($namespace\))]($style) '
-style = "bold blue"
+style = "bold white"
 
 # ─── Azure ────────────────────────────────────────────────────
 [azure]
 disabled = false
 format = "[ $subscription]($style) "
-style = "bold blue"
+style = "bold white"
 
 # ─── Terraform ────────────────────────────────────────────────
 [terraform]
@@ -108,6 +109,17 @@ style = "bold yellow"
 [golang]
 format = "via [$symbol($version )]($style)"
 style = "bold cyan"
+
+# ─── OS Icon (Apple / Penguin) ────────────────────────────────
+[os]
+disabled = false
+style = "bold white"
+format = "[$symbol]($style)"
+
+[os.symbols]
+Macos = "󰀵 "
+Linux = "󰌽 "
+NixOS = "󰌽 "
 
 # ─── Disable what we don't need ──────────────────────────────
 [package]
