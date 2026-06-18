@@ -36,6 +36,7 @@ function set_win_title() { echo -ne "\033]0; ${PWD/#$HOME/~} \007" }
 precmd_functions+=(set_win_title)
 
 # ─── ZSH Plugins ─────────────────────────────────────────────────
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ffff87"
 test -f ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh \
   && source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 test -f ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
