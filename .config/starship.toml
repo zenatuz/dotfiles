@@ -124,11 +124,9 @@ empty_symbol = "󰂎 "
 
 # ─── OS Icon (Apple  / Tux) ──────────────────────────────────
 # Usa Nerd Font nf-dev-apple (U+E711) em branco puro #ffffff
-# Custom module evita defaults de cor do [os] interno do Starship
 [custom.os_icon]
-command = """python3 -c 'import sys; sys.stdout.write(chr(0xE711) if sys.platform == "darwin" else chr(0xE712))'"""
+command = "os-icon"
 when = true
-symbol = ""
 format = "[$output](#ffffff) "
 
 

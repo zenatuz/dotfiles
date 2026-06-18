@@ -1,0 +1,9 @@
+#!/bin/bash
+# Outputs a Nerd Font OS icon based on uname:
+#   macOS → U+E711 (nf-dev-apple)  →  
+#   Linux  → U+E712 (nf-linux-tux) →  
+if [ "$(uname)" = "Darwin" ]; then
+  printf "\xee\x9c\x91"
+else
+  printf "\xee\x9c\x92"
+fi
