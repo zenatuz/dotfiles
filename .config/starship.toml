@@ -37,13 +37,13 @@ style = "bold red"
 # ─── Kubernetes ───────────────────────────────────────────────
 [kubernetes]
 disabled = false
-format = '[󰥋 $context( \($namespace\))]($style) '
+format = '[k8s:$context( \($namespace\))]($style) '
 style = "bold white"
 
 # ─── Azure ────────────────────────────────────────────────────
 [azure]
 disabled = false
-format = "[ $subscription]($style) "
+format = "[az:$subscription]($style) "
 style = "bold white"
 
 # ─── Terraform ────────────────────────────────────────────────
