@@ -5,6 +5,7 @@ add_newline = true
 
 # ─── Prompt Format ───────────────────────────────────────────
 format = """
+$os\
 $username\
 $hostname\
 $directory\
@@ -120,3 +121,10 @@ charging_symbol = "󰂄 "
 discharging_symbol = "󰂃 "
 unknown_symbol = "󰂑 "
 empty_symbol = "󰂎 "
+
+# ─── OS Icon (Apple/Tux) ──────────────────────────────────────
+[os]
+disabled = false
+style = "bold blue"
+format = "[$symbol]($style) "
+

@@ -48,7 +48,7 @@ backup_dotfiles() {
     local backup_dir="$HOME/dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
     local files_to_backup=(
         ".zshrc" ".zsh" ".config/starship.toml" ".vimrc"
-        ".gitconfig" ".gitconfig.local" ".gitignore"
+        ".config/ghostty/config" ".gitconfig" ".gitconfig.local" ".gitignore"
         ".editorconfig" ".brewfile" ".p10k.zsh"
     )
 

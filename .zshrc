@@ -20,6 +20,9 @@ fi
 # ─── Starship Prompt ──────────────────────────────────────────────
 eval "$(starship init zsh)"
 
+# ─── Suppress PROMPT_SP (the stray % on partial lines) ────────────
+unsetopt PROMPT_SP
+
 # ─── Transient Prompt (replace with ❯ after Enter) ────────────────
 function _starship_transient_prompt() {
   print -n '\r\e[K'
