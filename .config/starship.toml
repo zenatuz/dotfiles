@@ -24,12 +24,12 @@ right_format = """$kubernetes | $azure | $battery $time"""
 [directory]
 truncation_length = 3
 truncate_to_repo = true
-style = "bold blue"
+style = "bold white"
 
 # ─── Git ──────────────────────────────────────────────────────
 [git_branch]
 format = "[$symbol$branch]($style) "
-style = "bold purple"
+style = "bold yellow"
 
 [git_status]
 style = "bold red"
