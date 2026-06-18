@@ -1,23 +1,26 @@
 # ─── Starship Config: DevOps Engineer ─────────────────────────
 "$schema" = 'https://starship.rs/config-schema.json'
-command_timeout = 1000
-add_newline = true
+palette = "custom1"
+command_timeout = 500
+add_newline = false
 
 # ─── Prompt Format ───────────────────────────────────────────
 format = """
+$git_branch\
+$terraform\
+$docker_context\
+$cmd_duration\
+$jobs\
+$status\
+$azure | $kubernetes\
+$fill\
+$time\
+$line_break\
 $username\
 $hostname\
 $os\
 $directory\
-$git_branch\
 $git_status\
-$terraform\
-$docker_context\
-$cmd_duration\
-$fill\
-$kubernetes | $azure | $battery $time\
-$line_break\
-$status\
 $character"""
 
 right_format = ""
@@ -26,7 +29,16 @@ right_format = ""
 [directory]
 truncation_length = 3
 truncate_to_repo = true
-style = "bold white"
+style = "bold text"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"Desktop" = " "
+"Code" = " "
+"workspaces" = " "
 
 # ─── Git ──────────────────────────────────────────────────────
 [git_branch]
@@ -34,24 +46,39 @@ format = "[$symbol$branch]($style) "
 style = "bold yellow"
 
 [git_status]
-style = "bold red"
+format = "[$untracked$staged$modified$renamed$deleted$stashed$conflicted$ahead_behind ]($style)"
+staged     = "[+](green)"
+modified   = "[!](yellow)"
+renamed    = "[»](blue)"
+deleted    = "[-](red)"
+untracked  = "[?](red)"
+conflicted = "[×](bold red)"
+stashed    = "[$](lavender)"
+ahead      = "[↑${count}](teal)"
+behind     = "[↓${count}](peach)"
+diverged   = "[↕](mauve)"
+
+[git_metrics]
+disabled = false
 
 # ─── Kubernetes ───────────────────────────────────────────────
 [kubernetes]
 disabled = false
-format = '[k8s:$context( \($namespace\))]($style) '
-style = "bold white"
+symbol = "󱃾"
+format = ' [$symbol]($style) $context'
+style = "bold text"
 
 # ─── Azure ────────────────────────────────────────────────────
 [azure]
 disabled = false
-format = "[az:$subscription]($style) "
-style = "bold white"
+symbol = ""
+format = ' [$symbol]($style) $subscription'
+style = "bold text"
 
 # ─── Terraform ────────────────────────────────────────────────
 [terraform]
 format = "via [$symbol$workspace]($style) "
-style = "bold 113"
+style = "bold green"
 
 # ─── Docker Context ───────────────────────────────────────────
 [docker_context]
@@ -85,7 +112,7 @@ error_symbol = "[❯](bold red)"
 disabled = false
 format = "[$time]($style) "
 time_format = "%H:%M"
-style = "bold white"
+style = "bold text"
 
 # ─── Identity ─────────────────────────────────────────────────
 [username]
@@ -101,21 +128,24 @@ style = "bold green"
 
 # ─── Languages / Runtimes ────────────────────────────────────
 [nodejs]
+symbol = " "
 format = "via [$symbol($version )]($style)"
 style = "bold green"
 
 [python]
+symbol = " "
 format = "via [$symbol($version )]($style)"
 style = "bold yellow"
 
 [golang]
+symbol = " "
 format = "via [$symbol($version )]($style)"
-style = "bold cyan"
+style = "bold teal"
 
 # ─── OS Icon (Apple / Penguin) ────────────────────────────────
 [os]
 disabled = false
-style = "bold white"
+style = "bold text"
 format = "[$symbol]($style)"
 
 [os.symbols]
@@ -123,14 +153,45 @@ Macos = "󰀵 "
 Linux = "󰌽 "
 NixOS = "󰌽 "
 
+# ─── Jobs ──────────────────────────────────────────────────────
+[jobs]
+symbol = " "
+style = "bold yellow"
+number_threshold = 1
+format = '[$symbol$number]($style) '
+
 # ─── Disable what we don't need ──────────────────────────────
 [package]
 disabled = true
 
 [battery]
-disabled = false
-full_symbol = "󰁹 "
-charging_symbol = "󰂄 "
-discharging_symbol = "󰂃 "
-unknown_symbol = "󰂑 "
-empty_symbol = "󰂎 "
+disabled = true
+
+# ─── Palette ──────────────────────────────────────────────────
+[palettes.custom1]
+crust = "#11111b"
+mantle = "#181825"
+base = "#1e1e2e"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
