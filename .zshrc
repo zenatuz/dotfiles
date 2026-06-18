@@ -93,3 +93,6 @@ test -d ~/.rd/bin && export PATH="$HOME/.rd/bin:$PATH"
 
 # ─── Local overrides (machine-specific, not tracked) ────────────
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# ─── Cmd+N fix: always start in $HOME ──────────────────────────
+cd

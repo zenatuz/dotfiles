@@ -125,6 +125,7 @@ empty_symbol = "󰂎 "
 # ─── OS Icon (Apple/Tux) ──────────────────────────────────────
 [os]
 disabled = false
-style = "bold white"
-format = "[$symbol]($style) "
+format = "[$symbol] "
+# Sem style definido = herda a cor padrão do terminal (branco)
+# Argonaut distorce "bold white" como vermelho
 
