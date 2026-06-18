@@ -128,6 +128,7 @@ empty_symbol = "󰂎 "
 [custom.os_icon]
 command = """python3 -c 'import sys; sys.stdout.write(chr(0xE711) if sys.platform == "darwin" else chr(0xE712))'"""
 when = true
+symbol = ""
 format = "[$output](#ffffff) "
 
 
