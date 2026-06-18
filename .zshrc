@@ -24,12 +24,12 @@ eval "$(starship init zsh)"
 unsetopt PROMPT_SP
 
 # ─── Transient Prompt (replace with ❯ after Enter) ────────────────
-function _starship_transient_prompt() {
-  print -n '\r\e[K'
-  print -Pn '%B%F{green}❯%f%b '
-}
-autoload -Uz add-zsh-hook
-add-zsh-hook preexec _starship_transient_prompt
+# function _starship_transient_prompt() {
+#   print -n '\r\e[K'
+#   print -Pn '%B%F{green}❯%f%b '
+# }
+# autoload -Uz add-zsh-hook
+# add-zsh-hook preexec _starship_transient_prompt
 
 # ─── Window Title (show current dir) ──────────────────────────────
 function set_win_title() { echo -ne "\033]0; ${PWD/#$HOME/~} \007" }
