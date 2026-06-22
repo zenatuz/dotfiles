@@ -10,7 +10,7 @@ set -e
 cd "$HOME"
 
 # ─── REPO URLS ────────────────────────────────────────────────────
-# Pass a branch name as first argument to test a branch (e.g. `mac-migration`).
+# Pass a branch name as first argument to test a branch.
 # Pass --skip-backup to skip backing up current dotfiles.
 ARGS=()
 SKIP_BACKUP=false
@@ -127,7 +127,6 @@ install_brew() {
     fi
 
     # Source brew shellenv regardless of how brew was installed
-    # (needed because freshly-installed brew isn't in PATH yet)
     if [[ "$(uname -m)" == "arm64" ]] && [[ "$OSTYPE" == "darwin"* ]]; then
         local brew_prefix="/opt/homebrew"
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -178,7 +177,6 @@ ensure_git_identity() {
     if [[ -z "$name" || -z "$email" || "$bad_name" == true || "$bad_email" == true ]]; then
         name="Renato Batista"
         email="zenatuz@gmail.com"
-        # Also write to .gitconfig.local so it persists across yadm rebases
         echo "  Setting git identity: $name <$email>"
         cat > "$local_file" <<-EOF
 [user]
@@ -240,7 +238,6 @@ install_brew_packages() {
             return 1
         fi
         echo "  Installing packages (this may take a while)..."
-        # Filter third-party deprecation warnings (e.g. vipinator) from stderr
         brew bundle install --file="$brewfile_path" --quiet 2>&1 | grep -v 'deprecated\|depends_on macos' || {
             echo "  ⚠️  Some packages failed. Check the output above."
         }
@@ -259,7 +256,7 @@ install_helm_plugins() {
 
         if [[ -f "$plugins_file" ]]; then
             while IFS= read -r line || [[ -n "$line" ]]; do
-                # Skip blank lines and comments (POSIX-safe, works on macOS bash 3.x)
+                # Skip blank lines and comments
                 [[ "$line" =~ ^[[:space:]]*$ || "$line" =~ ^[[:space:]]*# ]] && continue
 
                 local plugin_name
@@ -268,12 +265,11 @@ install_helm_plugins() {
                 plugin_source=$(echo "$line" | awk '{print $2}')
 
                 # Derive the directory name from the git repo URL
+                # NOTE: basename without stripping .git — helm plugin install
+                # creates a directory with the .git suffix (e.g. helm-diff.git)
                 local plugin_dir_name
-                plugin_dir_name=$(basename "$plugin_source" .git)
+                plugin_dir_name=$(basename "$plugin_source")
 
-                # Use directory existence for detection — helm plugin list
-                # may show a different name than our helmlist label (e.g.
-                # "helm-diff" in helmlist but "diff" in `helm plugin list`)
                 local helm_plugins_dir
                 helm_plugins_dir=$(helm env HELM_PLUGINS)
 
@@ -304,7 +300,6 @@ create_local_configs() {
         echo '    git config --file ~/.gitconfig.local user.name "Your Name"'
         echo '    git config --file ~/.gitconfig.local user.email "your@email.com"'
         echo ""
-        # Interactive prompt only works with a real terminal (not curl | bash)
         if [[ -t 0 ]]; then
             read -p "  Name: " git_name
             read -p "  Email: " git_email
@@ -327,10 +322,35 @@ clone_dotfiles() {
     print_header "Setting up dotfiles"
 
     if command_exists yadm; then
-        local yadm_repo="$HOME/.local/share/yadm/repo.git"
+        local yadm_dir="$HOME/.local/share/yadm"
+        local yadm_repo="$yadm_dir/repo.git"
+
         if [ -d "$yadm_repo" ]; then
             echo "  yadm repo already exists. Updating..."
-            yadm pull
+
+            # ── Clean worktree before pull ────────────────────────────
+            # The dotfiles .gitconfig has [rebase] autoStash = true, which
+            # makes `yadm pull` try to git-stash any dirty tracked files
+            # before rebasing. If the stash fails (corrupt refs, detached
+            # HEAD, etc.), the whole installer dies with `set -e`.
+            # Resetting first avoids this entirely — the backup step
+            # already saved everything, so no data is lost.
+            local yadm_dirty=false
+            if ! yadm diff --quiet 2>/dev/null; then
+                yadm_dirty=true
+                echo "  Working tree has local changes. Resetting tracked files..."
+                yadm reset --hard HEAD
+            fi
+
+            if ! yadm pull; then
+                echo "  ⚠️  yadm pull failed. Backing up old repo and re-cloning..."
+                local yadm_backup="$HOME/.local/share/yadm-backup-$(date +%Y%m%d-%H%M%S)"
+                mv "$yadm_dir" "$yadm_backup"
+                echo "  Old yadm repo saved to: $yadm_backup"
+                yadm clone --branch "$DOTFILES_BRANCH" "$DOTFILES_REPO"
+            elif $yadm_dirty; then
+                echo "  yadm pull succeeded (worktree was dirty, now clean)."
+            fi
         else
             echo "  Cloning dotfiles with yadm..."
             yadm clone --branch "$DOTFILES_BRANCH" "$DOTFILES_REPO"
