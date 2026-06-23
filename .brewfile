@@ -27,8 +27,7 @@ brew "pyenv-virtualenv"             # Python virtualenv manager
 
 # ─── Cloud (Azure) ─────────────────────────────────────────────────
 brew "azure-cli"                    # Azure CLI
-# brew "azure/kubelogin/kubelogin" is auto-tapped via fully-qualified name — no explicit tap needed
-brew "azure/kubelogin/kubelogin"    # AKS credential helper (needed for kubelogin to connect AKS clusters)
+# kubelogin removed from Brewfile — install via `az aks install-cli` instead
 brew "aztfexport"                   # Export Azure resources to Terraform
 brew "terraform-ls"                 # Terraform Language Server
 

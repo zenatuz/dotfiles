@@ -318,8 +318,29 @@ EOF
 }
 
 # ─── Step 8: Clone dotfiles with yadm ─────────────────────────────
+# Sanitize ~/.gitconfig — remove [http] sections pointing to
+# machine-specific CA bundles (e.g. Aikido endpoint protection)
+# that were accidentally committed to the shared dotfiles repo.
+# These paths don't exist on other machines and break all git ops.
+sanitize_git_config() {
+    local cfg="$HOME/.gitconfig"
+    [[ ! -f "$cfg" ]] && return 0
+
+    # Check if a machine-specific CA path is set in the http section
+    local cafile
+    cafile="$(git config --global http.sslcainfo 2>/dev/null || true)"
+    if [[ -n "$cafile" ]] && ! [[ -f "$cafile" ]]; then
+        echo "  Cleaning ~/.gitconfig: http.sslcainfo points to non-existent file ($cafile)"
+        echo "  (This is often a work-specific CA bundle that doesn't belong in shared dotfiles.)"
+        git config --global --unset http.sslcainfo 2>/dev/null || true
+    fi
+}
+
 clone_dotfiles() {
     print_header "Setting up dotfiles"
+
+    # Strip machine-specific SSL config that breaks git on other machines
+    sanitize_git_config
 
     if command_exists yadm; then
         local yadm_dir="$HOME/.local/share/yadm"
