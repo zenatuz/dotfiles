@@ -57,14 +57,32 @@ Para **GitHub Copilot** no terminal:
 rtk init -g                    # hook global para Claude Code / Copilot
 ```
 
-Para **OpenCode** — usar o plugin community:
+Para **OpenCode** — usar o plugin `openrtk` (npm):
 
 ```bash
-# Plugin OpenCode RTK
-# https://github.com/withakay/opencode-rtk
-git clone https://github.com/withakay/opencode-rtk ~/.opencode/plugins/rtk
-# Seguir README do plugin para configurar
+# 1. Instalar o plugin via npm
+npm install openrtk
+
+# 2. Adicionar ao opencode.json (~/.config/opencode/opencode.json)
+# "plugin": ["openrtk"]
+
+# 3. Verificar se está carregado
+opencode plugin list
 ```
+
+Exemplo de `~/.config/opencode/opencode.json` com o plugin:
+
+```json
+{
+  "plugin": ["openrtk"],
+  "default_agent": "caveman",
+  "provider": "deepseek"
+}
+```
+
+O plugin `openrtk` (163 ⭐ no GitHub, 11.1 kB, zero deps) hooka no evento `tool.execute.before` do OpenCode e reescreve comandos shell para passar pelo RTK automaticamente. Suporta git, cargo, npm, docker, kubectl, grep, ls, pytest, curl e dezenas de outros comandos.
+
+> **Alternativa sem plugin**: `rtk init -g` cria um hook global que funciona para qualquer CLI em shell (incluindo OpenCode quando executa comandos bash), mas não captura comandos executados via tool calls internas.
 
 ### Como funciona
 
@@ -83,15 +101,39 @@ O hook do RTK intercepta comandos Bash antes de executá-los e reescreve para ve
 
 Python/TypeScript. Proxy que comprime payloads de tool outputs antes de enviar ao LLM.
 
-### Instalação
+### Instalação (via venv dedicado)
+
+Headroom será instalado em um **venv dedicado** para não poluir seu Python global:
 
 ```bash
-# Python (requer Python 3.10+)
-pip install "headroom-ai[proxy]"
+# 1. Criar o venv dedicado
+python3 -m venv ~/.local/venvs/headroom
 
-# Verificar
-headroom --help
+# 2. Ativar e instalar
+source ~/.local/venvs/headroom/bin/activate
+pip install "headroom-ai[proxy]"
+deactivate
+
+# 3. Verificar
+~/.local/venvs/headroom/bin/headroom --help
 ```
+
+### Aliases no .zshrc
+
+Adicione ao `~/.zsh/zsh-custom.sh` (ou direto no `.zshrc`):
+
+```bash
+# Headroom — proxy de compressão LLM
+alias headroom='$HOME/.local/venvs/headroom/bin/headroom'
+
+# Iniciar proxy Headroom (modo manual)
+alias headroom-proxy='headroom proxy --port 8787'
+
+# Iniciar proxy com output shaper ativado
+alias headroom-proxy-verbose='HEADROOM_OUTPUT_SHAPER=1 headroom proxy --port 8787'
+```
+
+Isso garante que o binário do headroom está disponível sem precisar ativar o venv manualmente. A shell function resolve o path absoluto do venv.
 
 ### Configuração
 
@@ -229,10 +271,18 @@ rtk gain
 ### Fase 3 — Headroom (proxy avançado)
 
 ```bash
-# 1. pip install "headroom-ai[proxy]"
-# 2. Configurar como proxy para DeepSeek
-# 3. Testar com OpenCode
-# 4. Ver savings no dashboard: headroom dashboard
+# 1. Instalar no venv
+python3 -m venv ~/.local/venvs/headroom
+source ~/.local/venvs/headroom/bin/activate
+pip install "headroom-ai[proxy]"
+deactivate
+
+# 2. Configurar alias no .zshrc (ver seção Headroom)
+# 3. Iniciar proxy como teste
+headroom proxy --port 8787
+
+# 4. Configurar como proxy para DeepSeek no OpenCode
+# 5. Ver savings: headroom dashboard
 ```
 
 ### Fase 4 — Skill Terso (OpenCode)
@@ -257,11 +307,24 @@ rtk gain
 
 ### RTK tem suporte nativo a OpenCode?
 
-**Não.** RTK não tem flag `--opencode` no `rtk init`. A integração é via plugins community:
-- `withakay/opencode-rtk` — plugin OpenCode
-- `strotgen/opencode-rtk-plugin` — alternativa
+**Não diretamente.** RTK não tem flag `--opencode` no `rtk init`. Mas o plugin `openrtk` (npm) faz a ponte — hook no evento `tool.execute.before` do OpenCode e reescreve comandos para passar pelo RTK.
 
-Alternativa mais simples: usar RTK como hook global (`rtk init -g`) que funciona para qualquer CLI que execute comandos shell (incluindo OpenCode), sem precisar de plugin específico.
+**Duas formas de integrar:**
+
+| Forma | Vantagem | Desvantagem |
+|-------|----------|-------------|
+| `rtk init -g` (hook global) | Funciona para qualquer CLI em shell | Não captura tool calls internas do OpenCode |
+| `openrtk` plugin (npm) | Captura TODOS os comandos shell via plugin API | Requer npm + config no opencode.json |
+
+**Recomendação**: usar ambos — o hook global cobre o terminal do VSCode/Copilot, e o plugin `openrtk` cobre o OpenCode por dentro.
+
+### Por que o `withakay/opencode-rtk` não funciona?
+
+O repositório `github.com/withakay/opencode-rtk` está vazio (repo em branco). O plugin real e funcional é o **`openrtk`** no npm (`npm install openrtk`), mantido por `martinstannard`. Ele hooka no evento `tool.execute.before` do OpenCode e reescreve comandos como `git status` → `rtk git status` automaticamente.
+
+### Headroom no venv
+
+Headroom roda em um **venv dedicado** (`~/.local/venvs/headroom/`) para não contaminar seu Python global. Os aliases no `.zshrc` usam o path absoluto do venv, então você pode chamar `headroom` de qualquer lugar sem ativar nada.
 
 ### Segurança
 
@@ -284,8 +347,11 @@ rtk init -g                    # hook global
 rtk gain                       # ver savings
 rtk discover                   # oportunidades perdidas
 
-# Headroom
+# Headroom (via venv dedicado)
+python3 -m venv ~/.local/venvs/headroom
+source ~/.local/venvs/headroom/bin/activate
 pip install "headroom-ai[proxy]"
+deactivate
 headroom proxy --port 8787      # iniciar proxy
 headroom dashboard              # dashboard ao vivo
 headroom perf                   # benchmark
