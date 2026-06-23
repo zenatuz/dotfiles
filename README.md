@@ -9,7 +9,48 @@ Terminal: **Ghostty** + **Starship** prompt with Kubernetes, Azure, Terraform mo
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/zenatuz/dotfiles/main/.install.sh)"
 ```
 
-This will install:
+> **Already have a setup?** See [Cleanup and Prepare](#cleanup-and-prepare) below.
+
+## Cleanup and Prepare
+
+If you're running the installer on a machine that already has some tools installed
+(or had a previous dotfiles setup), clean these up first to avoid conflicts:
+
+### 1. Remove old yadm repo (if exists)
+
+```bash
+mv ~/.local/share/yadm ~/.local/share/yadm.bak
+```
+
+This forces the installer to do a fresh `yadm clone` instead of trying to `pull` an
+existing repo with possible conflicts.
+
+### 2. Check for machine-specific git config
+
+```bash
+# Remove any [http] sections with non-existent CA bundles
+git config --global --unset http.sslcainfo 2>/dev/null
+```
+
+Look for entries like `http.sslcainfo` pointing to work-specific SSL certificates
+(e.g., Aikido, Zscaler) that don't exist on this machine.
+
+### 3. Fix untrusted Homebrew taps
+
+```bash
+# Check for third-party taps that need explicit trust
+brew tap list 2>/dev/null | grep -v 'homebrew/'
+# Trust any that are needed, or remove from .brewfile
+```
+
+### 4. Clean Helm plugins (optional)
+
+```bash
+# Remove helm plugin directories to force reinstall
+rm -rf "$(helm env HELM_PLUGINS)"/*
+```
+
+### 5. Run the installer (see [Quick Install](#quick-install-fresh-machine) above)
 - **Homebrew** + packages from `.brewfile`
 - **Ghostty** terminal (GPU-accelerated)
 - **Starship** prompt with DevOps modules
