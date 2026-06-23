@@ -330,7 +330,8 @@ sanitize_git_config() {
     local cafile
     cafile="$(git config --global http.sslcainfo 2>/dev/null || true)"
     if [[ -n "$cafile" ]] && ! [[ -f "$cafile" ]]; then
-        echo "  Cleaning git config (non-existent CA bundle)..."
+        echo "  Cleaning ~/.gitconfig: http.sslcainfo points to non-existent file ($cafile)"
+        echo "  (This is often a work-specific CA bundle that doesn't belong in shared dotfiles.)"
         git config --global --unset http.sslcainfo 2>/dev/null || true
     fi
 }
