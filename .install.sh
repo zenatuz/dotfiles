@@ -385,18 +385,21 @@ clone_dotfiles() {
                 local yadm_backup="$HOME/.local/share/yadm-backup-$(date +%Y%m%d-%H%M%S)"
                 mv "$yadm_dir" "$yadm_backup"
                 echo "  Old yadm repo saved to: $yadm_backup"
-                yadm clone --branch "$DOTFILES_BRANCH" "$DOTFILES_REPO"
+                echo "  Re-cloning with force (backup already saved everything)..."
+                yadm clone --branch "$DOTFILES_BRANCH" --force "$DOTFILES_REPO"
             elif $yadm_dirty; then
                 echo "  yadm pull succeeded (worktree was dirty, now clean)."
             fi
         else
-            echo "  Cloning dotfiles with yadm..."
-            yadm clone --branch "$DOTFILES_BRANCH" "$DOTFILES_REPO"
+            echo "  Cloning dotfiles with yadm (force)..."
+            echo "  (Backup was taken earlier — existing tracked files will be overwritten.)"
+            yadm clone --branch "$DOTFILES_BRANCH" --force "$DOTFILES_REPO"
         fi
     else
         echo "  yadm not installed yet. Installing..."
         brew install yadm
-        yadm clone "$DOTFILES_REPO"
+        echo "  Cloning dotfiles with yadm (force)..."
+        yadm clone --force "$DOTFILES_REPO"
     fi
 }
 
