@@ -317,6 +317,23 @@ EOF
     fi
 }
 
+# ─── Sanitize environment ─────────────────────────────────────────
+# Strip env vars that override SSL/TLS certificate paths if they
+# point to non-existent files. These are typically left behind by
+# corporate EDR / MDM agents (Aikido, CrowdStrike, SentinelOne, etc.)
+# after uninstall and break git, curl, and any HTTPS tooling on
+# machines that never had them.
+sanitize_env() {
+    local vars=("CURL_CA_BUNDLE" "SSL_CERT_FILE")
+    for var in "${vars[@]}"; do
+        local val="${!var:-}"
+        if [[ -n "$val" && ! -f "$val" ]]; then
+            echo "  Cleaning env: \$$var points to non-existent file ($val)"
+            unset "$var"
+        fi
+    done
+}
+
 # ─── Step 8: Clone dotfiles with yadm ─────────────────────────────
 # Sanitize ~/.gitconfig — remove [http] sections pointing to
 # machine-specific CA bundles (e.g. Aikido endpoint protection)
@@ -401,6 +418,9 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     echo "  OS: macOS"
     install_xcode_tools
 fi
+
+# Sanitize SSL/TLS env vars that corporate EDR agents leave behind
+sanitize_env
 
 # Step 0: Backup existing dotfiles before making changes
 $SKIP_BACKUP && export BACKUP_DISABLE=1
