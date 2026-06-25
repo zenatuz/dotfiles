@@ -317,6 +317,23 @@ EOF
     fi
 }
 
+# ─── Sanitize environment ─────────────────────────────────────────
+# Strip env vars that override SSL/TLS certificate paths if they
+# point to non-existent files. These are typically left behind by
+# corporate EDR / MDM agents (Aikido, CrowdStrike, SentinelOne, etc.)
+# after uninstall and break git, curl, and any HTTPS tooling on
+# machines that never had them.
+sanitize_env() {
+    local vars=("CURL_CA_BUNDLE" "SSL_CERT_FILE")
+    for var in "${vars[@]}"; do
+        local val="${!var:-}"
+        if [[ -n "$val" && ! -f "$val" ]]; then
+            echo "  Cleaning env: \$$var points to non-existent file ($val)"
+            unset "$var"
+        fi
+    done
+}
+
 # ─── Step 8: Clone dotfiles with yadm ─────────────────────────────
 # Sanitize ~/.gitconfig — remove [http] sections pointing to
 # machine-specific CA bundles (e.g. Aikido endpoint protection)
@@ -368,18 +385,21 @@ clone_dotfiles() {
                 local yadm_backup="$HOME/.local/share/yadm-backup-$(date +%Y%m%d-%H%M%S)"
                 mv "$yadm_dir" "$yadm_backup"
                 echo "  Old yadm repo saved to: $yadm_backup"
-                yadm clone --branch "$DOTFILES_BRANCH" "$DOTFILES_REPO"
+                echo "  Re-cloning with force (backup already saved everything)..."
+                yadm clone --branch "$DOTFILES_BRANCH" --force "$DOTFILES_REPO"
             elif $yadm_dirty; then
                 echo "  yadm pull succeeded (worktree was dirty, now clean)."
             fi
         else
-            echo "  Cloning dotfiles with yadm..."
-            yadm clone --branch "$DOTFILES_BRANCH" "$DOTFILES_REPO"
+            echo "  Cloning dotfiles with yadm (force)..."
+            echo "  (Backup was taken earlier — existing tracked files will be overwritten.)"
+            yadm clone --branch "$DOTFILES_BRANCH" --force "$DOTFILES_REPO"
         fi
     else
         echo "  yadm not installed yet. Installing..."
         brew install yadm
-        yadm clone "$DOTFILES_REPO"
+        echo "  Cloning dotfiles with yadm (force)..."
+        yadm clone --force "$DOTFILES_REPO"
     fi
 }
 
@@ -401,6 +421,9 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     echo "  OS: macOS"
     install_xcode_tools
 fi
+
+# Sanitize SSL/TLS env vars that corporate EDR agents leave behind
+sanitize_env
 
 # Step 0: Backup existing dotfiles before making changes
 $SKIP_BACKUP && export BACKUP_DISABLE=1
