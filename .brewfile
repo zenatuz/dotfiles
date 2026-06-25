@@ -42,7 +42,7 @@ brew "krew"                         # kubectl plugin manager
 brew "kubectx"                      # Switch k8s contexts + namespaces (includes kubens)
 brew "kubeconform"                  # Kubernetes manifest validation
 brew "kubent"                       # Detect deprecated k8s APIs
-brew "nova"                           # Scan Helm charts for updates
+brew "nova"                         # Scan Helm charts for updates
 brew "pluto"                        # Detect deprecated k8s resources
 brew "popeye"                       # K8s cluster sanitizer
 brew "kube-linter"                  # K8s manifest linter
@@ -76,8 +76,8 @@ if OS.mac?
   cask "ghostty"                    # GPU-accelerated terminal (replaces iterm2)
   cask "iterm2"                     # Terminal emulator
   cask "raycast"                    # Spotlight replacement / launcher
-  cask "alt-tab"                      # Windows-style window switcher (open-source)
-  cask "rectangle"                    # Window management
+  cask "alt-tab"                    # Windows-style window switcher (open-source)
+  cask "rectangle"                  # Window management
   cask "visual-studio-code"         # Code editor
   cask "slack"                      # Communication
   cask "notion"                     # Notes / docs
@@ -90,11 +90,12 @@ if OS.mac?
   cask "microsoft-remote-desktop"   # RDP client
   cask "deepl"                      # AI translation desktop app
   cask "logi-options+"              # Logitech peripheral manager
-
+  cask "vpukhanov/tools/vipinator"  # VPN manager menubar
+  cask "shottr"                     # Screenshot & annotation tool (clean Mac-native UI)
+  
   # Mac App Store (only available here, no cask alternative)
-  mas "Amphetamine", id: 937984704                  # Keep Mac awake
-  mas "Azure VPN Client", id: 1553936137           # Azure VPN
-  cask "vpukhanov/tools/vipinator"   # VPN manager menubar
   mas "Unsplash Wallpapers", id: 1284863847        # Wallpaper app
-  cask "shottr"                      # Screenshot & annotation tool (clean Mac-native UI)
+  mas "Amphetamine", id: 937984704                 # Keep Mac awake
+  mas "Azure VPN Client", id: 1553936137           # Azure VPN
+  
 end
