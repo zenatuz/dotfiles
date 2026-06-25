@@ -106,6 +106,17 @@ Other local override files (also gitignored):
 
 > Full cask and Mac App Store list in [.brewfile](.brewfile) (browserosaurus, meetingbar, deepl, shottr, vipinator, Unsplash Wallpapers, and more).
 
+### Container Runtime
+
+On macOS, container runtime is split into two layers:
+
+| Layer | Project | Role |
+|-------|---------|------|
+| **Daemon** | [Colima](https://github.com/abiosoft/colima) | Runs the Docker engine inside a lightweight Lima VM — no Docker Desktop license needed |
+| **CLI** | [Docker CLI](https://github.com/docker/cli) / [Compose](https://github.com/docker/compose) | Client tools that connect to Colima's socket (`colima` manages the `docker` context automatically) |
+
+On Linux, the Docker daemon runs natively and both packages serve their standard roles.
+
 ## Starship Prompt
 
 The prompt is optimized for DevOps workflows with modules shown on demand:
