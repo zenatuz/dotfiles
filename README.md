@@ -17,6 +17,28 @@ This will install:
 - **Helm plugins** (diff, secrets, git)
 - Clone dotfiles with **yadm**
 
+## Machine-Specific Configuration
+
+Some tools set environment variables that are specific to a single machine (e.g., corporate EDR certificates, proxy settings, internal CA bundles). These **should not** be committed to the shared dotfiles repo.
+
+The `.zshrc` automatically sources `~/.zshrc.local` (listed in `.gitignore`) — use it for anything that only belongs on one machine:
+
+```zsh
+# ~/.zshrc.local — created only on machines that need these exports
+# (never committed to dotfiles repo)
+
+# Example: corporate EDR certificates (Aikido Security, CrowdStrike, etc.)
+export CURL_CA_BUNDLE="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-openssl-combined-ca.pem"
+export NODE_EXTRA_CA_CERTS="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-combined-ca.pem"
+export PIP_CERT="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-pip-combined-ca.pem"
+export REQUESTS_CA_BUNDLE="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-pip-combined-ca.pem"
+export BUNDLE_SSL_CA_CERT="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-ruby-combined-ca.pem"
+```
+
+Other local override files (also gitignored):
+- `~/.gitconfig.local` — machine-specific git config
+- `~/.vimrc.local` — machine-specific vim settings
+
 ## What's Included
 
 ### Shell & Terminal
