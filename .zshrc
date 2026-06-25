@@ -105,18 +105,3 @@ test -d ~/.rd/bin && export PATH="$HOME/.rd/bin:$PATH"
 
 # ─── Local overrides (machine-specific, not tracked) ────────────
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-# aikido-endpoint-cert-config-start
-export NODE_EXTRA_CA_CERTS="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-combined-ca.pem"
-# aikido-endpoint-cert-config-end
-# aikido-endpoint-pip-cert-config-start
-export PIP_CERT="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-pip-combined-ca.pem"
-export REQUESTS_CA_BUNDLE="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-pip-combined-ca.pem"
-export POETRY_CERTIFICATES_PYPI_CERT="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-pip-combined-ca.pem"
-export UV_SYSTEM_CERTS=true
-# aikido-endpoint-pip-cert-config-end
-# aikido-endpoint-ruby-cert-config-start
-export BUNDLE_SSL_CA_CERT="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-ruby-combined-ca.pem"
-# aikido-endpoint-ruby-cert-config-end
-# aikido-endpoint-curl-cert-config-start
-export CURL_CA_BUNDLE="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-openssl-combined-ca.pem"
-# aikido-endpoint-curl-cert-config-end
