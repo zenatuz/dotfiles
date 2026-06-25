@@ -15,6 +15,7 @@ This will install:
 - **Starship** prompt with DevOps modules
 - **ZSH plugins** (autosuggestions, syntax-highlighting)
 - **Helm plugins** (diff, secrets, git)
+- **Docker** + **Colima** (lightweight container runtime)
 - Clone dotfiles with **yadm**
 
 ## Machine-Specific Configuration
@@ -84,21 +85,26 @@ Other local override files (also gitignored):
 | [terraform-docs](https://terraform-docs.io/) | Auto-generate Terraform docs | Always-updated module docs |
 | [terraform-ls](https://github.com/hashicorp/terraform-ls) | Terraform Language Server | Autocomplete + validation in editor |
 | [checkov](https://www.checkov.io/) | IaC security scanning | Catch misconfigs in TF/K8s/YAML |
+| [aztfexport](https://github.com/Azure/aztfexport) | Export Azure resources | Import existing infra to Terraform |
 
 ### macOS Apps (via Brew Bundle)
 
 | App | What | Why |
 |-----|------|-----|
 | [Ghostty](https://ghostty.org/) | GPU-accelerated terminal emulator | Blazing fast, native macOS feel |
-| [Rancher Desktop](https://rancherdesktop.io/) | Kubernetes + Docker Desktop alternative | Local K8s without Docker license |
+| [Colima](https://github.com/abiosoft/colima) | Lightweight container runtime | Docker Desktop alternative, no license needed |
 | [Raycast](https://raycast.com/) | Spotlight replacement | Quick launcher + extensions |
 | [Rectangle](https://rectangleapp.com/) | Window management | Snap windows with keyboard |
-| [Ice](https://github.com/jordanbaird/Ice) | Menu bar manager | Organize menu bar icons |
+| [AltTab](https://alt-tab-macos.netlify.app/) | Windows-style window switcher | Alt+Tab with app previews |
 | [Stats](https://github.com/exelban/Stats) | System monitor menu bar | CPU, RAM, disk, network at a glance |
 | [1Password](https://1password.com/) | Password manager | Secrets, SSH keys, tokens |
+| [Thaw](https://github.com/matthewlawson/thaw) | Menu bar manager | Organize menu bar icons (Ice alternative) |
+| [MonitorControl](https://github.com/MonitorControl/MonitorControl) | External monitor controls | Brightness/volume for non-Apple displays |
 | [Amphetamine](https://apps.apple.com/app/id937984704) | Keep Mac awake | Prevent sleep during long runs |
 | [Azure VPN Client](https://apps.apple.com/app/id1553936137) | Azure VPN | Connect to Azure VPN gateways |
 | [Microsoft Remote Desktop](https://apps.microsoft.com/detail/9WZDNCRFJ3PS) | RDP client | Remote desktop to Windows VMs |
+
+> Full cask and Mac App Store list in [.brewfile](.brewfile) (browserosaurus, meetingbar, deepl, shottr, vipinator, Unsplash Wallpapers, and more).
 
 ## Starship Prompt
 
@@ -186,15 +192,16 @@ yadm pull
 │   │   └── init.vim   # Neovim config (sources .vimrc)
 │   └── starship.toml  # Starship prompt with k8s/azure/terraform
 ├── .editorconfig      # Editor settings
+├── .env               # Environment variables (gitignored template)
 ├── .gitconfig         # Git configuration (with delta, aliases)
 ├── .gitignore         # Git ignore rules
 ├── .helmlist          # Helm plugins
 ├── .install.sh        # One-shot setup script
+├── LICENSE            # MIT License
 ├── .ssh/
 │   └── config         # SSH hosts (GitHub, Azure DevOps)
 ├── .vimrc             # Vim/Neovim config (line numbers, syntax, indentation)
 ├── .zshrc             # Zsh configuration
 ├── .zsh/
-│   ├── zsh-custom.sh  # Aliases & functions
-│   └── plugins/       # Zsh plugins (autosuggestions, syntax-highlighting)
+│   └── zsh-custom.sh  # Aliases & functions
 ```
