@@ -74,7 +74,6 @@ if OS.mac?
   cask "1password"                  # Password manager
   cask "font-meslo-lg-nerd-font"    # Nerd Font for Starship + terminal icons
   cask "ghostty"                    # GPU-accelerated terminal (replaces iterm2)
-  cask "iterm2"                     # Terminal emulator
   cask "raycast"                    # Spotlight replacement / launcher
   cask "alt-tab"                    # Windows-style window switcher (open-source)
   cask "rectangle"                  # Window management
