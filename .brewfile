@@ -11,7 +11,7 @@ brew "tree"                         # Directory tree viewer
 brew "watch"                        # Command repeater
 
 # ─── Prompt & Terminal ──────────────────────────────────────────────
-brew "starship"                      # Cross-shell prompt
+brew "starship"                     # Cross-shell prompt
 
 # ─── Git ───────────────────────────────────────────────────────────
 brew "git"                          # Latest git
@@ -27,7 +27,6 @@ brew "pyenv-virtualenv"             # Python virtualenv manager
 
 # ─── Cloud (Azure) ─────────────────────────────────────────────────
 brew "azure-cli"                    # Azure CLI
-# kubelogin removed from Brewfile — install via `az aks install-cli` instead
 brew "aztfexport"                   # Export Azure resources to Terraform
 brew "terraform-ls"                 # Terraform Language Server
 
