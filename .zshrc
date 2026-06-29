@@ -100,8 +100,5 @@ fi
 test -d /opt/homebrew/opt/mysql-client/ \
   && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
-# ─── Rancher Desktop ─────────────────────────────────────────────
-test -d ~/.rd/bin && export PATH="$HOME/.rd/bin:$PATH"
-
 # ─── Local overrides (machine-specific, not tracked) ────────────
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
