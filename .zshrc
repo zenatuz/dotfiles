@@ -104,41 +104,13 @@ test -d /opt/homebrew/opt/mysql-client/ \
   && export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
 
 # ─── Local overrides (machine-specific, not tracked) ────────────
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 # aikido-endpoint-cert-config-start
-# Allow Node.js tooling to trust the SafeChain MITM CA while preserving public roots.
-export NODE_EXTRA_CA_CERTS="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-combined-ca.pem"
-# aikido-endpoint-cert-config-end
-# aikido-endpoint-pip-cert-config-start
-# Allow Python package managers to trust the SafeChain MITM CA while preserving user-provided roots.
-export PIP_CERT="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-pip-combined-ca.pem"
-export REQUESTS_CA_BUNDLE="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-pip-combined-ca.pem"
-export POETRY_CERTIFICATES_PYPI_CERT="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-pip-combined-ca.pem"
-export UV_SYSTEM_CERTS=true
-# aikido-endpoint-pip-cert-config-end
-# aikido-endpoint-ruby-cert-config-start
-# Allow Ruby Bundler to trust the SafeChain MITM CA while preserving public roots.
-export BUNDLE_SSL_CA_CERT="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-ruby-combined-ca.pem"
-# aikido-endpoint-ruby-cert-config-end
-# aikido-endpoint-curl-cert-config-start
-# Allow curl and other OpenSSL-linked tools to trust the SafeChain MITM CA while preserving the system roots.
-export CURL_CA_BUNDLE="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-openssl-combined-ca.pem"
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 # aikido-endpoint-curl-cert-config-end
 
-# ─── Token Optimization (rtk, headroom, caveman) ────────────────
-TOKEN_OPTIMIZATION_DIR="/Users/r.batista/code/personal/token-optimization"
 
-# rtk — shell command aliases
-test -d "$TOKEN_OPTIMIZATION_DIR/configs" && source "$TOKEN_OPTIMIZATION_DIR/configs/rtk.aliases.zsh"
+# ─── Token Optimization (rtk, caveman) ─────────────────────────────
 
-# headroom — auto-start proxy if not running
-if command -v headroom &>/dev/null; then
-  if ! curl -sf http://127.0.0.1:8787/health > /dev/null 2>&1; then
-    nohup headroom proxy --port 8787 > /tmp/headroom.log 2>&1 &
-    echo "headroom proxy started (PID $!)"
-  fi
-fi
-
-# ANTHROPIC_BASE_URL for opencode (enable via proxy)
-# export ANTHROPIC_BASE_URL=http://127.0.0.1:8787
-# ─── End Token Optimization ──────────────────────────────
+# rtk — shell command aliases (compresses shell output for LLM context)
+test -d "$HOME/.config/token-optimization" && source "$HOME/.config/token-optimization/rtk.aliases.zsh"
+# ─── End Token Optimization ─────────────────────────────────────
