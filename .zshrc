@@ -124,3 +124,21 @@ export BUNDLE_SSL_CA_CERT="/Library/Application Support/AikidoSecurity/EndpointP
 # Allow curl and other OpenSSL-linked tools to trust the SafeChain MITM CA while preserving the system roots.
 export CURL_CA_BUNDLE="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-openssl-combined-ca.pem"
 # aikido-endpoint-curl-cert-config-end
+
+# ─── Token Optimization (rtk, headroom, caveman) ────────────────
+TOKEN_OPTIMIZATION_DIR="/Users/r.batista/code/personal/token-optimization"
+
+# rtk — shell command aliases
+test -d "$TOKEN_OPTIMIZATION_DIR/configs" && source "$TOKEN_OPTIMIZATION_DIR/configs/rtk.aliases.zsh"
+
+# headroom — auto-start proxy if not running
+if command -v headroom &>/dev/null; then
+  if ! curl -sf http://127.0.0.1:8787/health > /dev/null 2>&1; then
+    nohup headroom proxy --port 8787 > /tmp/headroom.log 2>&1 &
+    echo "headroom proxy started (PID $!)"
+  fi
+fi
+
+# ANTHROPIC_BASE_URL for opencode (enable via proxy)
+# export ANTHROPIC_BASE_URL=http://127.0.0.1:8787
+# ─── End Token Optimization ──────────────────────────────
