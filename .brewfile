@@ -85,7 +85,7 @@ if OS.mac?
   cask "stats"                      # System monitor in menu bar
   cask "browserosaurus"             # Browser chooser per-link
   cask "meetingbar"                 # Next meeting in menu bar
-  cask "microsoft-remote-desktop"   # RDP client
+  cask "windows-app"                # RDP client
   cask "deepl"                      # AI translation desktop app
   cask "logi-options+"              # Logitech peripheral manager
   cask "vpukhanov/tools/vipinator"  # VPN manager menubar
