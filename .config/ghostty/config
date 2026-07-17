@@ -6,3 +6,4 @@ theme = Argonaut
 cursor-style = bar
 cursor-style-blink = false
 cursor-color = #cdd6f4
+term = xterm-256color

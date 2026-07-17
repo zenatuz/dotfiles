@@ -41,10 +41,6 @@ alias kns="kubens"
 alias k9s="k9s -A"
 alias stern="stern --tail 50"
 
-# ─── Local clusters ───────────────────────────────────────────────
-alias k9s-rch="k9s --context rancher-desktop"
-alias kctx-rch="kubectx rancher-desktop"
-
 # ─── Docker / Containers ──────────────────────────────────────────
 alias d-up="docker compose up --remove-orphans"
 alias d-down="docker compose down"
@@ -67,6 +63,9 @@ alias update="brew update && brew upgrade && brew cleanup"
 alias ip="curl -s https://checkip.amazonaws.com 2>/dev/null || echo 'checkip unavailable'"
 alias localip="ipconfig getifaddr en0 2>/dev/null || hostname -I 2>/dev/null | awk '{print \$1}'"
 alias ports="lsof -i -P -n | grep LISTEN"
+
+# ─── Local overrides ───────────────────────────────────────────────
+[[ -f ~/.zsh/zsh-custom.local ]] && source ~/.zsh/zsh-custom.local
 
 # ═══════════════════════════════════════════════════════════════════
 # FUNCTIONS
