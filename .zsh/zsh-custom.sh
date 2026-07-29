@@ -42,6 +42,8 @@ alias k9s="k9s -A"
 alias stern="stern --tail 50"
 
 # ─── Docker / Containers ──────────────────────────────────────────
+export DOCKER_BUILDKIT=1
+alias dbuild="docker buildx build"
 alias d-up="docker compose up --remove-orphans"
 alias d-down="docker compose down"
 alias d-ps="docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Status}}'"
