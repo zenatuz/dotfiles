@@ -10,6 +10,9 @@
 .DS_Store
 Thumbs.db
 
+# macOS LaunchAgents — managed as symlinks to .config/
+Library/LaunchAgents/com.user.colima-autostop.plist
+
 # Editor files
 *.swp
 *.swo

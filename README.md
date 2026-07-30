@@ -117,6 +117,29 @@ On macOS, container runtime is split into two layers:
 
 On Linux, the Docker daemon runs natively and both packages serve their standard roles.
 
+#### Colima Automation
+
+To avoid wasting 8 GB of RAM when no containers are running, two automations are in place:
+
+**Auto-start** (in `.zshrc`): a shell function wraps the `docker` command. If Colima is stopped, it starts the VM automatically before running the docker command. Use `command docker` to bypass.
+
+**Auto-stop** (`~/.config/colima/autostop.sh` + LaunchAgent): runs every 5 minutes via a macOS LaunchAgent. If no containers are running for 3 consecutive checks (~15 min), Colima is stopped. The plist uses `$HOME` expansion (via `bash -c`) so it's portable across machines.
+
+```bash
+# First-time setup (on a new Mac):
+ln -s ~/.config/colima/com.user.colima-autostop.plist ~/Library/LaunchAgents/
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.colima-autostop.plist
+
+# Manual control
+launchctl bootout gui/$(id -u)/com.user.colima-autostop   # disable auto-stop
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.user.colima-autostop.plist  # re-enable
+
+# View auto-stop logs
+cat ~/.local/state/colima/autostop.log
+
+# Adjust idle timeout: edit INTERVAL_SEC and MAX_IDLE_SEC in ~/.config/colima/autostop.sh
+```
+
 ## Starship Prompt
 
 The prompt is optimized for DevOps workflows with modules shown on demand:
