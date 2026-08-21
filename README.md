@@ -40,6 +40,46 @@ Other local override files (also gitignored):
 - `~/.gitconfig.local` — machine-specific git config
 - `~/.vimrc.local` — machine-specific vim settings
 
+## OpenCode MCP Servers
+
+The global OpenCode configuration is stored at `~/.config/opencode/opencode.json`.
+It enables MCP access to:
+
+- Atlassian: Jira and Confluence via OAuth 2.1
+- Azure: Azure resources via Azure CLI credentials and RBAC
+- Azure DevOps: repositories, pipelines, search, and wiki for `keesingtech`
+- Terraform: public Terraform Registry documentation and modules
+
+Authenticate after installing the configuration:
+
+```bash
+az login
+opencode mcp auth atlassian
+```
+
+Azure DevOps uses interactive Microsoft authentication on first use. Terraform
+Registry access is public. HCP Terraform private registry access additionally
+requires `TFE_ADDRESS` and `TFE_TOKEN`; keep those values in the shell
+environment or a secret manager, never in tracked configuration.
+
+## SwiftBar Plugins
+
+SwiftBar plugins are stored in `~/.swiftbar`:
+
+- `check-network.3s.sh` — monitors gateway, internet, and DNS connectivity
+- `deepseek_balance.5m.sh` — displays DeepSeek balance
+- `ration.5m.sh` — tracks Copilot, Codex, and Antigravity quotas
+
+For the DeepSeek plugin, create a local environment file:
+
+```bash
+cp ~/.swiftbar/.env.example ~/.swiftbar/.env
+# Edit ~/.swiftbar/.env and set DEEPSEEK_API_KEY
+```
+
+`.env`, `.env.*`, and local credential files must never be committed. Commit
+only sanitized templates such as `.env.example`.
+
 ## What's Included
 
 ### Shell & Terminal
@@ -224,7 +264,10 @@ yadm pull
 │   │   └── config     # Ghostty terminal config (theme, font, opacity)
 │   ├── nvim/
 │   │   └── init.vim   # Neovim config (sources .vimrc)
-│   └── starship.toml  # Starship prompt with k8s/azure/terraform
+│   ├── opencode/
+│   │   ├── opencode.json # MCP server configuration
+│   │   └── skills/       # OpenCode skills
+│   └── starship.toml     # Starship prompt with k8s/azure/terraform
 ├── .editorconfig      # Editor settings
 ├── .env               # Environment variables (gitignored template)
 ├── .gitconfig         # Git configuration (with delta, aliases)
@@ -234,6 +277,9 @@ yadm pull
 ├── LICENSE            # MIT License
 ├── .ssh/
 │   └── config         # SSH hosts (GitHub, Azure DevOps)
+├── .swiftbar/
+│   ├── .env.example    # Sanitized credential template
+│   └── *.sh             # SwiftBar plugins
 ├── .vimrc             # Vim/Neovim config (line numbers, syntax, indentation)
 ├── .zshrc             # Zsh configuration
 ├── .zsh/

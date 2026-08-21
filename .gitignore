@@ -5,6 +5,7 @@
 .zshrc.local
 .gitconfig.local
 .vimrc.local
+.gitconfig
 
 # OS files
 .DS_Store
