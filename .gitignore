@@ -20,3 +20,6 @@ Library/LaunchAgents/com.user.colima-autostop.plist
 
 # Environment
 .env
+.env.*
+!.env.example
+!.env.*.example
