@@ -10,6 +10,10 @@ brew "mcfly"                        # Smart shell history
 brew "tree"                         # Directory tree viewer
 brew "watch"                        # Command repeater
 
+# ─── rtk (Reduced Token Kit) — custom script, not a brew package ────
+# Installed via yadm as ~/bin/rtk — wraps commands compressing output for LLM context.
+# Aliases are sourced from ~/.config/token-optimization/rtk.aliases.zsh
+
 # ─── Prompt & Terminal ──────────────────────────────────────────────
 brew "starship"                     # Cross-shell prompt
 
@@ -74,7 +78,6 @@ if OS.mac?
   cask "font-meslo-lg-nerd-font"    # Nerd Font for Starship + terminal icons
   cask "ghostty"                    # GPU-accelerated terminal (replaces iterm2)
   cask "raycast"                    # Spotlight replacement / launcher
-  cask "alt-tab"                    # Windows-style window switcher (open-source)
   cask "rectangle"                  # Window management
   cask "visual-studio-code"         # Code editor
   cask "slack"                      # Communication
@@ -90,6 +93,10 @@ if OS.mac?
   cask "logi-options+"              # Logitech peripheral manager
   cask "vpukhanov/tools/vipinator"  # VPN manager menubar
   cask "shottr"                     # Screenshot & annotation tool (clean Mac-native UI)
+  
+  # ─── MrTab (window switcher) — manual install via curl (not a cask) ──
+  # curl -L https://github.com/andrecarlucci/mrtab/releases/latest/download/MrTab.tar.gz | tar -xz -C /Applications
+  # open /Applications/MrTab.app
   
   # Mac App Store (only available here, no cask alternative)
   mas "Unsplash Wallpapers", id: 1284863847        # Wallpaper app

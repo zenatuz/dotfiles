@@ -364,6 +364,19 @@ clone_dotfiles() {
     fi
 }
 
+install_mrtab() {
+    if [[ "$OSTYPE" != "darwin"* ]]; then return 0; fi
+    if [[ -d "/Applications/MrTab.app" ]]; then
+        echo "  MrTab already installed."
+        return 0
+    fi
+    echo "  Installing MrTab (window switcher)..."
+    curl -L https://github.com/andrecarlucci/mrtab/releases/latest/download/MrTab.tar.gz \
+      | tar -xz -C /Applications 2>/dev/null && \
+      echo "  MrTab installed to /Applications/MrTab.app" || \
+      echo "  ⚠️  MrTab install failed. Install manually: open /Applications/MrTab.app"
+}
+
 # ═══════════════════════════════════════════════════════════════════
 # MAIN
 # ═══════════════════════════════════════════════════════════════════
@@ -395,6 +408,7 @@ install_helm_plugins
 create_local_configs
 clone_dotfiles
 install_brew_packages
+install_mrtab
 
 echo ""
 echo "  ╔══════════════════════════════════════════╗"

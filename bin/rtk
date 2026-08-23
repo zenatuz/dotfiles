@@ -1,0 +1,64 @@
+#!/bin/bash
+# rtk — Reduced Token Kit
+# Wraps CLI commands and compresses output for LLM context.
+# Strips ANSI codes, squashes blank lines, truncates excessively long output.
+set -euo pipefail
+
+# ── Config ─────────────────────────────────────────────────────────
+MAX_LINES="${RTK_MAX_LINES:-500}"
+MAX_LINE_LEN="${RTK_MAX_LINE_LEN:-2000}"
+SQUASH_BLANKS="${RTK_SQUASH_BLANKS:-1}"   # 1 = collapse consecutive empty lines
+
+# ── Help ───────────────────────────────────────────────────────────
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+  cat <<'EOF'
+rtk — Reduced Token Kit
+
+Compresses command output for LLM context usage.
+
+Usage:
+  rtk <command> [args...]
+
+Environment:
+  RTK_MAX_LINES=500       Max output lines (truncates oldest)
+  RTK_MAX_LINE_LEN=2000   Max chars per line (truncates)
+  RTK_SQUASH_BLANKS=1     Collapse consecutive blank lines (0=off)
+
+Aliases:
+  rtk ls        → ls with human-readable sizes
+  rtk read      → cat with line numbers, no empty lines
+  rtk git       → git with compact log/diff formats
+  rtk grep      → grep without noisy context
+  rtk pytest    → pytest with compact tracebacks
+EOF
+  exit 0
+fi
+
+# ── Run command ────────────────────────────────────────────────────
+"$@" 2>&1                                                                      \
+  | sed 's/\x1b\[[0-9;]*[a-zA-Z]//g'                                           \
+  | sed 's/\x1b\][0-9;]*[a-zA-Z]//g'                                           \
+  | sed 's/\x1b[^m]*m//g'                                                       \
+  | sed 's/\r//g'                                                               \
+  | awk -v max="$MAX_LINES" -v maxlen="$MAX_LINE_LEN" -v squash="$SQUASH_BLANKS" '
+      BEGIN { buf_len = 0 }
+      {
+        # Truncate overlong lines
+        if (length($0) > maxlen) $0 = substr($0, 1, maxlen) "..."
+        # Squash blank lines
+        if (squash && /^[[:space:]]*$/) { blank=1; next }
+        if (blank) { blank=0; print "" }
+        # Circular buffer — keep last N lines
+        buf[buf_len % max] = $0
+        buf_len++
+      }
+      END {
+        if (buf_len > max) {
+          print "--- truncated " (buf_len - max) " lines ---"
+        }
+        start = (buf_len > max) ? (buf_len % max) : 0
+        count = (buf_len > max) ? max : buf_len
+        for (i = 0; i < count; i++) {
+          print buf[(start + i) % max]
+        }
+      }'
