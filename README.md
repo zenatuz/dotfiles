@@ -40,6 +40,49 @@ Other local override files (also gitignored):
 - `~/.gitconfig.local` — machine-specific git config
 - `~/.vimrc.local` — machine-specific vim settings
 
+## Git Clean/Smudge Filter: Corporate Certificate Stripping
+
+Some corporate tools (e.g., Aikido Security EDR) inject CA bundle variables directly into `~/.zshrc` on every shell spawn. These lines **must not** be committed, but they also cannot be moved to `.zshrc.local` because the tool re-adds them automatically.
+
+The repo uses a **git clean/smudge filter** to strip these lines on the fly:
+
+```
+[filter "aikido"]
+    clean = ~/.config/yadm/filters/aikido.zsh   # runs on add/commit/push
+    smudge = cat                                  # pass-through on checkout
+```
+
+**How it works:**
+
+```
+You edit .zshrc (EDR tool adds CA exports)
+         │
+         ▼
+yadm add .zshrc → git runs clean → aikido.zsh → removes EDR certificate lines
+         │                                          ↓
+         └──── staged content is CLEAN ──────────────┘
+         │
+         ▼
+yadm commit/push → no EDR lines ever reach the remote
+```
+
+The filter is defined in `.gitconfig` (tracked) and mapped by `.gitattributes`:
+- `.gitattributes` → `.zshrc filter=aikido`
+- `.gitconfig` → `filter.aikido.clean` + `filter.aikido.smudge`
+
+The working copy on disk is **never touched** — the filter only transforms content entering the index. This means `yadm status` will show `.zshrc` as modified (` M`) because the working copy has EDR lines while the staged copy doesn't. This is expected and harmless.
+
+**Per-machine setup:**
+
+```bash
+# The script must exist at ~/.config/yadm/filters/aikido.zsh
+mkdir -p ~/.config/yadm/filters
+curl -fsSL https://raw.githubusercontent.com/zenatuz/dotfiles/main/.config/yadm/filters/aikido.zsh \
+  -o ~/.config/yadm/filters/aikido.zsh
+```
+
+The filter configuration ships with `.gitconfig` — no manual git config needed after cloning.
+
 ## OpenCode MCP Servers
 
 The global OpenCode configuration is stored at `~/.config/opencode/opencode.json`.
