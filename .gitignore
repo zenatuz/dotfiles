@@ -3,9 +3,8 @@
 
 # Local overrides (machine-specific, not tracked)
 .zshrc.local
-.gitconfig.local
 .vimrc.local
-.gitconfig
+.gitconfig.local
 
 # OS files
 .DS_Store

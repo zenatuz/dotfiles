@@ -1,0 +1,6 @@
+[include]
+    path = ~/.gitconfig.local
+
+[filter "aikido"]
+    clean = ~/.config/yadm/filters/aikido.zsh
+    smudge = cat

@@ -116,9 +116,6 @@ docker() {
 # ─── End Colima auto-start ─────────────────────────────────────
 
 # ─── Local overrides (machine-specific, not tracked) ────────────
-# aikido-endpoint-cert-config-start
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
-# aikido-endpoint-curl-cert-config-end
 
 
 # ─── Token Optimization (rtk, caveman) ─────────────────────────────
@@ -126,18 +123,3 @@ docker() {
 # rtk — shell command aliases (compresses shell output for LLM context)
 test -d "$HOME/.config/token-optimization" && source "$HOME/.config/token-optimization/rtk.aliases.zsh"
 # ─── End Token Optimization ─────────────────────────────────────
-# aikido-endpoint-pip-cert-config-start
-# Allow Python package managers to trust the SafeChain MITM CA while preserving user-provided roots.
-export PIP_CERT="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-pip-combined-ca.pem"
-export REQUESTS_CA_BUNDLE="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-pip-combined-ca.pem"
-export POETRY_CERTIFICATES_PYPI_CERT="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-pip-combined-ca.pem"
-export UV_SYSTEM_CERTS=true
-# aikido-endpoint-pip-cert-config-end
-# aikido-endpoint-ruby-cert-config-start
-# Allow Ruby Bundler to trust the SafeChain MITM CA while preserving public roots.
-export BUNDLE_SSL_CA_CERT="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-ruby-combined-ca.pem"
-# aikido-endpoint-ruby-cert-config-end
-# aikido-endpoint-curl-cert-config-start
-# Allow curl and other OpenSSL-linked tools to trust the SafeChain MITM CA while preserving the system roots.
-export CURL_CA_BUNDLE="/Library/Application Support/AikidoSecurity/EndpointProtection/run/endpoint-protection-openssl-combined-ca.pem"
-# aikido-endpoint-curl-cert-config-end
