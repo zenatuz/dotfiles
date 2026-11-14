@@ -105,6 +105,30 @@ Registry access is public. HCP Terraform private registry access additionally
 requires `TFE_ADDRESS` and `TFE_TOKEN`; keep those values in the shell
 environment or a secret manager, never in tracked configuration.
 
+## Herdr (agents app)
+
+The Herdr app keeps its whole interface as files in `~/.config/herdr-app`.
+Only our own pieces are versioned here:
+
+- `settings.json` - zoom, sounds, fonts, theme.
+- `layouts/main-vscode.json` - a clone of the shipped `main` layout with a
+  **VS Code** button in the status bar.
+- `mods/vscode-open/` - the button: opens the focused terminal's folder in
+  VS Code, locally or over VS Code Remote-SSH (`--remote ssh-remote+<machine>`).
+
+The rest (`AGENTS.md`, `*.d.ts`, `frame/`, `icons/`, the shipped layouts and
+mods, and state files) is generated or replaced by Herdr on every start and is
+listed in `.config/herdr-app/.gitignore`.
+
+**Convention:** the Herdr machine name is the `Host` alias in that machine's
+`~/.ssh/config`. Exceptions (renamed machines, `--via` machines, `user@host`
+targets) go in `mods/vscode-open/machines.local.json`, which is ignored like
+`.zshrc.local`.
+
+On macOS/Linux the `code` CLI must be on `PATH` and
+`ms-vscode-remote.remote-ssh` installed. After cloning, pick the
+`main-vscode` layout once (`ctrl-shift-l`).
+
 ## SwiftBar Plugins
 
 SwiftBar plugins are stored in `~/.swiftbar`:
@@ -310,6 +334,10 @@ yadm pull
 │   ├── opencode/
 │   │   ├── opencode.json # MCP server configuration
 │   │   └── skills/       # OpenCode skills
+│   ├── herdr-app/
+│   │   ├── settings.json
+│   │   ├── layouts/main-vscode.json
+│   │   └── mods/vscode-open/
 │   └── starship.toml     # Starship prompt with k8s/azure/terraform
 ├── .editorconfig      # Editor settings
 ├── .env               # Environment variables (gitignored template)
